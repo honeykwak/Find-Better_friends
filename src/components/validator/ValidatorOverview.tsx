@@ -338,7 +338,6 @@ export const ValidatorOverview = () => {
                         if (prevDisplayData) {
                           const prevPoint = prevDisplayData.find((p: any) => p.voter === payload.voter);
                           if (prevPoint) {
-                            // 이전 데이터의 실제 화면상 위치 계산
                             const xScale = props.xAxis.scale;
                             const yScale = props.yAxis.scale;
                             startCx = xScale(prevPoint.x);
@@ -355,15 +354,32 @@ export const ValidatorOverview = () => {
                         });
 
                         const isSelected = currentValidator?.voter === payload.voter;
+                        const isSearchMatch = searchTerm && payload.voter.toLowerCase().includes(searchTerm.toLowerCase());
+
                         return (
                           <animated.circle
                             cx={springProps.cx}
                             cy={springProps.cy}
                             r={isSelected ? 8 : 5}
                             fill={fill}
-                            stroke={isSelected ? "#3B82F6" : "none"}
-                            strokeWidth={isSelected ? 3 : 0}
-                            style={{ opacity: springProps.opacity }}
+                            stroke={
+                              isSelected 
+                                ? "#3B82F6"  // 선택된 validator: 진한 파란색
+                                : isSearchMatch 
+                                  ? "#93C5FD"  // 검색된 validator: 연한 파란색
+                                  : "none"
+                            }
+                            strokeWidth={
+                              isSelected 
+                                ? 3  // 선택된 validator: 두꺼운 테두리
+                                : isSearchMatch 
+                                  ? 1.5  // 검색된 validator: 얇은 테두리
+                                  : 0
+                            }
+                            style={{ 
+                              opacity: springProps.opacity,
+                              transition: 'stroke-width 0.2s, stroke 0.2s'  // 부드러운 테두리 전환 효과
+                            }}
                           />
                         );
                       }}
