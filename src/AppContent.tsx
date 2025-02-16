@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { ChainSection } from './components/chain/ChainSection';
 import { ValidatorOverview } from './components/validator/ValidatorOverview';
 import { ValidatorInfo } from './components/validator/ValidatorInfo';
-import { ValidatorAnalysis, ChainProposals } from './types';
+import { 
+  ValidatorAnalysis, 
+  ChainProposals, 
+  CoordinateData,
+  ValidatorData
+} from './types';
 import { useAppSelector } from './hooks/useAppSelector';
 
 export const AppContent = () => {
@@ -26,12 +31,11 @@ export const AppContent = () => {
           coordinatesResponse.json(),
           analysisResponse.json(),
           proposalsResponse.json()
-        ]);
+        ]) as [CoordinateData, ValidatorAnalysis, ChainProposals];
 
-        // validatorChainMap 생성
         const mapping = new Map<string, Set<string>>();
         Object.entries(coordinates.chain_coords_dict).forEach(([chainId, validators]) => {
-          validators.forEach(validator => {
+          validators.forEach((validator: ValidatorData) => {
             const chainSet = mapping.get(validator.voter) || new Set<string>();
             chainSet.add(chainId);
             mapping.set(validator.voter, chainSet);

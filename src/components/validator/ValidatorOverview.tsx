@@ -36,6 +36,9 @@ export const ValidatorOverview = () => {
   const selectedClusters = useAppSelector(state => state.chain.selectedClusters);
   const currentValidator = useAppSelector(state => state.validator.selectedValidator);
 
+  // 애니메이션 제어를 위한 상태
+  const [shouldAnimate, setShouldAnimate] = useState(false);
+
   const createValidatorChainMap = useCallback((data: CoordinateData) => {
     const mapping = new Map<string, Set<string>>();
     
@@ -100,8 +103,6 @@ export const ValidatorOverview = () => {
     }
   }, [selectedChain, currentValidator, validatorChainMap, dispatch]);
 
-  const [shouldAnimate, setShouldAnimate] = useState(false);
-
   const displayData = useMemo(() => {
     if (!coordinateData) return [];
     
@@ -130,7 +131,7 @@ export const ValidatorOverview = () => {
       }));
 
       setPreviousValidators(currentValidators);
-
+      
       // 체인 전환 시 애니메이션 활성화
       setShouldAnimate(true);
 
@@ -139,7 +140,7 @@ export const ValidatorOverview = () => {
       console.error('Error processing display data:', error);
       return [];
     }
-  }, [coordinateData, selectedChain, dispatch]);
+  }, [coordinateData, selectedChain]);
 
   const prevDisplayData = usePrevious(displayData);
 
@@ -275,8 +276,11 @@ export const ValidatorOverview = () => {
                         if (prevDisplayData) {
                           const prevPoint = prevDisplayData.find((p: any) => p.voter === payload.voter);
                           if (prevPoint) {
-                            startCx = prevPoint.x;
-                            startCy = prevPoint.y;
+                            // 이전 데이터의 실제 화면상 위치 계산
+                            const xScale = props.xAxis.scale;
+                            const yScale = props.yAxis.scale;
+                            startCx = xScale(prevPoint.x);
+                            startCy = yScale(prevPoint.y);
                           } else {
                             initialOpacity = 0;
                           }
@@ -285,7 +289,7 @@ export const ValidatorOverview = () => {
                           from: { cx: startCx, cy: startCy, opacity: initialOpacity },
                           to: { cx, cy, opacity: 1 },
                           config: { tension: 170, friction: 26 },
-                          immediate: !shouldAnimate, // 애니메이션 적용 여부 제어
+                          immediate: !shouldAnimate,
                         });
 
                         const isSelected = currentValidator?.voter === payload.voter;
