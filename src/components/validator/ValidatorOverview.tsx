@@ -25,6 +25,8 @@ export const ValidatorOverview = () => {
   const [error, setError] = useState<string | null>(null);
   const [previousValidators, setPreviousValidators] = useState<Set<string>>(new Set());
   const [validatorChainMap, setValidatorChainMap] = useState<Map<string, Set<string>>>(new Map());
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   // 글로벌 좌표 범위 상태 추가
   const [globalXMin, setGlobalXMin] = useState<number | null>(null);
@@ -192,6 +194,43 @@ export const ValidatorOverview = () => {
     }
   }, [dispatch, currentValidator]);
 
+  // validator 목록 필터링 및 정렬
+  const filteredValidators = useMemo(() => {
+    if (!searchTerm.trim()) return displayData;
+    const term = searchTerm.toLowerCase();
+    
+    return displayData
+      .filter(validator => 
+        validator.voter.toLowerCase().includes(term)
+      )
+      .sort((a, b) => {
+        const aIndex = a.voter.toLowerCase().indexOf(term);
+        const bIndex = b.voter.toLowerCase().indexOf(term);
+        
+        // 검색어 위치가 다르면 앞에 있는 것이 우선
+        if (aIndex !== bIndex) {
+          return aIndex - bIndex;
+        }
+        
+        // 검색어 위치가 같으면 알파벳 순
+        return a.voter.localeCompare(b.voter);
+      });
+  }, [displayData, searchTerm]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const searchContainer = document.querySelector('.search-container');
+      if (searchContainer && !searchContainer.contains(event.target as Node)) {
+        setIsSearchFocused(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   if (isLoading) {
     return (
       <div className="w-full h-[600px] bg-white rounded-lg shadow-lg p-6 flex items-center justify-center">
@@ -213,11 +252,34 @@ export const ValidatorOverview = () => {
       <div className="w-full h-[600px] bg-white rounded-lg shadow-lg p-6">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">Validator Overview</h2>
-          <div className="text-sm text-gray-500">
-            {selectedChain && coordinateData?.chain_info?.[selectedChain]?.name ? (
-              <span>Showing validators for {coordinateData.chain_info[selectedChain].name}</span>
-            ) : (
-              <span>Showing all validators</span>
+          <div className="relative search-container">
+            <input
+              type="text"
+              className="w-64 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Search validators..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onFocus={() => setIsSearchFocused(true)}
+            />
+            {isSearchFocused && (
+              <div className="absolute z-10 w-64 mt-1 bg-white border rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                {filteredValidators.map((validator) => (
+                  <div
+                    key={validator.voter}
+                    className={`
+                      px-4 py-2 cursor-pointer hover:bg-gray-50
+                      ${currentValidator?.voter === validator.voter ? 'bg-blue-50 text-blue-600' : ''}
+                    `}
+                    onClick={() => {
+                      dispatch(setSelectedValidator(validator));
+                      setIsSearchFocused(false);
+                      setSearchTerm('');
+                    }}
+                  >
+                    {validator.voter}
+                  </div>
+                ))}
+              </div>
             )}
           </div>
         </div>

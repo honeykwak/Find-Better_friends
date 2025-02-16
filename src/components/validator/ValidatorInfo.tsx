@@ -90,10 +90,10 @@ export const ValidatorInfo: React.FC<ValidatorInfoProps> = ({
                   <div key={chain} className="space-y-1">
                     <div className="grid grid-cols-2 gap-x-4 text-sm">
                       <div>Operation Time:</div>
-                      <div>{data.Operation_Time_Days.toFixed(2)} days</div>
+                      <div>+ {data.Operation_Time_Days.toFixed(2)}</div>
                       
                       <div>Voting Power:</div>
-                      <div>{(data.Voting_Power * 100).toFixed(4)}%</div>
+                      <div>{(data.Voting_Power * 100).toFixed(4)}</div>
                       
                       <div>Votes Participation:</div>
                       <div>
