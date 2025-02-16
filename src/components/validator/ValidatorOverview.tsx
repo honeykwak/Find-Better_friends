@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, Tooltip, ResponsiveContainer } from 'recharts';
@@ -41,6 +41,12 @@ export const ValidatorOverview = () => {
 
   // 애니메이션 제어를 위한 상태
   const [shouldAnimate, setShouldAnimate] = useState(false);
+
+  const [scale, setScale] = useState(1);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const chartRef = useRef<HTMLDivElement>(null);
 
   const createValidatorChainMap = useCallback((data: CoordinateData) => {
     const mapping = new Map<string, Set<string>>();
@@ -232,6 +238,51 @@ export const ValidatorOverview = () => {
     };
   }, []);
 
+  // 줌 핸들러
+  const handleWheel = useCallback((e: WheelEvent) => {
+    e.preventDefault();
+    const delta = e.deltaY;
+    setScale(prevScale => {
+      const newScale = delta > 0 
+        ? Math.max(1, prevScale - 0.1)  // 축소 (최소 1배)
+        : Math.min(5, prevScale + 0.1);  // 확대 (최대 5배)
+      return newScale;
+    });
+  }, []);
+
+  // 드래그 핸들러
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    setIsDragging(true);
+    setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
+  }, [position]);
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (!isDragging) return;
+    const newX = e.clientX - dragStart.x;
+    const newY = e.clientY - dragStart.y;
+    setPosition({ x: newX, y: newY });
+  }, [isDragging, dragStart]);
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  // 이벤트 리스너 설정
+  useEffect(() => {
+    const chart = chartRef.current;
+    if (!chart) return;
+
+    chart.addEventListener('wheel', handleWheel, { passive: false });
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      chart.removeEventListener('wheel', handleWheel);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [handleWheel, handleMouseMove, handleMouseUp]);
+
   if (isLoading) {
     return (
       <div className="w-full h-[600px] bg-white rounded-lg shadow-lg p-6 flex items-center justify-center">
@@ -307,115 +358,139 @@ export const ValidatorOverview = () => {
           </div>
         </div>
 
-        <ResponsiveContainer width="100%" height="90%">
-          <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-            <XAxis 
-              type="number" 
-              dataKey="x" 
-              domain={[chartBounds.xExtent[0], chartBounds.xExtent[1]]}
-              hide={true}
-            />
-            <YAxis 
-              type="number" 
-              dataKey="y" 
-              domain={[chartBounds.yExtent[0], chartBounds.yExtent[1]]}
-              hide={true}
-            />
-            <ZAxis type="number" range={[50]} />
-            <Tooltip
-              cursor={{ strokeDasharray: '3 3' }}
-              content={({ payload }) => {
-                if (!payload || !payload[0]) return null;
-                const data = payload[0].payload as ValidatorData;
-                const isSelected = currentValidator?.voter === data.voter;
-                return (
-                  <div className={`
-                    bg-white p-3 border rounded shadow
-                    ${isSelected ? 'ring-2 ring-blue-500 bg-blue-50' : ''}
-                  `}>
-                    <p className={`font-medium ${isSelected ? 'text-blue-600' : ''}`}>
-                      {data.voter}
-                      {isSelected && <span className="ml-2 text-xs">(Selected)</span>}
-                    </p>
-                  </div>
-                );
-              }}
-            />
-            {CLUSTERS.map((cluster) => {
-              const clusterData = filteredData.filter(d => d.cluster === cluster);
-              const { batches } = getBatchedClusterData(clusterData);
+        <div 
+          ref={chartRef}
+          className="relative w-full h-[90%] overflow-auto"
+          style={{
+            cursor: isDragging ? 'grabbing' : 'grab'
+          }}
+          onMouseDown={handleMouseDown}
+        >
+          <div
+            style={{
+              transform: `scale(${scale})`,
+              transformOrigin: '0 0',
+              width: scale > 1 ? `${100 * scale}%` : '100%',
+              height: scale > 1 ? `${100 * scale}%` : '100%',
+            }}
+          >
+            <ResponsiveContainer width="100%" height="100%">
+              <ScatterChart 
+                margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
+                style={{ 
+                  transform: `translate(${position.x}px, ${position.y}px)`,
+                  transition: isDragging ? 'none' : 'transform 0.1s'
+                }}
+              >
+                <XAxis 
+                  type="number" 
+                  dataKey="x" 
+                  domain={[chartBounds.xExtent[0], chartBounds.xExtent[1]]}
+                  hide={true}
+                />
+                <YAxis 
+                  type="number" 
+                  dataKey="y" 
+                  domain={[chartBounds.yExtent[0], chartBounds.yExtent[1]]}
+                  hide={true}
+                />
+                <ZAxis type="number" range={[50]} />
+                <Tooltip
+                  cursor={{ strokeDasharray: '3 3' }}
+                  content={({ payload }) => {
+                    if (!payload || !payload[0]) return null;
+                    const data = payload[0].payload as ValidatorData;
+                    const isSelected = currentValidator?.voter === data.voter;
+                    return (
+                      <div className={`
+                        bg-white p-3 border rounded shadow
+                        ${isSelected ? 'ring-2 ring-blue-500 bg-blue-50' : ''}
+                      `}>
+                        <p className={`font-medium ${isSelected ? 'text-blue-600' : ''}`}>
+                          {data.voter}
+                          {isSelected && <span className="ml-2 text-xs">(Selected)</span>}
+                        </p>
+                      </div>
+                    );
+                  }}
+                />
+                {CLUSTERS.map((cluster) => {
+                  const clusterData = filteredData.filter(d => d.cluster === cluster);
+                  const { batches } = getBatchedClusterData(clusterData);
 
-              return (
-                <React.Fragment key={cluster}>
-                  {batches.map((batch, batchIndex) => (
-                    <Scatter
-                      key={`${cluster}-batch-${batchIndex}`}
-                      data={batch}
-                      fill={CLUSTER_COLORS[cluster]}
-                      isAnimationActive={false}
-                      onClick={handleClick}
-                      cursor="pointer"
-                      shape={(props: any) => {
-                        const { cx, cy, fill, payload } = props;
-                        let startCx = cx, startCy = cy, initialOpacity = 1;
-                        if (prevDisplayData) {
-                          const prevPoint = prevDisplayData.find((p: any) => p.voter === payload.voter);
-                          if (prevPoint) {
-                            const xScale = props.xAxis.scale;
-                            const yScale = props.yAxis.scale;
-                            startCx = xScale(prevPoint.x);
-                            startCy = yScale(prevPoint.y);
-                          } else {
-                            initialOpacity = 0;
-                          }
-                        }
-                        const springProps = useSpring({
-                          from: { cx: startCx, cy: startCy, opacity: initialOpacity },
-                          to: { cx, cy, opacity: 1 },
-                          config: { tension: 170, friction: 26 },
-                          immediate: !shouldAnimate,
-                        });
-
-                        const isSelected = currentValidator?.voter === payload.voter;
-                        const isSearchMatch = searchTerm && payload.voter.toLowerCase().includes(searchTerm.toLowerCase());
-                        const isHovered = hoveredValidator === payload.voter;
-
-                        return (
-                          <animated.circle
-                            cx={springProps.cx}
-                            cy={springProps.cy}
-                            r={isSelected ? 8 : 5}
-                            fill={fill}
-                            stroke={
-                              isSelected 
-                                ? "#3B82F6"  // 선택된 validator: 진한 파란색
-                                : isHovered
-                                  ? "#8B5CF6"  // hover된 validator: 보라색
-                                  : isSearchMatch && isSearchFocused
-                                    ? "#93C5FD"  // 검색된 validator: 연한 파란색 (검색 중일 때만)
-                                    : "none"
+                  return (
+                    <React.Fragment key={cluster}>
+                      {batches.map((batch, batchIndex) => (
+                        <Scatter
+                          key={`${cluster}-batch-${batchIndex}`}
+                          data={batch}
+                          fill={CLUSTER_COLORS[cluster]}
+                          isAnimationActive={false}
+                          onClick={handleClick}
+                          cursor="pointer"
+                          shape={(props: any) => {
+                            const { cx, cy, fill, payload } = props;
+                            let startCx = cx, startCy = cy, initialOpacity = 1;
+                            if (prevDisplayData) {
+                              const prevPoint = prevDisplayData.find((p: any) => p.voter === payload.voter);
+                              if (prevPoint) {
+                                const xScale = props.xAxis.scale;
+                                const yScale = props.yAxis.scale;
+                                startCx = xScale(prevPoint.x);
+                                startCy = yScale(prevPoint.y);
+                              } else {
+                                initialOpacity = 0;
+                              }
                             }
-                            strokeWidth={
-                              isSelected || isHovered
-                                ? 3  // 선택되거나 hover된 경우: 두꺼운 테두리
-                                : isSearchMatch && isSearchFocused
-                                  ? 1.5  // 검색된 경우: 얇은 테두리
-                                  : 0
-                            }
-                            style={{ 
-                              opacity: springProps.opacity,
-                              transition: 'stroke-width 0.2s, stroke 0.2s'
-                            }}
-                          />
-                        );
-                      }}
-                    />
-                  ))}
-                </React.Fragment>
-              );
-            })}
-          </ScatterChart>
-        </ResponsiveContainer>
+                            const springProps = useSpring({
+                              from: { cx: startCx, cy: startCy, opacity: initialOpacity },
+                              to: { cx, cy, opacity: 1 },
+                              config: { tension: 170, friction: 26 },
+                              immediate: !shouldAnimate,
+                            });
+
+                            const isSelected = currentValidator?.voter === payload.voter;
+                            const isSearchMatch = searchTerm && payload.voter.toLowerCase().includes(searchTerm.toLowerCase());
+                            const isHovered = hoveredValidator === payload.voter;
+
+                            return (
+                              <animated.circle
+                                cx={springProps.cx}
+                                cy={springProps.cy}
+                                r={isSelected ? 8 : 5}
+                                fill={fill}
+                                stroke={
+                                  isSelected 
+                                    ? "#3B82F6"  // 선택된 validator: 진한 파란색
+                                    : isHovered
+                                      ? "#8B5CF6"  // hover된 validator: 보라색
+                                      : isSearchMatch && isSearchFocused
+                                        ? "#93C5FD"  // 검색된 validator: 연한 파란색 (검색 중일 때만)
+                                        : "none"
+                                }
+                                strokeWidth={
+                                  isSelected || isHovered
+                                    ? 3  // 선택되거나 hover된 경우: 두꺼운 테두리
+                                    : isSearchMatch && isSearchFocused
+                                      ? 1.5  // 검색된 경우: 얇은 테두리
+                                      : 0
+                                }
+                                style={{ 
+                                  opacity: springProps.opacity,
+                                  transition: 'stroke-width 0.2s, stroke 0.2s'
+                                }}
+                              />
+                            );
+                          }}
+                        />
+                      ))}
+                    </React.Fragment>
+                  );
+                })}
+              </ScatterChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
       </div>
     </div>
   );
