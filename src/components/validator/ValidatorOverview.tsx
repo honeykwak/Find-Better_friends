@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { useSpring, animated } from "@react-spring/web";
+import { usePrevious } from '../../hooks/usePrevious';
 import { ClusterType, CoordinateData, ValidatorData } from '../../types';
 import { CLUSTER_COLORS } from '../../constants';
-import { ValidatorInfo } from './ValidatorInfo';
+import { setSelectedValidator } from '../../store/slices/validatorSlice';
 
 const CLUSTERS: readonly ClusterType[] = [1, 2, 3, 4, 5];
 const ANIMATION_DURATION = 500;
@@ -16,15 +19,22 @@ interface EnhancedValidatorData extends ValidatorData {
 }
 
 export const ValidatorOverview = () => {
+  const dispatch = useAppDispatch();
   const [coordinateData, setCoordinateData] = useState<CoordinateData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [previousValidators, setPreviousValidators] = useState<Set<string>>(new Set());
-  const [selectedValidator, setSelectedValidator] = useState<ValidatorData | null>(null);
   const [validatorChainMap, setValidatorChainMap] = useState<Map<string, Set<string>>>(new Map());
-  
+
+  // 글로벌 좌표 범위 상태 추가
+  const [globalXMin, setGlobalXMin] = useState<number | null>(null);
+  const [globalXMax, setGlobalXMax] = useState<number | null>(null);
+  const [globalYMin, setGlobalYMin] = useState<number | null>(null);
+  const [globalYMax, setGlobalYMax] = useState<number | null>(null);
+
   const selectedChain = useAppSelector(state => state.chain.selectedChain);
   const selectedClusters = useAppSelector(state => state.chain.selectedClusters);
+  const currentValidator = useAppSelector(state => state.validator.selectedValidator);
 
   const createValidatorChainMap = useCallback((data: CoordinateData) => {
     const mapping = new Map<string, Set<string>>();
@@ -55,6 +65,20 @@ export const ValidatorOverview = () => {
       
       const mapping = createValidatorChainMap(data);
       setValidatorChainMap(mapping);
+
+      // 글로벌 좌표 범위 계산
+      const allValidators = [
+        ...(data.coords_dict.onehot || []),
+        ...Object.values(data.chain_coords_dict).flat()
+      ];
+
+      const xValues = allValidators.map(v => v.mds_x ?? 0);
+      const yValues = allValidators.map(v => v.mds_y ?? 0);
+
+      setGlobalXMin(Math.min(...xValues));
+      setGlobalXMax(Math.max(...xValues));
+      setGlobalYMin(Math.min(...yValues));
+      setGlobalYMax(Math.max(...yValues));
     } catch (error) {
       console.error('Error loading coordinates:', error);
       setError('Failed to load validator data.');
@@ -68,13 +92,15 @@ export const ValidatorOverview = () => {
   }, [loadCoordinates]);
 
   useEffect(() => {
-    if (selectedValidator && selectedChain) {
-      const validatorChains = validatorChainMap.get(selectedValidator.voter);
+    if (selectedChain && currentValidator) {
+      const validatorChains = validatorChainMap.get(currentValidator.voter);
       if (!validatorChains?.has(selectedChain)) {
-        setSelectedValidator(null);
+        dispatch(setSelectedValidator(null));
       }
     }
-  }, [selectedChain, selectedValidator, validatorChainMap]);
+  }, [selectedChain, currentValidator, validatorChainMap, dispatch]);
+
+  const [shouldAnimate, setShouldAnimate] = useState(false);
 
   const displayData = useMemo(() => {
     if (!coordinateData) return [];
@@ -97,7 +123,6 @@ export const ValidatorOverview = () => {
       }
 
       const currentValidators = new Set(currentData.map(d => d.voter));
-      
       const processedData = currentData.map((d, index) => ({
         ...d,
         isAnimated: true,
@@ -106,12 +131,17 @@ export const ValidatorOverview = () => {
 
       setPreviousValidators(currentValidators);
 
+      // 체인 전환 시 애니메이션 활성화
+      setShouldAnimate(true);
+
       return processedData;
     } catch (error) {
       console.error('Error processing display data:', error);
       return [];
     }
-  }, [coordinateData, selectedChain]);
+  }, [coordinateData, selectedChain, dispatch]);
+
+  const prevDisplayData = usePrevious(displayData);
 
   const filteredData = useMemo(() => {
     return displayData.filter(d => 
@@ -120,7 +150,7 @@ export const ValidatorOverview = () => {
   }, [displayData, selectedClusters]);
 
   const chartBounds = useMemo(() => {
-    if (filteredData.length === 0) {
+    if (globalXMin === null || globalXMax === null || globalYMin === null || globalYMax === null) {
       return {
         xExtent: [-10, 10],
         yExtent: [-10, 10],
@@ -129,20 +159,16 @@ export const ValidatorOverview = () => {
       };
     }
 
-    const xExtent = [
-      Math.min(...filteredData.map(d => d.x)),
-      Math.max(...filteredData.map(d => d.x))
-    ];
-    const yExtent = [
-      Math.min(...filteredData.map(d => d.y)),
-      Math.max(...filteredData.map(d => d.y))
-    ];
+    const xPadding = (globalXMax - globalXMin) * 0.05;
+    const yPadding = (globalYMax - globalYMin) * 0.05;
 
-    const xPadding = (xExtent[1] - xExtent[0]) * 0.05;
-    const yPadding = (yExtent[1] - yExtent[0]) * 0.05;
-
-    return { xExtent, yExtent, xPadding, yPadding };
-  }, [filteredData]);
+    return { 
+      xExtent: [globalXMin - xPadding, globalXMax + xPadding], 
+      yExtent: [globalYMin - yPadding, globalYMax + yPadding],
+      xPadding,
+      yPadding 
+    };
+  }, [globalXMin, globalXMax, globalYMin, globalYMax]);
 
   const getBatchedClusterData = useCallback((clusterData: EnhancedValidatorData[]) => {
     const batches = Array.from({ length: Math.ceil(clusterData.length / BATCH_SIZE) }, (_, i) => 
@@ -155,11 +181,15 @@ export const ValidatorOverview = () => {
   const handleClick = useCallback((data: any) => {
     if (data && data.payload) {
       const validator = data.payload;
-      setSelectedValidator(prev => 
-        prev?.voter === validator.voter ? null : validator
-      );
+      if (currentValidator?.voter === validator.voter) {
+        dispatch(setSelectedValidator(null));
+      } else {
+        dispatch(setSelectedValidator(validator));
+      }
+      // Validator 선택 시 애니메이션 비활성화
+      setShouldAnimate(false);
     }
-  }, []);
+  }, [dispatch, currentValidator]);
 
   if (isLoading) {
     return (
@@ -196,13 +226,13 @@ export const ValidatorOverview = () => {
             <XAxis 
               type="number" 
               dataKey="x" 
-              domain={[chartBounds.xExtent[0] - chartBounds.xPadding, chartBounds.xExtent[1] + chartBounds.xPadding]}
+              domain={[chartBounds.xExtent[0], chartBounds.xExtent[1]]}
               hide={true}
             />
             <YAxis 
               type="number" 
               dataKey="y" 
-              domain={[chartBounds.yExtent[0] - chartBounds.yPadding, chartBounds.yExtent[1] + chartBounds.yPadding]}
+              domain={[chartBounds.yExtent[0], chartBounds.yExtent[1]]}
               hide={true}
             />
             <ZAxis type="number" range={[50]} />
@@ -211,9 +241,16 @@ export const ValidatorOverview = () => {
               content={({ payload }) => {
                 if (!payload || !payload[0]) return null;
                 const data = payload[0].payload as ValidatorData;
+                const isSelected = currentValidator?.voter === data.voter;
                 return (
-                  <div className="bg-white p-3 border rounded shadow">
-                    <p className="font-medium">{data.voter}</p>
+                  <div className={`
+                    bg-white p-3 border rounded shadow
+                    ${isSelected ? 'ring-2 ring-blue-500 bg-blue-50' : ''}
+                  `}>
+                    <p className={`font-medium ${isSelected ? 'text-blue-600' : ''}`}>
+                      {data.voter}
+                      {isSelected && <span className="ml-2 text-xs">(Selected)</span>}
+                    </p>
                   </div>
                 );
               }}
@@ -229,12 +266,41 @@ export const ValidatorOverview = () => {
                       key={`${cluster}-batch-${batchIndex}`}
                       data={batch}
                       fill={CLUSTER_COLORS[cluster]}
-                      shape="circle"
-                      isAnimationActive={true}
-                      animationDuration={ANIMATION_DURATION}
-                      animationBegin={batchIndex * STAGGER_DELAY}
+                      isAnimationActive={false}
                       onClick={handleClick}
                       cursor="pointer"
+                      shape={(props: any) => {
+                        const { cx, cy, fill, payload } = props;
+                        let startCx = cx, startCy = cy, initialOpacity = 1;
+                        if (prevDisplayData) {
+                          const prevPoint = prevDisplayData.find((p: any) => p.voter === payload.voter);
+                          if (prevPoint) {
+                            startCx = prevPoint.x;
+                            startCy = prevPoint.y;
+                          } else {
+                            initialOpacity = 0;
+                          }
+                        }
+                        const springProps = useSpring({
+                          from: { cx: startCx, cy: startCy, opacity: initialOpacity },
+                          to: { cx, cy, opacity: 1 },
+                          config: { tension: 170, friction: 26 },
+                          immediate: !shouldAnimate, // 애니메이션 적용 여부 제어
+                        });
+
+                        const isSelected = currentValidator?.voter === payload.voter;
+                        return (
+                          <animated.circle
+                            cx={springProps.cx}
+                            cy={springProps.cy}
+                            r={isSelected ? 8 : 5}
+                            fill={fill}
+                            stroke={isSelected ? "#3B82F6" : "none"}
+                            strokeWidth={isSelected ? 3 : 0}
+                            style={{ opacity: springProps.opacity }}
+                          />
+                        );
+                      }}
                     />
                   ))}
                 </React.Fragment>
@@ -243,11 +309,6 @@ export const ValidatorOverview = () => {
           </ScatterChart>
         </ResponsiveContainer>
       </div>
-
-      <ValidatorInfo 
-        validator={selectedValidator}
-        validatorChains={selectedValidator ? Array.from(validatorChainMap.get(selectedValidator.voter) || []) : []}
-      />
     </div>
   );
 };

@@ -1,20 +1,37 @@
 // src/components/chain/ChainSection.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { ClusterButton } from './ClusterButton';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { selectChain } from '../../store/slices/chainSlice';
-import { ClusterType, CoordinateData } from '../../types';
+import { ClusterType, CoordinateData, ValidatorData } from '../../types';
 import { CLUSTER_COLORS, CLUSTER_LABELS, SELECTED_BACKGROUND } from '../../constants';
 
 const CLUSTERS: readonly ClusterType[] = [1, 2, 3, 4, 5];
+
+// 체인 로고를 로드하는 함수 추가
+const loadChainLogo = (chainName: string): string | undefined => {
+  try {
+    // 체인 이름을 소문자로 변환
+    const normalizedName = chainName.toLowerCase();
+    // 이미지 경로 생성
+    return `/chain-logos/${normalizedName}.png`;
+  } catch (error) {
+    console.error('Error loading chain logo:', error);
+    return undefined;
+  }
+};
 
 export const ChainSection = () => {
   const [coordinateData, setCoordinateData] = useState<CoordinateData | null>(null);
   const dispatch = useAppDispatch();
   const selectedClusters = useAppSelector(state => state.chain.selectedClusters);
   const selectedChain = useAppSelector(state => state.chain.selectedChain);
+  const selectedValidator = useAppSelector(state => state.validator.selectedValidator);
+  
+  // validatorChainMap을 props로 받거나 context로 관리하도록 수정
+  const [validatorChainMap, setValidatorChainMap] = useState<Map<string, Set<string>>>(new Map());
 
   useEffect(() => {
     const loadData = async () => {
@@ -22,6 +39,17 @@ export const ChainSection = () => {
         const response = await fetch('/src/data/coordinates/coordinates.json');
         const data: CoordinateData = await response.json();
         setCoordinateData(data);
+        
+        // validatorChainMap 생성
+        const mapping = new Map<string, Set<string>>();
+        Object.entries(data.chain_coords_dict).forEach(([chainId, validators]) => {
+          validators.forEach((validator: ValidatorData) => {
+            const chainSet = mapping.get(validator.voter) || new Set<string>();
+            chainSet.add(chainId);
+            mapping.set(validator.voter, chainSet);
+          });
+        });
+        setValidatorChainMap(mapping);
       } catch (error) {
         console.error('Error loading chain data:', error);
       }
@@ -29,7 +57,18 @@ export const ChainSection = () => {
     loadData();
   }, []);
 
+  // validatorChains 계산
+  const validatorChains = useMemo(() => {
+    if (!selectedValidator) return [];
+    return Array.from(validatorChainMap.get(selectedValidator.voter) || []);
+  }, [selectedValidator, validatorChainMap]);
+
   if (!coordinateData) return <div>Loading...</div>;
+
+  // 모든 체인의 validator 수 중 최대값 계산
+  const maxValidators = Math.max(
+    ...Object.values(coordinateData.chain_info).map(info => info.validators_count)
+  );
 
   const handleChainClick = (chainId: string) => {
     dispatch(selectChain(chainId === selectedChain ? null : chainId));
@@ -55,12 +94,40 @@ export const ChainSection = () => {
         {Object.entries(coordinateData.chain_info).map(([chainId, info]) => (
           <div
             key={chainId}
-            className={`flex items-center p-4 rounded-lg cursor-pointer transition-colors hover:bg-gray-50 ${
-              selectedChain === chainId ? `bg-[${SELECTED_BACKGROUND}]` : ''
-            }`}
+            className={`
+              flex items-center p-4 rounded-lg cursor-pointer 
+              transition-all duration-200 hover:bg-gray-50
+              ${selectedChain === chainId 
+                ? 'ring-2 ring-indigo-500 shadow-sm'
+                : ''
+              }
+              ${selectedValidator && validatorChains.includes(chainId)
+                ? 'bg-blue-50'
+                : ''
+              }
+              ${selectedChain === chainId && selectedValidator && validatorChains.includes(chainId)
+                ? 'ring-2 ring-indigo-500 bg-blue-50 shadow-md'
+                : ''
+              }
+            `}
             onClick={() => handleChainClick(chainId)}
           >
-            <div className="w-1/4 font-medium">{info.name}</div>
+            <div className="w-1/4 font-medium flex items-center gap-2">
+              <img 
+                src={loadChainLogo(info.name)}
+                alt={`${info.name} logo`}
+                className="w-6 h-6 object-contain"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = 'none';
+                }}
+              />
+              {info.name}
+              {selectedValidator && validatorChains.includes(chainId) && (
+                <span className="text-xs font-semibold text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
+                  Active validator
+                </span>
+              )}
+            </div>
             <div className="w-3/4 h-8">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart 
@@ -76,7 +143,7 @@ export const ChainSection = () => {
                   <XAxis 
                     type="number" 
                     hide 
-                    domain={[0, 'dataMax']}
+                    domain={[0, maxValidators]}
                   />
                   <YAxis type="category" hide />
                   {CLUSTERS.map((cluster) => (
@@ -98,7 +165,19 @@ export const ChainSection = () => {
 
       {selectedChain && coordinateData.chain_info[selectedChain] && (
         <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-          <h3 className="font-semibold mb-2">{coordinateData.chain_info[selectedChain].name}</h3>
+          <div className="flex items-center gap-3">
+            <img 
+              src={loadChainLogo(coordinateData.chain_info[selectedChain].name)}
+              alt={`${coordinateData.chain_info[selectedChain].name} logo`}
+              className="w-8 h-8 object-contain"
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = 'none';
+              }}
+            />
+            <h3 className="font-semibold mb-2">
+              {coordinateData.chain_info[selectedChain].name}
+            </h3>
+          </div>
           <p>Total Validators: {coordinateData.chain_info[selectedChain].validators_count}</p>
           <div className="grid grid-cols-5 gap-4 mt-2">
             {Object.entries(coordinateData.chain_info[selectedChain].cluster_distribution)
