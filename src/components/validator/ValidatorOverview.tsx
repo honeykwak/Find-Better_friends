@@ -27,6 +27,7 @@ export const ValidatorOverview = () => {
   const [validatorChainMap, setValidatorChainMap] = useState<Map<string, Set<string>>>(new Map());
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [hoveredValidator, setHoveredValidator] = useState<string | null>(null);
 
   // 글로벌 좌표 범위 상태 추가
   const [globalXMin, setGlobalXMin] = useState<number | null>(null);
@@ -253,28 +254,50 @@ export const ValidatorOverview = () => {
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">Validator Overview</h2>
           <div className="relative search-container">
-            <input
-              type="text"
-              className="w-64 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Search validators..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onFocus={() => setIsSearchFocused(true)}
-            />
+            <div className="relative">
+              <input
+                type="text"
+                className="w-64 px-4 py-2 pr-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Search validators..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onFocus={() => setIsSearchFocused(true)}
+              />
+              {searchTerm && (
+                <button
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  onClick={() => {
+                    setSearchTerm('');
+                    setIsSearchFocused(false);
+                  }}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              )}
+            </div>
             {isSearchFocused && (
-              <div className="absolute z-10 w-64 mt-1 bg-white border rounded-lg shadow-lg max-h-60 overflow-y-auto">
+              <div className="absolute z-10 w-64 mt-1 border rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                <div className="absolute inset-0 bg-white opacity-80 backdrop-blur-sm rounded-lg" />
                 {filteredValidators.map((validator) => (
                   <div
                     key={validator.voter}
                     className={`
-                      px-4 py-2 cursor-pointer hover:bg-gray-50
-                      ${currentValidator?.voter === validator.voter ? 'bg-blue-50 text-blue-600' : ''}
+                      relative px-4 py-2 cursor-pointer
+                      hover:bg-gray-100/70
+                      ${currentValidator?.voter === validator.voter 
+                        ? 'bg-blue-50/70 text-blue-600' 
+                        : ''
+                      }
                     `}
                     onClick={() => {
                       dispatch(setSelectedValidator(validator));
                       setIsSearchFocused(false);
                       setSearchTerm('');
                     }}
+                    onMouseEnter={() => setHoveredValidator(validator.voter)}
+                    onMouseLeave={() => setHoveredValidator(null)}
                   >
                     {validator.voter}
                   </div>
@@ -355,6 +378,7 @@ export const ValidatorOverview = () => {
 
                         const isSelected = currentValidator?.voter === payload.voter;
                         const isSearchMatch = searchTerm && payload.voter.toLowerCase().includes(searchTerm.toLowerCase());
+                        const isHovered = hoveredValidator === payload.voter;
 
                         return (
                           <animated.circle
@@ -365,20 +389,22 @@ export const ValidatorOverview = () => {
                             stroke={
                               isSelected 
                                 ? "#3B82F6"  // 선택된 validator: 진한 파란색
-                                : isSearchMatch 
-                                  ? "#93C5FD"  // 검색된 validator: 연한 파란색
-                                  : "none"
+                                : isHovered
+                                  ? "#8B5CF6"  // hover된 validator: 보라색
+                                  : isSearchMatch && isSearchFocused
+                                    ? "#93C5FD"  // 검색된 validator: 연한 파란색 (검색 중일 때만)
+                                    : "none"
                             }
                             strokeWidth={
-                              isSelected 
-                                ? 3  // 선택된 validator: 두꺼운 테두리
-                                : isSearchMatch 
-                                  ? 1.5  // 검색된 validator: 얇은 테두리
+                              isSelected || isHovered
+                                ? 3  // 선택되거나 hover된 경우: 두꺼운 테두리
+                                : isSearchMatch && isSearchFocused
+                                  ? 1.5  // 검색된 경우: 얇은 테두리
                                   : 0
                             }
                             style={{ 
                               opacity: springProps.opacity,
-                              transition: 'stroke-width 0.2s, stroke 0.2s'  // 부드러운 테두리 전환 효과
+                              transition: 'stroke-width 0.2s, stroke 0.2s'
                             }}
                           />
                         );
