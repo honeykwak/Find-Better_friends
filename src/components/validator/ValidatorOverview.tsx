@@ -238,7 +238,60 @@ export const ValidatorOverview = () => {
     };
   }, []);
 
-  // 줌 핸들러
+  // 줌/패닝 초기화 함수
+  const resetZoomPan = useCallback(() => {
+    setScale(1);
+    setPosition({ x: 0, y: 0 });
+  }, []);
+
+  // 체인 변경 시 줌/패닝 초기화
+  useEffect(() => {
+    resetZoomPan();
+  }, [selectedChain, resetZoomPan]);
+
+  // 패닝 제한을 위한 범위 계산
+  const calculatePanLimits = useCallback(() => {
+    if (!chartRef.current) return { minX: 0, maxX: 0, minY: 0, maxY: 0 };
+    
+    const container = chartRef.current;
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
+    const scaledWidth = containerWidth * scale;
+    const scaledHeight = containerHeight * scale;
+    
+    const maxPanX = (scaledWidth - containerWidth) / 2;
+    const maxPanY = (scaledHeight - containerHeight) / 2;
+
+    return {
+      minX: -maxPanX,
+      maxX: maxPanX,
+      minY: -maxPanY,
+      maxY: maxPanY
+    };
+  }, [scale]);
+
+  // 드래그 핸들러 수정
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (!isDragging) return;
+    
+    const limits = calculatePanLimits();
+    const newX = Math.min(Math.max(e.clientX - dragStart.x, limits.minX), limits.maxX);
+    const newY = Math.min(Math.max(e.clientY - dragStart.y, limits.minY), limits.maxY);
+    
+    setPosition({ x: newX, y: newY });
+  }, [isDragging, dragStart, calculatePanLimits]);
+
+  // 드래그 핸들러
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    setIsDragging(true);
+    setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
+  }, [position]);
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  // 줌 핸들러 추가
   const handleWheel = useCallback((e: WheelEvent) => {
     e.preventDefault();
     const delta = e.deltaY;
@@ -248,23 +301,6 @@ export const ValidatorOverview = () => {
         : Math.min(5, prevScale + 0.1);  // 확대 (최대 5배)
       return newScale;
     });
-  }, []);
-
-  // 드래그 핸들러
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    setIsDragging(true);
-    setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
-  }, [position]);
-
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (!isDragging) return;
-    const newX = e.clientX - dragStart.x;
-    const newY = e.clientY - dragStart.y;
-    setPosition({ x: newX, y: newY });
-  }, [isDragging, dragStart]);
-
-  const handleMouseUp = useCallback(() => {
-    setIsDragging(false);
   }, []);
 
   // 이벤트 리스너 설정
@@ -303,7 +339,18 @@ export const ValidatorOverview = () => {
     <div className="space-y-6">
       <div className="w-full h-[600px] bg-white rounded-lg shadow-lg p-6">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Validator Overview</h2>
+          <div className="flex items-center space-x-4">
+            <h2 className="text-xl font-semibold">Validator Overview</h2>
+            <button
+              className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+              onClick={resetZoomPan}
+              title="Reset zoom and position"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M4 2a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H4zm0 2h12v12H4V4zm3 3a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1z" clipRule="evenodd"/>
+              </svg>
+            </button>
+          </div>
           <div className="relative search-container">
             <div className="relative">
               <input
@@ -360,7 +407,7 @@ export const ValidatorOverview = () => {
 
         <div 
           ref={chartRef}
-          className="relative w-full h-[90%] overflow-auto"
+          className="relative w-full h-[90%] overflow-hidden"
           style={{
             cursor: isDragging ? 'grabbing' : 'grab'
           }}
@@ -369,9 +416,9 @@ export const ValidatorOverview = () => {
           <div
             style={{
               transform: `scale(${scale})`,
-              transformOrigin: '0 0',
-              width: scale > 1 ? `${100 * scale}%` : '100%',
-              height: scale > 1 ? `${100 * scale}%` : '100%',
+              transformOrigin: '50% 50%',
+              width: '100%',
+              height: '100%',
             }}
           >
             <ResponsiveContainer width="100%" height="100%">
@@ -397,15 +444,25 @@ export const ValidatorOverview = () => {
                 <ZAxis type="number" range={[50]} />
                 <Tooltip
                   cursor={{ strokeDasharray: '3 3' }}
-                  content={({ payload }) => {
-                    if (!payload || !payload[0]) return null;
+                  content={({ payload, coordinate }) => {
+                    if (!payload || !payload[0] || !coordinate) return null;
                     const data = payload[0].payload as ValidatorData;
                     const isSelected = currentValidator?.voter === data.voter;
+                    
                     return (
-                      <div className={`
-                        bg-white p-3 border rounded shadow
-                        ${isSelected ? 'ring-2 ring-blue-500 bg-blue-50' : ''}
-                      `}>
+                      <div 
+                        className={`
+                          absolute bg-white p-3 border rounded shadow
+                          ${isSelected ? 'ring-2 ring-blue-500 bg-blue-50' : ''}
+                        `}
+                        style={{ 
+                          transform: `scale(${1/scale})`,
+                          transformOrigin: 'top left',
+                          left: coordinate.x + 10,  // 노드 오른쪽으로 10px
+                          top: coordinate.y - 10,   // 노드 위로 10px
+                          pointerEvents: 'none'     // 툴팁이 마우스 이벤트를 방해하지 않도록
+                        }}
+                      >
                         <p className={`font-medium ${isSelected ? 'text-blue-600' : ''}`}>
                           {data.voter}
                           {isSelected && <span className="ml-2 text-xs">(Selected)</span>}
@@ -413,6 +470,8 @@ export const ValidatorOverview = () => {
                       </div>
                     );
                   }}
+                  position={{ x: 0, y: 0 }}  // Recharts의 기본 위치 계산 비활성화
+                  wrapperStyle={{ pointerEvents: 'none' }}  // 툴팁 컨테이너도 마우스 이벤트 방해 방지
                 />
                 {CLUSTERS.map((cluster) => {
                   const clusterData = filteredData.filter(d => d.cluster === cluster);
