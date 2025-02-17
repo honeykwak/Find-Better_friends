@@ -1,15 +1,11 @@
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, ResponsiveContainer } from 'recharts';
-import { useSpring, animated } from "@react-spring/web";
-import { usePrevious } from '../../hooks/usePrevious';
 import { ClusterType, CoordinateData, ValidatorData } from '../../types';
 import { CLUSTER_COLORS } from '../../constants';
 import { setSelectedValidator } from '../../store/slices/validatorSlice';
 import * as d3 from 'd3';
 
-const CLUSTERS: readonly ClusterType[] = [1, 2, 3, 4, 5];
 const ANIMATION_DURATION = 500;
 const BATCH_SIZE = 50;
 const STAGGER_DELAY = 20;
@@ -28,7 +24,6 @@ export const ValidatorOverview = () => {
   const [coordinateData, setCoordinateData] = useState<CoordinateData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [previousValidators, setPreviousValidators] = useState<Set<string>>(new Set());
   const [validatorChainMap, setValidatorChainMap] = useState<Map<string, Set<string>>>(new Map());
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -44,15 +39,11 @@ export const ValidatorOverview = () => {
   const selectedClusters = useAppSelector(state => state.chain.selectedClusters);
   const currentValidator = useAppSelector(state => state.validator.selectedValidator);
 
-  // 애니메이션 제어를 위한 상태
-  const [shouldAnimate, setShouldAnimate] = useState(false);
-
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const chartRef = useRef<HTMLDivElement>(null);
-  const [currentZoomIndex, setCurrentZoomIndex] = useState(0);  // 현재 줌 레벨 인덱스
 
   const svgRef = useRef<SVGSVGElement>(null);
   const gRef = useRef<SVGGElement>(null);
@@ -216,17 +207,12 @@ export const ValidatorOverview = () => {
         animationBegin: Math.floor(index / BATCH_SIZE) * STAGGER_DELAY
       }));
 
-      setPreviousValidators(currentValidators);
-      setShouldAnimate(true);
-
       return processedData;
     } catch (error) {
       console.error('Error processing display data:', error);
       return [];
     }
   }, [coordinateData, selectedChain]);
-
-  const prevDisplayData = usePrevious(displayData);
 
   const filteredData = useMemo(() => {
     return displayData.filter(d => 
@@ -255,14 +241,6 @@ export const ValidatorOverview = () => {
     };
   }, [globalXMin, globalXMax, globalYMin, globalYMax]);
 
-  const getBatchedClusterData = useCallback((clusterData: EnhancedValidatorData[]) => {
-    const batches = Array.from({ length: Math.ceil(clusterData.length / BATCH_SIZE) }, (_, i) => 
-      clusterData.slice(i * BATCH_SIZE, (i + 1) * BATCH_SIZE)
-    );
-
-    return { batches };
-  }, []);
-
   const handleClick = useCallback((data: any) => {
     if (data && data.payload) {
       const validator = data.payload;
@@ -271,8 +249,6 @@ export const ValidatorOverview = () => {
       } else {
         dispatch(setSelectedValidator(validator));
       }
-      // Validator 선택 시 애니메이션 비활성화
-      setShouldAnimate(false);
     }
   }, [dispatch, currentValidator]);
 
@@ -318,15 +294,13 @@ export const ValidatorOverview = () => {
     e.preventDefault();
     const delta = e.deltaY;
     
-    setCurrentZoomIndex(prevIndex => {
-      const newIndex = delta > 0 
-        ? Math.max(0, prevIndex - 1)
-        : Math.min(currentZoomLevels.length - 1, prevIndex + 1);
-      
-      setScale(currentZoomLevels[newIndex]);
-      return newIndex;
+    setScale(prevScale => {
+      const newScale = delta > 0 
+        ? Math.min(prevScale * 1.1, 3.5)
+        : Math.max(prevScale / 1.1, 1);
+      return newScale;
     });
-  }, [currentZoomLevels]);
+  }, []);
 
   // 리셋 함수 수정
   const resetZoomPan = useCallback(() => {
@@ -536,8 +510,8 @@ export const ValidatorOverview = () => {
 
     // 이벤트 핸들러 설정 부분 수정
     g.selectAll<SVGCircleElement, EnhancedValidatorData>('circle')
-      .on('click', (event, d) => handleClick({ payload: d }))
-      .on('mouseover', function(event, d: EnhancedValidatorData) {
+      .on('click', (_, d) => handleClick({ payload: d }))
+      .on('mouseover', (_, d: EnhancedValidatorData) => {
         setHoveredValidator(d.voter);
         setTooltipData({
           voter: d.voter,
@@ -545,7 +519,7 @@ export const ValidatorOverview = () => {
           y: scaleRef.current.yScale(d.y)
         });
       })
-      .on('mouseout', function(event, d: EnhancedValidatorData) {
+      .on('mouseout', () => {
         setHoveredValidator(null);
         setTooltipData(null);
       });

@@ -10,13 +10,12 @@ import {
 } from './types';
 import { useAppSelector } from './hooks/useAppSelector';
 
-export const AppContent = () => {
+export const AppContent: React.FC = () => {
   const [validatorAnalysis, setValidatorAnalysis] = useState<ValidatorAnalysis | null>(null);
   const [chainProposals, setChainProposals] = useState<ChainProposals | null>(null);
   const [validatorChainMap, setValidatorChainMap] = useState<Map<string, Set<string>>>(new Map());
 
   const selectedValidator = useAppSelector(state => state.validator.selectedValidator);
-  const selectedChain = useAppSelector(state => state.chain.selectedChain);
 
   useEffect(() => {
     const loadData = async () => {

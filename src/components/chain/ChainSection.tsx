@@ -1,5 +1,4 @@
 // src/components/chain/ChainSection.tsx
-// src/components/chain/ChainSection.tsx
 import { useState, useEffect, useMemo } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
