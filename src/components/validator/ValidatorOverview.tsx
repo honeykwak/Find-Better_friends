@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { ClusterType, CoordinateData, ValidatorData } from '../../types';
+import { CoordinateData, ValidatorData } from '../../types';
 import { CLUSTER_COLORS } from '../../constants';
 import { setSelectedValidator } from '../../store/slices/validatorSlice';
 import * as d3 from 'd3';
@@ -9,10 +9,6 @@ import * as d3 from 'd3';
 const ANIMATION_DURATION = 500;
 const BATCH_SIZE = 50;
 const STAGGER_DELAY = 20;
-
-// 줌 레벨 상수를 체인별로 다르게 설정
-const ALL_CHAIN_ZOOM_LEVELS = [0.4, 0.6, 0.8, 1, 1.5, 2];  // 전체 체인용
-const SINGLE_CHAIN_ZOOM_LEVELS = [1, 1.5, 2, 2.5, 3, 3.5];  // 개별 체인용
 
 interface EnhancedValidatorData extends ValidatorData {
   isAnimated: boolean;
@@ -47,12 +43,6 @@ export const ValidatorOverview = () => {
 
   const svgRef = useRef<SVGSVGElement>(null);
   const gRef = useRef<SVGGElement>(null);
-
-  // 현재 체인에 따른 줌 레벨 선택
-  const currentZoomLevels = useMemo(() => 
-    selectedChain ? SINGLE_CHAIN_ZOOM_LEVELS : ALL_CHAIN_ZOOM_LEVELS,
-    [selectedChain]
-  );
 
   // D3 줌 behavior 설정을 먼저 정의
   const zoom = useMemo(() => 
@@ -200,7 +190,6 @@ export const ValidatorOverview = () => {
         }));
       }
 
-      const currentValidators = new Set(currentData.map(d => d.voter));
       const processedData = currentData.map((d, index) => ({
         ...d,
         isAnimated: true,
@@ -307,9 +296,7 @@ export const ValidatorOverview = () => {
     if (!svgRef.current || !gRef.current) return;
     
     const svg = d3.select(svgRef.current);
-    const g = d3.select(gRef.current);
     
-    // 트랜지션과 함께 초기 상태로 리셋
     svg.transition()
       .duration(750)
       .call(
@@ -317,7 +304,6 @@ export const ValidatorOverview = () => {
         d3.zoomIdentity
       );
     
-    // 상태 업데이트
     setScale(1);
     setPosition({ x: 0, y: 0 });
   }, [zoom]);
@@ -354,8 +340,8 @@ export const ValidatorOverview = () => {
     setPosition({ x: newX, y: newY });
   }, [isDragging, dragStart, calculatePanLimits]);
 
-  // 드래그 핸들러
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+  // 드래그 핸들러 수정
+  const handleMouseDown = useCallback((e: MouseEvent) => {
     setIsDragging(true);
     setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
   }, [position]);
@@ -525,6 +511,18 @@ export const ValidatorOverview = () => {
       });
   }, [filteredData, chartBounds, handleClick, currentValidator, hoveredValidator, searchTerm]);
 
+  // SVG에 mousedown 이벤트 핸들러 연결
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+
+    svg.addEventListener('mousedown', handleMouseDown);
+    
+    return () => {
+      svg.removeEventListener('mousedown', handleMouseDown);
+    };
+  }, [handleMouseDown]);
+
   if (isLoading) {
     return (
       <div className="w-full h-[600px] bg-white rounded-lg shadow-lg p-6 flex items-center justify-center">
@@ -616,6 +614,9 @@ export const ValidatorOverview = () => {
             ref={svgRef}
             className="w-full h-full"
             style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+            onMouseDown={(e: React.MouseEvent) => {
+              handleMouseDown(e.nativeEvent);
+            }}
           >
             <g ref={gRef} />
           </svg>
