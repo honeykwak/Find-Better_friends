@@ -4,17 +4,14 @@ import { ValidatorOverview } from './components/validator/ValidatorOverview';
 import { ValidatorInfo } from './components/validator/ValidatorInfo';
 import { 
   ValidatorAnalysis, 
-  ChainProposals, 
-  CoordinateData,
-  ValidatorData
+  ChainProposals
 } from './types';
 import { useAppSelector } from './hooks/useAppSelector';
 
 export const AppContent: React.FC = () => {
   const [validatorAnalysis, setValidatorAnalysis] = useState<ValidatorAnalysis | null>(null);
   const [chainProposals, setChainProposals] = useState<ChainProposals | null>(null);
-  const [validatorChainMap, setValidatorChainMap] = useState<Map<string, Set<string>>>(new Map());
-
+  
   const selectedValidator = useAppSelector(state => state.validator.selectedValidator);
 
   useEffect(() => {
@@ -38,8 +35,9 @@ export const AppContent: React.FC = () => {
     loadData();
   }, []);
 
-  const validatorChains = selectedValidator 
-    ? Array.from(validatorChainMap.get(selectedValidator.voter) || [])
+  // validatorChains는 ChainSection 컴포넌트에서 관리하도록 수정
+  const validatorChains = selectedValidator?.voter 
+    ? [] // ChainSection에서 관리하므로 빈 배열로 변경
     : [];
 
   return (
