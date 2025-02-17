@@ -27,9 +27,9 @@ export const ClusterButton: React.FC<ClusterButtonProps> = ({ cluster, label }) 
   return (
     <button
       className={classNames(
-        'px-4 py-2 rounded-full transition-colors',
+        'w-full px-2 py-1.5 rounded-lg transition-colors text-sm whitespace-nowrap overflow-hidden text-ellipsis',
         clusterColors[cluster],
-        isSelected && 'ring-2 ring-offset-2 ring-gray-500'
+        isSelected && 'ring-2 ring-offset-1 ring-gray-500'
       )}
       onClick={() => dispatch(toggleCluster(cluster))}
     >

@@ -38,16 +38,27 @@ export const AppContent: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <h1 className="text-3xl font-bold mb-8">Find Better Friends</h1>
-      <div className="space-y-6">
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <ChainSection />
+      
+      <div className="grid grid-cols-4 gap-6">
+        {/* 좌측 Cluster 섹션 (1칸) */}
+        <div className="col-span-1">
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <ChainSection />
+          </div>
         </div>
-        <ValidatorOverview />
-        <ValidatorInfo 
-          validator={selectedValidator}
-          validatorAnalysis={validatorAnalysis || {}}
-          chainProposals={chainProposals || {}}
-        />
+
+        {/* 우측 섹션 (3칸) */}
+        <div className="col-span-3 space-y-6">
+          {/* 우측 상단 Validator Overview */}
+          <ValidatorOverview />
+          
+          {/* 우측 하단 Validator Info */}
+          <ValidatorInfo 
+            validator={selectedValidator}
+            validatorAnalysis={validatorAnalysis || {}}
+            chainProposals={chainProposals || {}}
+          />
+        </div>
       </div>
     </div>
   );

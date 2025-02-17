@@ -81,9 +81,10 @@ export const ChainSection = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center space-x-4 mb-6">
+      {/* Clusters 제목 */}
+      <div className="space-y-2">
         <h2 className="text-xl font-semibold">Clusters</h2>
-        <div className="flex gap-2">
+        <div className="grid grid-cols-3 gap-1.5 w-full">
           {CLUSTERS.map((cluster) => (
             <ClusterButton 
               key={cluster}
@@ -94,8 +95,9 @@ export const ChainSection = () => {
         </div>
       </div>
 
-      <div className="space-y-2">
-        <h2 className="text-xl font-semibold">Chains</h2>
+      {/* Chains 섹션 */}
+      <div className="mt-6">
+        <h2 className="text-xl font-semibold mb-4">Chains</h2>
         {Object.entries(coordinateData.chain_info).map(([chainId, info]) => (
           <div
             key={chainId}
@@ -127,13 +129,8 @@ export const ChainSection = () => {
                 }}
               />
               {info.name}
-              {selectedValidator && validatorChains.includes(chainId) && (
-                <span className="text-xs font-semibold text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
-                  Active validator
-                </span>
-              )}
             </div>
-            <div className="w-3/4 h-8">
+            <div className="w-3/4 h-8 ml-4">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart 
                   data={[{ 
@@ -168,6 +165,7 @@ export const ChainSection = () => {
         ))}
       </div>
 
+      {/* 선택된 체인 정보 섹션 */}
       {selectedChain && coordinateData.chain_info[selectedChain] && (
         <div className="mt-4 p-4 bg-gray-50 rounded-lg">
           <div className="flex items-center gap-3">
