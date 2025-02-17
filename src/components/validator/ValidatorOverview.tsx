@@ -96,11 +96,7 @@ export const ValidatorOverview = () => {
       setIsLoading(true);
       setError(null);
       
-      const response = await fetch('/src/data/coordinates/coordinates.json');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
+      const response = await fetch('/data/coordinates/coordinates.json');
       const data: CoordinateData = await response.json();
       setCoordinateData(data);
       
