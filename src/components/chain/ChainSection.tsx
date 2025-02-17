@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { ClusterButton } from './ClusterButton';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { selectChain } from '../../store/slices/chainSlice';
-import { ClusterType, CoordinateData, ValidatorData } from '../../types';
+import { ClusterType, CoordinateData, ValidatorData, ChainProposals } from '../../types';
 import { CLUSTER_COLORS, CLUSTER_LABELS } from '../../constants';
 
 const CLUSTERS: readonly ClusterType[] = [1, 2, 3, 4, 5];
@@ -25,6 +25,7 @@ const loadChainLogo = (chainName: string): string | undefined => {
 
 export const ChainSection = () => {
   const [coordinateData, setCoordinateData] = useState<CoordinateData | null>(null);
+  const [chainProposals, setChainProposals] = useState<ChainProposals | null>(null);
   const dispatch = useAppDispatch();
   const selectedClusters = useAppSelector(state => state.chain.selectedClusters);
   const selectedChain = useAppSelector(state => state.chain.selectedChain);
@@ -36,13 +37,17 @@ export const ChainSection = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const response = await fetch('/data/coordinates/coordinates.json');
-        const data: CoordinateData = await response.json();
-        setCoordinateData(data);
+        const coordResponse = await fetch('/data/coordinates/coordinates.json');
+        const coordData: CoordinateData = await coordResponse.json();
+        setCoordinateData(coordData);
         
+        const proposalsResponse = await fetch('/data/analysis/chain_proposals.json');
+        const proposalsData: ChainProposals = await proposalsResponse.json();
+        setChainProposals(proposalsData);
+
         // validatorChainMap 생성
         const mapping = new Map<string, Set<string>>();
-        Object.entries(data.chain_coords_dict).forEach(([chainId, validators]) => {
+        Object.entries(coordData.chain_coords_dict).forEach(([chainId, validators]) => {
           validators.forEach((validator: ValidatorData) => {
             const chainSet = mapping.get(validator.voter) || new Set<string>();
             chainSet.add(chainId);
@@ -178,21 +183,24 @@ export const ChainSection = () => {
               {coordinateData.chain_info[selectedChain].name}
             </h3>
           </div>
-          <p>Total Validators: {coordinateData.chain_info[selectedChain].validators_count}</p>
-          <div className="grid grid-cols-5 gap-4 mt-2">
-            {Object.entries(coordinateData.chain_info[selectedChain].cluster_distribution)
-              .map(([clusterStr, count]) => {
-                const cluster = Number(clusterStr) as ClusterType;
-                return (
-                  <div 
-                    key={cluster}
-                    className="text-sm"
-                    style={{ color: CLUSTER_COLORS[cluster] }}
-                  >
-                    {CLUSTER_LABELS[cluster]}: {count}
-                  </div>
-                );
-              })}
+          <div className="space-y-2">
+            <p>Total Validators: {coordinateData.chain_info[selectedChain].validators_count}</p>
+            <p>Total Proposals: {chainProposals?.[selectedChain] || 0}</p>
+            <div className="grid grid-cols-5 gap-4 mt-2">
+              {Object.entries(coordinateData.chain_info[selectedChain].cluster_distribution)
+                .map(([clusterStr, count]) => {
+                  const cluster = Number(clusterStr) as ClusterType;
+                  return (
+                    <div 
+                      key={cluster}
+                      className="text-sm"
+                      style={{ color: CLUSTER_COLORS[cluster] }}
+                    >
+                      {CLUSTER_LABELS[cluster]}: {count}
+                    </div>
+                  );
+                })}
+            </div>
           </div>
         </div>
       )}

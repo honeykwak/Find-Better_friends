@@ -24,7 +24,6 @@ interface ChainProposals {
 
 interface ValidatorInfoProps {
   validator: ValidatorData | null;
-  validatorChains: string[];
   validatorAnalysis: Record<string, ValidatorAnalysis>;
   chainProposals: ChainProposals;
 }
@@ -40,7 +39,6 @@ const formatParticipationRate = (participationCount: number, totalProposals: num
 
 export const ValidatorInfo: React.FC<ValidatorInfoProps> = ({ 
   validator, 
-  validatorChains,
   validatorAnalysis,
   chainProposals 
 }) => {
@@ -65,20 +63,6 @@ export const ValidatorInfo: React.FC<ValidatorInfoProps> = ({
           <h3 className="font-medium text-gray-700">Validator:</h3>
           <p className="text-lg">{validator.voter}</p>
         </div>
-        
-        <div>
-          <h3 className="font-medium text-gray-700">Active Chains:</h3>
-          <div className="flex flex-wrap gap-2">
-            {validatorChains.map(chain => (
-              <span 
-                key={chain}
-                className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
-              >
-                {chain}
-              </span>
-            ))}
-          </div>
-        </div>
 
         <div>
           <h3 className="font-medium text-gray-700">Validator Analysis</h3>
@@ -87,7 +71,8 @@ export const ValidatorInfo: React.FC<ValidatorInfoProps> = ({
               {Object.entries(analysis)
                 .filter(([chain]) => !selectedChain || chain === selectedChain)
                 .map(([chain, data]) => (
-                  <div key={chain} className="space-y-1">
+                  <div key={chain} className="space-y-2">
+                    <h4 className="text-blue-600 font-medium text-lg">{chain}</h4>
                     <div className="grid grid-cols-2 gap-x-4 text-sm">
                       <div>Operation Time:</div>
                       <div>+ {data.Operation_Time_Days.toFixed(2)}</div>

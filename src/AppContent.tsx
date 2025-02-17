@@ -35,11 +35,6 @@ export const AppContent: React.FC = () => {
     loadData();
   }, []);
 
-  // validatorChains는 ChainSection 컴포넌트에서 관리하도록 수정
-  const validatorChains = selectedValidator?.voter 
-    ? [] // ChainSection에서 관리하므로 빈 배열로 변경
-    : [];
-
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <h1 className="text-3xl font-bold mb-8">Find Better Friends</h1>
@@ -50,7 +45,6 @@ export const AppContent: React.FC = () => {
         <ValidatorOverview />
         <ValidatorInfo 
           validator={selectedValidator}
-          validatorChains={validatorChains}
           validatorAnalysis={validatorAnalysis || {}}
           chainProposals={chainProposals || {}}
         />
