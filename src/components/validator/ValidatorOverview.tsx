@@ -7,11 +7,16 @@ import { usePrevious } from '../../hooks/usePrevious';
 import { ClusterType, CoordinateData, ValidatorData } from '../../types';
 import { CLUSTER_COLORS } from '../../constants';
 import { setSelectedValidator } from '../../store/slices/validatorSlice';
+import * as d3 from 'd3';
 
 const CLUSTERS: readonly ClusterType[] = [1, 2, 3, 4, 5];
 const ANIMATION_DURATION = 500;
 const BATCH_SIZE = 50;
 const STAGGER_DELAY = 20;
+
+// 줌 레벨 상수를 체인별로 다르게 설정
+const ALL_CHAIN_ZOOM_LEVELS = [0.4, 0.6, 0.8, 1, 1.5, 2];  // 전체 체인용
+const SINGLE_CHAIN_ZOOM_LEVELS = [1, 1.5, 2, 2.5, 3, 3.5];  // 개별 체인용
 
 interface EnhancedValidatorData extends ValidatorData {
   isAnimated?: boolean;
@@ -47,6 +52,49 @@ export const ValidatorOverview = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const chartRef = useRef<HTMLDivElement>(null);
+  const [currentZoomIndex, setCurrentZoomIndex] = useState(0);  // 현재 줌 레벨 인덱스
+
+  const svgRef = useRef<SVGSVGElement>(null);
+  const gRef = useRef<SVGGElement>(null);
+
+  // 현재 체인에 따른 줌 레벨 선택
+  const currentZoomLevels = useMemo(() => 
+    selectedChain ? SINGLE_CHAIN_ZOOM_LEVELS : ALL_CHAIN_ZOOM_LEVELS,
+    [selectedChain]
+  );
+
+  // D3 줌 behavior 설정을 먼저 정의
+  const zoom = useMemo(() => 
+    d3.zoom<SVGSVGElement, unknown>()
+      .scaleExtent([1, 3.5])
+      .on('zoom', (event) => {
+        if (!gRef.current) return;
+        const { transform } = event;
+        d3.select(gRef.current).attr('transform', transform);
+        setScale(transform.k);
+        setPosition({ x: transform.x, y: transform.y });
+      }),
+    []
+  );
+
+  // 그 다음 체인 변경 시 초기화 effect 정의
+  useEffect(() => {
+    if (!svgRef.current || !gRef.current) return;
+    
+    const svg = d3.select(svgRef.current);
+    
+    // 트랜지션과 함께 초기 상태로 리셋
+    svg.transition()
+      .duration(750)
+      .call(
+        zoom.transform,
+        d3.zoomIdentity
+      );
+    
+    // 상태 업데이트
+    setScale(1);
+    setPosition({ x: 0, y: 0 });
+  }, [selectedChain, zoom]);
 
   const createValidatorChainMap = useCallback((data: CoordinateData) => {
     const mapping = new Map<string, Set<string>>();
@@ -118,8 +166,37 @@ export const ValidatorOverview = () => {
     try {
       let currentData;
       if (!selectedChain) {
-        currentData = coordinateData.coords_dict?.onehot || [];
+        // 전체 체인(onehot) 데이터의 경우
+        const onehotData = coordinateData.coords_dict?.onehot || [];
+        
+        // x, y 좌표의 범위 계산
+        const xValues = onehotData.map(d => d.x ?? 0);
+        const yValues = onehotData.map(d => d.y ?? 0);
+        const xMin = Math.min(...xValues);
+        const xMax = Math.max(...xValues);
+        const yMin = Math.min(...yValues);
+        const yMax = Math.max(...yValues);
+        
+        // 중앙 정렬을 위한 스케일 조정
+        const xScale = d3.scaleLinear()
+          .domain([xMin, xMax])
+          .range([-0.5, 0.5]);  // -0.5 ~ 0.5 범위로 조정하여 중앙 정렬
+        const yScale = d3.scaleLinear()
+          .domain([yMin, yMax])
+          .range([-0.5, 0.5]);  // -0.5 ~ 0.5 범위로 조정하여 중앙 정렬
+        
+        currentData = onehotData.map(d => ({
+          voter: d.voter,
+          x: xScale(d.x ?? 0),
+          y: yScale(d.y ?? 0),
+          cluster: d.cluster,
+          mds_x: d.mds_x,
+          mds_y: d.mds_y,
+          tsne_x: d.tsne_x,
+          tsne_y: d.tsne_y
+        }));
       } else {
+        // 개별 체인의 경우 기존 방식 유지
         currentData = (coordinateData.chain_coords_dict?.[selectedChain] || []).map(d => ({
           voter: d.voter,
           x: d.mds_x ?? 0,
@@ -140,8 +217,6 @@ export const ValidatorOverview = () => {
       }));
 
       setPreviousValidators(currentValidators);
-      
-      // 체인 전환 시 애니메이션 활성화
       setShouldAnimate(true);
 
       return processedData;
@@ -238,16 +313,40 @@ export const ValidatorOverview = () => {
     };
   }, []);
 
-  // 줌/패닝 초기화 함수
+  // 줌 핸들러 수정
+  const handleWheel = useCallback((e: WheelEvent) => {
+    e.preventDefault();
+    const delta = e.deltaY;
+    
+    setCurrentZoomIndex(prevIndex => {
+      const newIndex = delta > 0 
+        ? Math.max(0, prevIndex - 1)
+        : Math.min(currentZoomLevels.length - 1, prevIndex + 1);
+      
+      setScale(currentZoomLevels[newIndex]);
+      return newIndex;
+    });
+  }, [currentZoomLevels]);
+
+  // 리셋 함수 수정
   const resetZoomPan = useCallback(() => {
+    if (!svgRef.current || !gRef.current) return;
+    
+    const svg = d3.select(svgRef.current);
+    const g = d3.select(gRef.current);
+    
+    // 트랜지션과 함께 초기 상태로 리셋
+    svg.transition()
+      .duration(750)
+      .call(
+        zoom.transform,
+        d3.zoomIdentity
+      );
+    
+    // 상태 업데이트
     setScale(1);
     setPosition({ x: 0, y: 0 });
-  }, []);
-
-  // 체인 변경 시 줌/패닝 초기화
-  useEffect(() => {
-    resetZoomPan();
-  }, [selectedChain, resetZoomPan]);
+  }, [zoom]);
 
   // 패닝 제한을 위한 범위 계산
   const calculatePanLimits = useCallback(() => {
@@ -291,18 +390,6 @@ export const ValidatorOverview = () => {
     setIsDragging(false);
   }, []);
 
-  // 줌 핸들러 추가
-  const handleWheel = useCallback((e: WheelEvent) => {
-    e.preventDefault();
-    const delta = e.deltaY;
-    setScale(prevScale => {
-      const newScale = delta > 0 
-        ? Math.max(1, prevScale - 0.1)  // 축소 (최소 1배)
-        : Math.min(5, prevScale + 0.1);  // 확대 (최대 5배)
-      return newScale;
-    });
-  }, []);
-
   // 이벤트 리스너 설정
   useEffect(() => {
     const chart = chartRef.current;
@@ -318,6 +405,129 @@ export const ValidatorOverview = () => {
       document.removeEventListener('mouseup', handleMouseUp);
     };
   }, [handleWheel, handleMouseMove, handleMouseUp]);
+
+  // 차트 초기화
+  useEffect(() => {
+    if (!svgRef.current || !filteredData.length) return;
+
+    const svg = d3.select(svgRef.current);
+    const g = d3.select(gRef.current);
+    const width = svgRef.current.clientWidth;
+    const height = svgRef.current.clientHeight;
+
+    // margin 설정
+    const margin = { top: 20, right: 20, bottom: 20, left: 20 };
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+
+    // 스케일 설정
+    const xScale = d3.scaleLinear()
+      .domain([chartBounds.xExtent[0], chartBounds.xExtent[1]])
+      .range([margin.left, innerWidth]);
+
+    const yScale = d3.scaleLinear()
+      .domain([chartBounds.yExtent[0], chartBounds.yExtent[1]])
+      .range([innerHeight, margin.top]);
+
+    // 줌 설정 수정
+    const zoom = d3.zoom<SVGSVGElement, unknown>()
+      .scaleExtent([1, 3.5])
+      .translateExtent([[0, 0], [width, height]])  // 패닝 범위를 SVG 크기로 제한
+      .extent([[0, 0], [width, height]])           // 줌 범위도 SVG 크기로 제한
+      .on('zoom', (event) => {
+        const { transform } = event;
+        g.attr('transform', transform.toString());
+        setScale(transform.k);
+        setPosition({ x: transform.x, y: transform.y });
+      });
+
+    svg.call(zoom);
+
+    // 기존 노드 선택
+    const nodes = g.selectAll<SVGCircleElement, EnhancedValidatorData>('circle')
+      .data(filteredData, d => d.voter);
+
+    // 노드 스타일링 부분 수정
+    const applyNodeStyles = (selection: d3.Selection<SVGCircleElement, EnhancedValidatorData, any, any>) => {
+      selection
+        .attr('cx', d => xScale(d.x))
+        .attr('cy', d => yScale(d.y))
+        .attr('r', d => currentValidator?.voter === d.voter ? 8 : 5)
+        .style('fill', d => CLUSTER_COLORS[d.cluster])
+        .style('cursor', 'pointer')
+        .style('stroke', d => 
+          currentValidator?.voter === d.voter 
+            ? "#3B82F6"
+            : hoveredValidator === d.voter
+              ? "#8B5CF6"
+              : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
+                ? "#93C5FD"
+                : "none"
+        )
+        .style('stroke-width', d =>
+          currentValidator?.voter === d.voter || hoveredValidator === d.voter
+            ? 3
+            : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
+              ? 1.5
+              : 0
+        );
+    };
+
+    // Enter 부분 수정
+    const nodesEnter = nodes.enter()
+      .append('circle')
+      .style('opacity', 0)
+      .call(applyNodeStyles);
+
+    // Update 부분 수정
+    nodes
+      .merge(nodesEnter)
+      .transition()
+      .duration(ANIMATION_DURATION)
+      .style('opacity', 1)
+      .call(applyNodeStyles);
+
+    // Exit: 제거될 노드
+    nodes.exit()
+      .transition()
+      .duration(ANIMATION_DURATION)
+      .style('opacity', 0)
+      .remove();
+
+    // 이벤트 핸들러 설정
+    g.selectAll<SVGCircleElement, EnhancedValidatorData>('circle')
+      .on('click', (event, d) => handleClick({ payload: d }))
+      .on('mouseover', function(event, d: EnhancedValidatorData) {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .style('stroke', () => 
+            currentValidator?.voter === d.voter 
+              ? "#3B82F6" 
+              : hoveredValidator === d.voter
+                ? "#8B5CF6"
+                : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
+                  ? "#93C5FD"
+                  : "none"
+          )
+          .style('stroke-width', () =>
+            currentValidator?.voter === d.voter || hoveredValidator === d.voter
+              ? 3
+              : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
+                ? 1.5
+                : 0
+          );
+      })
+      .on('mouseout', function(event, d: EnhancedValidatorData) {
+        if (currentValidator?.voter !== d.voter) {
+          d3.select(this)
+            .transition()
+            .duration(200)
+            .style('stroke', 'none')
+            .style('stroke-width', 0);
+        }
+      });
+  }, [filteredData, chartBounds, handleClick, currentValidator, hoveredValidator, searchTerm]);
 
   if (isLoading) {
     return (
@@ -405,150 +615,14 @@ export const ValidatorOverview = () => {
           </div>
         </div>
 
-        <div 
-          ref={chartRef}
-          className="relative w-full h-[90%] overflow-hidden"
-          style={{
-            cursor: isDragging ? 'grabbing' : 'grab'
-          }}
-          onMouseDown={handleMouseDown}
-        >
-          <div
-            style={{
-              transform: `scale(${scale})`,
-              transformOrigin: '50% 50%',
-              width: '100%',
-              height: '100%',
-            }}
+        <div className="relative w-full h-[90%]">
+          <svg
+            ref={svgRef}
+            className="w-full h-full"
+            style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
           >
-            <ResponsiveContainer width="100%" height="100%">
-              <ScatterChart 
-                margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
-                style={{ 
-                  transform: `translate(${position.x}px, ${position.y}px)`,
-                  transition: isDragging ? 'none' : 'transform 0.1s'
-                }}
-              >
-                <XAxis 
-                  type="number" 
-                  dataKey="x" 
-                  domain={[chartBounds.xExtent[0], chartBounds.xExtent[1]]}
-                  hide={true}
-                />
-                <YAxis 
-                  type="number" 
-                  dataKey="y" 
-                  domain={[chartBounds.yExtent[0], chartBounds.yExtent[1]]}
-                  hide={true}
-                />
-                <ZAxis type="number" range={[50]} />
-                <Tooltip
-                  cursor={{ strokeDasharray: '3 3' }}
-                  content={({ payload, coordinate }) => {
-                    if (!payload || !payload[0] || !coordinate) return null;
-                    const data = payload[0].payload as ValidatorData;
-                    const isSelected = currentValidator?.voter === data.voter;
-                    
-                    return (
-                      <div 
-                        className={`
-                          absolute bg-white p-3 border rounded shadow
-                          ${isSelected ? 'ring-2 ring-blue-500 bg-blue-50' : ''}
-                        `}
-                        style={{ 
-                          transform: `scale(${1/scale})`,
-                          transformOrigin: 'top left',
-                          left: coordinate.x + 10,  // 노드 오른쪽으로 10px
-                          top: coordinate.y - 10,   // 노드 위로 10px
-                          pointerEvents: 'none'     // 툴팁이 마우스 이벤트를 방해하지 않도록
-                        }}
-                      >
-                        <p className={`font-medium ${isSelected ? 'text-blue-600' : ''}`}>
-                          {data.voter}
-                          {isSelected && <span className="ml-2 text-xs">(Selected)</span>}
-                        </p>
-                      </div>
-                    );
-                  }}
-                  position={{ x: 0, y: 0 }}  // Recharts의 기본 위치 계산 비활성화
-                  wrapperStyle={{ pointerEvents: 'none' }}  // 툴팁 컨테이너도 마우스 이벤트 방해 방지
-                />
-                {CLUSTERS.map((cluster) => {
-                  const clusterData = filteredData.filter(d => d.cluster === cluster);
-                  const { batches } = getBatchedClusterData(clusterData);
-
-                  return (
-                    <React.Fragment key={cluster}>
-                      {batches.map((batch, batchIndex) => (
-                        <Scatter
-                          key={`${cluster}-batch-${batchIndex}`}
-                          data={batch}
-                          fill={CLUSTER_COLORS[cluster]}
-                          isAnimationActive={false}
-                          onClick={handleClick}
-                          cursor="pointer"
-                          shape={(props: any) => {
-                            const { cx, cy, fill, payload } = props;
-                            let startCx = cx, startCy = cy, initialOpacity = 1;
-                            if (prevDisplayData) {
-                              const prevPoint = prevDisplayData.find((p: any) => p.voter === payload.voter);
-                              if (prevPoint) {
-                                const xScale = props.xAxis.scale;
-                                const yScale = props.yAxis.scale;
-                                startCx = xScale(prevPoint.x);
-                                startCy = yScale(prevPoint.y);
-                              } else {
-                                initialOpacity = 0;
-                              }
-                            }
-                            const springProps = useSpring({
-                              from: { cx: startCx, cy: startCy, opacity: initialOpacity },
-                              to: { cx, cy, opacity: 1 },
-                              config: { tension: 170, friction: 26 },
-                              immediate: !shouldAnimate,
-                            });
-
-                            const isSelected = currentValidator?.voter === payload.voter;
-                            const isSearchMatch = searchTerm && payload.voter.toLowerCase().includes(searchTerm.toLowerCase());
-                            const isHovered = hoveredValidator === payload.voter;
-
-                            return (
-                              <animated.circle
-                                cx={springProps.cx}
-                                cy={springProps.cy}
-                                r={isSelected ? 8 : 5}
-                                fill={fill}
-                                stroke={
-                                  isSelected 
-                                    ? "#3B82F6"  // 선택된 validator: 진한 파란색
-                                    : isHovered
-                                      ? "#8B5CF6"  // hover된 validator: 보라색
-                                      : isSearchMatch && isSearchFocused
-                                        ? "#93C5FD"  // 검색된 validator: 연한 파란색 (검색 중일 때만)
-                                        : "none"
-                                }
-                                strokeWidth={
-                                  isSelected || isHovered
-                                    ? 3  // 선택되거나 hover된 경우: 두꺼운 테두리
-                                    : isSearchMatch && isSearchFocused
-                                      ? 1.5  // 검색된 경우: 얇은 테두리
-                                      : 0
-                                }
-                                style={{ 
-                                  opacity: springProps.opacity,
-                                  transition: 'stroke-width 0.2s, stroke 0.2s'
-                                }}
-                              />
-                            );
-                          }}
-                        />
-                      ))}
-                    </React.Fragment>
-                  );
-                })}
-              </ScatterChart>
-            </ResponsiveContainer>
-          </div>
+            <g ref={gRef} />
+          </svg>
         </div>
       </div>
     </div>
