@@ -16,7 +16,7 @@ export const ChainList: React.FC = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const response = await fetch('/src/data/coordinates/coordinates.json');
+        const response = await fetch('/data/coordinates/coordinates.json');
         const data: CoordinateData = await response.json();
         setCoordinateData(data);
       } catch (error) {

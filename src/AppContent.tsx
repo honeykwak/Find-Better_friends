@@ -20,32 +20,18 @@ export const AppContent: React.FC = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const [coordinatesResponse, analysisResponse, proposalsResponse] = await Promise.all([
-          fetch('/src/data/coordinates/coordinates.json'),
-          fetch('/src/data/coordinates/validator_analysis.json'),
-          fetch('/src/data/coordinates/chain_proposals.json')
-        ]);
+        // validator analysis 데이터 로드
+        const analysisResponse = await fetch('/data/analysis/validator_analysis.json');
+        const analysisData: ValidatorAnalysis = await analysisResponse.json();
+        setValidatorAnalysis(analysisData);
 
-        const [coordinates, analysis, proposals] = await Promise.all([
-          coordinatesResponse.json(),
-          analysisResponse.json(),
-          proposalsResponse.json()
-        ]) as [CoordinateData, ValidatorAnalysis, ChainProposals];
+        // chain proposals 데이터 로드
+        const proposalsResponse = await fetch('/data/analysis/chain_proposals.json');
+        const proposalsData: ChainProposals = await proposalsResponse.json();
+        setChainProposals(proposalsData);
 
-        const mapping = new Map<string, Set<string>>();
-        Object.entries(coordinates.chain_coords_dict).forEach(([chainId, validators]) => {
-          validators.forEach((validator: ValidatorData) => {
-            const chainSet = mapping.get(validator.voter) || new Set<string>();
-            chainSet.add(chainId);
-            mapping.set(validator.voter, chainSet);
-          });
-        });
-        
-        setValidatorChainMap(mapping);
-        setValidatorAnalysis(analysis);
-        setChainProposals(proposals);
       } catch (error) {
-        console.error('Error loading data:', error);
+        console.error('Error loading validator data:', error);
       }
     };
 
