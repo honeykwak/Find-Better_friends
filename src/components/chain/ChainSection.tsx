@@ -81,10 +81,10 @@ export const ChainSection = () => {
 
   return (
     <div className="space-y-4">
-      {/* Clusters 제목 */}
+      {/* Clusters 제목과 버튼들 */}
       <div className="space-y-2">
         <h2 className="text-xl font-semibold">Clusters</h2>
-        <div className="grid grid-cols-3 gap-1.5 w-full">
+        <div className="grid grid-cols-5 gap-1.5 w-full">
           {CLUSTERS.map((cluster) => (
             <ClusterButton 
               key={cluster}
@@ -98,71 +98,73 @@ export const ChainSection = () => {
       {/* Chains 섹션 */}
       <div className="mt-6">
         <h2 className="text-xl font-semibold mb-4">Chains</h2>
-        {Object.entries(coordinateData.chain_info).map(([chainId, info]) => (
-          <div
-            key={chainId}
-            className={`
-              flex items-center p-4 rounded-lg cursor-pointer 
-              transition-all duration-200 hover:bg-gray-50
-              ${selectedChain === chainId 
-                ? 'ring-2 ring-indigo-500 shadow-sm'
-                : ''
-              }
-              ${selectedValidator && validatorChains.includes(chainId)
-                ? 'bg-blue-50'
-                : ''
-              }
-              ${selectedChain === chainId && selectedValidator && validatorChains.includes(chainId)
-                ? 'ring-2 ring-indigo-500 bg-blue-50 shadow-md'
-                : ''
-              }
-            `}
-            onClick={() => handleChainClick(chainId)}
-          >
-            <div className="w-1/4 font-medium flex items-center gap-2">
-              <img 
-                src={loadChainLogo(info.name)}
-                alt={`${info.name} logo`}
-                className="w-6 h-6 object-contain"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
-                }}
-              />
-              {info.name}
+        <div className="space-y-2">
+          {Object.entries(coordinateData.chain_info).map(([chainId, info]) => (
+            <div
+              key={chainId}
+              className={`
+                flex items-center p-4 rounded-lg cursor-pointer 
+                transition-all duration-200 hover:bg-gray-50
+                ${selectedChain === chainId 
+                  ? 'ring-2 ring-indigo-500 shadow-sm'
+                  : ''
+                }
+                ${selectedValidator && validatorChains.includes(chainId)
+                  ? 'bg-blue-50'
+                  : ''
+                }
+                ${selectedChain === chainId && selectedValidator && validatorChains.includes(chainId)
+                  ? 'ring-2 ring-indigo-500 bg-blue-50 shadow-md'
+                  : ''
+                }
+              `}
+              onClick={() => handleChainClick(chainId)}
+            >
+              <div className="w-1/4 font-medium flex items-center gap-2">
+                <img 
+                  src={loadChainLogo(info.name)}
+                  alt={`${info.name} logo`}
+                  className="w-6 h-6 object-contain"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = 'none';
+                  }}
+                />
+                {info.name}
+              </div>
+              <div className="w-3/4 h-8 ml-4">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart 
+                    data={[{ 
+                      ...info.cluster_distribution,
+                      name: info.name,
+                      chainId,
+                      totalValidators: info.validators_count
+                    }]} 
+                    layout="vertical"
+                    margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+                  >
+                    <XAxis 
+                      type="number" 
+                      hide 
+                      domain={[0, maxValidators]}
+                    />
+                    <YAxis type="category" hide />
+                    {CLUSTERS.map((cluster) => (
+                      selectedClusters.length === 0 || selectedClusters.includes(cluster) ? (
+                        <Bar
+                          key={cluster}
+                          dataKey={cluster.toString()}
+                          stackId="a"
+                          fill={CLUSTER_COLORS[cluster]}
+                        />
+                      ) : null
+                    ))}
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             </div>
-            <div className="w-3/4 h-8 ml-4">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart 
-                  data={[{ 
-                    ...info.cluster_distribution,
-                    name: info.name,
-                    chainId,
-                    totalValidators: info.validators_count
-                  }]} 
-                  layout="vertical"
-                  margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-                >
-                  <XAxis 
-                    type="number" 
-                    hide 
-                    domain={[0, maxValidators]}
-                  />
-                  <YAxis type="category" hide />
-                  {CLUSTERS.map((cluster) => (
-                    selectedClusters.length === 0 || selectedClusters.includes(cluster) ? (
-                      <Bar
-                        key={cluster}
-                        dataKey={cluster.toString()}
-                        stackId="a"
-                        fill={CLUSTER_COLORS[cluster]}
-                      />
-                    ) : null
-                  ))}
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       {/* 선택된 체인 정보 섹션 */}
