@@ -237,12 +237,19 @@ export const ValidatorOverview = () => {
     }
   }, [dispatch, currentValidator]);
 
-  // validator 목록 필터링 및 정렬
+  // filteredValidators 로직 수정
   const filteredValidators = useMemo(() => {
-    if (!searchTerm.trim()) return displayData;
+    // 먼저 클러스터 필터링
+    const clusterFiltered = displayData.filter(validator => 
+      // 선택된 클러스터가 없거나, 해당 validator가 선택된 클러스터에 속하는 경우
+      selectedClusters.length === 0 || selectedClusters.includes(validator.cluster)
+    );
+
+    // 검색어로 필터링
+    if (!searchTerm.trim()) return clusterFiltered;
     const term = searchTerm.toLowerCase();
     
-    return displayData
+    return clusterFiltered
       .filter(validator => 
         validator.voter.toLowerCase().includes(term)
       )
@@ -258,7 +265,7 @@ export const ValidatorOverview = () => {
         // 검색어 위치가 같으면 알파벳 순
         return a.voter.localeCompare(b.voter);
       });
-  }, [displayData, searchTerm]);
+  }, [displayData, searchTerm, selectedClusters]); // selectedClusters 의존성 추가
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
