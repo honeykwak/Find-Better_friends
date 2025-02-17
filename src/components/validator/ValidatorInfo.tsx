@@ -97,17 +97,16 @@ export const ValidatorInfo: React.FC<ValidatorInfoProps> = ({
                       
                       <div>Votes Participation:</div>
                       <div>
-                        {data.Votes_Participation_Count}/{chainProposals[chain] || 0} (
-                        {((data.Votes_Participation_Count / (chainProposals[chain] || 1)) * 100).toFixed(2)}%)
+                        {formatParticipationRate(data.Votes_Participation_Count, chainProposals[chain] || 0)}
                       </div>
                       
                       <div>Voting Pattern:</div>
                       <div className="space-y-1">
-                        <div>Yes: {(data.Yes_Rate * 100).toFixed(2)}%</div>
-                        <div>No: {(data.No_Rate * 100).toFixed(2)}%</div>
-                        <div>Veto: {(data.Veto_Rate * 100).toFixed(2)}%</div>
-                        <div>Abstain: {(data.Abstain_Rate * 100).toFixed(2)}%</div>
-                        <div>No Vote: {(data.No_Vote_Rate * 100).toFixed(2)}%</div>
+                        <div>Yes: {formatRate(data.Yes_Rate)}</div>
+                        <div>No: {formatRate(data.No_Rate)}</div>
+                        <div>Veto: {formatRate(data.Veto_Rate)}</div>
+                        <div>Abstain: {formatRate(data.Abstain_Rate)}</div>
+                        <div>No Vote: {formatRate(data.No_Vote_Rate)}</div>
                       </div>
                     </div>
                   </div>

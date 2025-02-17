@@ -1,12 +1,13 @@
 // src/components/chain/ChainSection.tsx
-import React, { useState, useEffect, useMemo } from 'react';
+// src/components/chain/ChainSection.tsx
+import { useState, useEffect, useMemo } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { ClusterButton } from './ClusterButton';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { selectChain } from '../../store/slices/chainSlice';
 import { ClusterType, CoordinateData, ValidatorData } from '../../types';
-import { CLUSTER_COLORS, CLUSTER_LABELS, SELECTED_BACKGROUND } from '../../constants';
+import { CLUSTER_COLORS, CLUSTER_LABELS } from '../../constants';
 
 const CLUSTERS: readonly ClusterType[] = [1, 2, 3, 4, 5];
 

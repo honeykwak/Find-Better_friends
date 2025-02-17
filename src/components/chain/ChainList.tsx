@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { ClusterType, CoordinateData } from '../../types';
 import { CLUSTER_COLORS } from '../../constants';
-import { selectChain, updateValidatorSelection } from '../../store/slices/chainSlice';
+import { selectChain } from '../../store/slices/chainSlice';
 
 export const ChainList: React.FC = () => {
   const [coordinateData, setCoordinateData] = useState<CoordinateData | null>(null);

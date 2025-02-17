@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, ResponsiveContainer } from 'recharts';
 import { useSpring, animated } from "@react-spring/web";
 import { usePrevious } from '../../hooks/usePrevious';
 import { ClusterType, CoordinateData, ValidatorData } from '../../types';
@@ -19,8 +19,8 @@ const ALL_CHAIN_ZOOM_LEVELS = [0.4, 0.6, 0.8, 1, 1.5, 2];  // 전체 체인용
 const SINGLE_CHAIN_ZOOM_LEVELS = [1, 1.5, 2, 2.5, 3, 3.5];  // 개별 체인용
 
 interface EnhancedValidatorData extends ValidatorData {
-  isAnimated?: boolean;
-  animationBegin?: number;
+  isAnimated: boolean;
+  animationBegin: number;
 }
 
 export const ValidatorOverview = () => {
@@ -406,6 +406,72 @@ export const ValidatorOverview = () => {
     };
   }, [handleWheel, handleMouseMove, handleMouseUp]);
 
+  // 스케일 ref 추가
+  const scaleRef = useRef<{
+    xScale: d3.ScaleLinear<number, number>,
+    yScale: d3.ScaleLinear<number, number>
+  }>({ 
+    xScale: d3.scaleLinear(), 
+    yScale: d3.scaleLinear() 
+  });
+  
+  // 툴팁 state를 다른 state들과 함께 상단으로 이동
+  const [tooltipData, setTooltipData] = useState<{
+    voter: string;
+    x: number;
+    y: number;
+  } | null>(null);
+
+  // 노드 스타일링 함수들 분리
+  const applyStaticStyles = (selection: d3.Selection<SVGCircleElement, EnhancedValidatorData, any, any>) => {
+    selection
+      .attr('cx', d => scaleRef.current.xScale(d.x))
+      .attr('cy', d => scaleRef.current.yScale(d.y))
+      .attr('r', d => currentValidator?.voter === d.voter ? 8 : 5)
+      .style('fill', d => CLUSTER_COLORS[d.cluster])
+      .style('cursor', 'pointer')
+      .style('stroke', d => 
+        currentValidator?.voter === d.voter 
+          ? "#3B82F6"
+          : hoveredValidator === d.voter
+            ? "#8B5CF6"
+            : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
+              ? "#93C5FD"
+              : "none"
+      )
+      .style('stroke-width', d =>
+        currentValidator?.voter === d.voter || hoveredValidator === d.voter
+          ? 3
+          : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
+            ? 1.5
+            : 0
+      );
+  };
+
+  const applyTransitionStyles = (transition: d3.Transition<SVGCircleElement, EnhancedValidatorData, any, any>) => {
+    transition
+      .attr('cx', d => scaleRef.current.xScale(d.x))
+      .attr('cy', d => scaleRef.current.yScale(d.y))
+      .attr('r', d => currentValidator?.voter === d.voter ? 8 : 5)
+      .style('fill', d => CLUSTER_COLORS[d.cluster])
+      .style('stroke', d => 
+        currentValidator?.voter === d.voter 
+          ? "#3B82F6"
+          : hoveredValidator === d.voter
+            ? "#8B5CF6"
+            : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
+              ? "#93C5FD"
+              : "none"
+      )
+      .style('stroke-width', d =>
+        currentValidator?.voter === d.voter || hoveredValidator === d.voter
+          ? 3
+          : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
+            ? 1.5
+            : 0
+      );
+  };
+
   // 차트 초기화
   useEffect(() => {
     if (!svgRef.current || !filteredData.length) return;
@@ -420,12 +486,12 @@ export const ValidatorOverview = () => {
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
-    // 스케일 설정
-    const xScale = d3.scaleLinear()
+    // 스케일 설정 및 ref 업데이트
+    scaleRef.current.xScale = d3.scaleLinear()
       .domain([chartBounds.xExtent[0], chartBounds.xExtent[1]])
       .range([margin.left, innerWidth]);
 
-    const yScale = d3.scaleLinear()
+    scaleRef.current.yScale = d3.scaleLinear()
       .domain([chartBounds.yExtent[0], chartBounds.yExtent[1]])
       .range([innerHeight, margin.top]);
 
@@ -447,37 +513,11 @@ export const ValidatorOverview = () => {
     const nodes = g.selectAll<SVGCircleElement, EnhancedValidatorData>('circle')
       .data(filteredData, d => d.voter);
 
-    // 노드 스타일링 부분 수정
-    const applyNodeStyles = (selection: d3.Selection<SVGCircleElement, EnhancedValidatorData, any, any>) => {
-      selection
-        .attr('cx', d => xScale(d.x))
-        .attr('cy', d => yScale(d.y))
-        .attr('r', d => currentValidator?.voter === d.voter ? 8 : 5)
-        .style('fill', d => CLUSTER_COLORS[d.cluster])
-        .style('cursor', 'pointer')
-        .style('stroke', d => 
-          currentValidator?.voter === d.voter 
-            ? "#3B82F6"
-            : hoveredValidator === d.voter
-              ? "#8B5CF6"
-              : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
-                ? "#93C5FD"
-                : "none"
-        )
-        .style('stroke-width', d =>
-          currentValidator?.voter === d.voter || hoveredValidator === d.voter
-            ? 3
-            : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
-              ? 1.5
-              : 0
-        );
-    };
-
     // Enter 부분 수정
     const nodesEnter = nodes.enter()
       .append('circle')
       .style('opacity', 0)
-      .call(applyNodeStyles);
+      .call(applyStaticStyles);
 
     // Update 부분 수정
     nodes
@@ -485,7 +525,7 @@ export const ValidatorOverview = () => {
       .transition()
       .duration(ANIMATION_DURATION)
       .style('opacity', 1)
-      .call(applyNodeStyles);
+      .call(applyTransitionStyles);
 
     // Exit: 제거될 노드
     nodes.exit()
@@ -494,38 +534,20 @@ export const ValidatorOverview = () => {
       .style('opacity', 0)
       .remove();
 
-    // 이벤트 핸들러 설정
+    // 이벤트 핸들러 설정 부분 수정
     g.selectAll<SVGCircleElement, EnhancedValidatorData>('circle')
       .on('click', (event, d) => handleClick({ payload: d }))
       .on('mouseover', function(event, d: EnhancedValidatorData) {
-        d3.select(this)
-          .transition()
-          .duration(200)
-          .style('stroke', () => 
-            currentValidator?.voter === d.voter 
-              ? "#3B82F6" 
-              : hoveredValidator === d.voter
-                ? "#8B5CF6"
-                : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
-                  ? "#93C5FD"
-                  : "none"
-          )
-          .style('stroke-width', () =>
-            currentValidator?.voter === d.voter || hoveredValidator === d.voter
-              ? 3
-              : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
-                ? 1.5
-                : 0
-          );
+        setHoveredValidator(d.voter);
+        setTooltipData({
+          voter: d.voter,
+          x: scaleRef.current.xScale(d.x),
+          y: scaleRef.current.yScale(d.y)
+        });
       })
       .on('mouseout', function(event, d: EnhancedValidatorData) {
-        if (currentValidator?.voter !== d.voter) {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .style('stroke', 'none')
-            .style('stroke-width', 0);
-        }
+        setHoveredValidator(null);
+        setTooltipData(null);
       });
   }, [filteredData, chartBounds, handleClick, currentValidator, hoveredValidator, searchTerm]);
 
@@ -623,6 +645,26 @@ export const ValidatorOverview = () => {
           >
             <g ref={gRef} />
           </svg>
+          {tooltipData && (
+            <div 
+              className={`
+                absolute bg-white p-3 border rounded shadow
+                ${currentValidator?.voter === tooltipData.voter ? 'ring-2 ring-blue-500 bg-blue-50' : ''}
+              `}
+              style={{ 
+                left: (tooltipData.x * scale + position.x) + 15,  // 줌과 패닝을 고려한 위치 계산
+                top: (tooltipData.y * scale + position.y) - 10,   // 줌과 패닝을 고려한 위치 계산
+                transformOrigin: 'top left',
+                pointerEvents: 'none'
+                // transform 속성 제거 - 툴팁 크기는 고정
+              }}
+            >
+              <p className={`font-medium ${currentValidator?.voter === tooltipData.voter ? 'text-blue-600' : ''}`}>
+                {tooltipData.voter}
+                {currentValidator?.voter === tooltipData.voter && <span className="ml-2 text-xs">(Selected)</span>}
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>
