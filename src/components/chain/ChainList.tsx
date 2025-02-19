@@ -50,7 +50,7 @@ export const ChainList: React.FC = () => {
   return (
     <div className="w-full space-y-4">
       {chartData.map((chain) => {
-        const isValidatorChain = validatorChains.has(chain.chainId);
+        const isValidatorChain = validatorChains.includes(chain.chainId);
         
         return (
           <div 

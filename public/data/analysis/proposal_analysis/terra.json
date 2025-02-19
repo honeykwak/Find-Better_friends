@@ -1,0 +1,515 @@
+{
+  "validator_count": 193,
+  "proposals": {
+    "4823": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "Phoenix Directive  Alliance Reform and Ecosystem Growth Initiative",
+      "type": "/alliance.alliance.MsgUpdateAlliance",
+      "status": "PASSED",
+      "timeSubmit": 1728369700177,
+      "timeVotingStart": 1728369700177,
+      "timeVotingEnd": 1728974500177,
+      "ratios": {
+        "YES": 0.46875,
+        "NO": 0.125,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.40625
+      },
+      "total_votes": 64
+    },
+    "4816": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "The Phoenix Directive  A Path Forward",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1722265201655,
+      "timeVotingStart": 1722265201655,
+      "timeVotingEnd": 1722870001655,
+      "ratios": {
+        "YES": 0.4461538461538462,
+        "NO": 0.2923076923076923,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.26153846153846155
+      },
+      "total_votes": 65
+    },
+    "4814": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Sayve Protocol Community Grant",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "REJECTED",
+      "timeSubmit": 1717518958501,
+      "timeVotingStart": 1717518958501,
+      "timeVotingEnd": 1718123758501,
+      "ratios": {
+        "YES": 0.043478260869565216,
+        "NO": 0.6086956521739131,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.34782608695652173
+      },
+      "total_votes": 69
+    },
+    "4803": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "A 5 Global Minimum Commission for Validators",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1708620720562,
+      "timeVotingStart": 1708620720562,
+      "timeVotingEnd": 1709225520562,
+      "ratios": {
+        "YES": 0.6071428571428571,
+        "NO": 0.14285714285714285,
+        "NO_WITH_VETO": 0.023809523809523808,
+        "ABSTAIN": 0.2261904761904762
+      },
+      "total_votes": 84
+    },
+    "4797": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "TFL Delegation Equal Amount Delegation for Fairness",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1704949654325,
+      "timeVotingStart": 1704949654325,
+      "timeVotingEnd": 1705554454325,
+      "ratios": {
+        "YES": 0.25773195876288657,
+        "NO": 0.4536082474226804,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.28865979381443296
+      },
+      "total_votes": 97
+    },
+    "4775": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Orneio  Legal audit  Grant Proposal",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1695402005415,
+      "timeVotingStart": 1695402005415,
+      "timeVotingEnd": 1696006805415,
+      "ratios": {
+        "YES": 0.1527777777777778,
+        "NO": 0.5,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3472222222222222
+      },
+      "total_votes": 72
+    },
+    "4765": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Airdrop for Missed Protocols",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1694454136001,
+      "timeVotingStart": 1694454136001,
+      "timeVotingEnd": 1695058936001,
+      "ratios": {
+        "YES": 0.6212121212121212,
+        "NO": 0.045454545454545456,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3333333333333333
+      },
+      "total_votes": 66
+    },
+    "4744": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "YFoundry LUNA Integration into YFoundry Governance",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1691475055154,
+      "timeVotingStart": 1691475055154,
+      "timeVotingEnd": 1692079855154,
+      "ratios": {
+        "YES": 0.5,
+        "NO": 0.0945945945945946,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.40540540540540543
+      },
+      "total_votes": 74
+    },
+    "4743": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Confio Funding Halt",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1691405660345,
+      "timeVotingStart": 1691405660345,
+      "timeVotingEnd": 1692010460345,
+      "ratios": {
+        "YES": 0.4225352112676056,
+        "NO": 0.1267605633802817,
+        "NO_WITH_VETO": 0.014084507042253521,
+        "ABSTAIN": 0.43661971830985913
+      },
+      "total_votes": 71
+    },
+    "4742": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Chainscope Grant",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1691296011878,
+      "timeVotingStart": 1691296288741,
+      "timeVotingEnd": 1691901088741,
+      "ratios": {
+        "YES": 0.4027777777777778,
+        "NO": 0.2777777777777778,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3194444444444444
+      },
+      "total_votes": 72
+    },
+    "4739": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Deploy LUNA to the stLUNA liquidity pool",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1689959150893,
+      "timeVotingStart": 1689960633098,
+      "timeVotingEnd": 1690565433098,
+      "ratios": {
+        "YES": 0.3076923076923077,
+        "NO": 0.4,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2923076923076923
+      },
+      "total_votes": 65
+    },
+    "4738": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "The Gate Contract",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1689591574670,
+      "timeVotingStart": 1689591574670,
+      "timeVotingEnd": 1690196374670,
+      "ratios": {
+        "YES": 0.2727272727272727,
+        "NO": 0.2878787878787879,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.4393939393939394
+      },
+      "total_votes": 66
+    },
+    "4736": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "OFFICIAL Revitalizing Terra A Backbone Labs and Eris Protocol Collaboration Not a Grant",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1688406545431,
+      "timeVotingStart": 1688406545431,
+      "timeVotingEnd": 1689011345431,
+      "ratios": {
+        "YES": 0.5238095238095238,
+        "NO": 0.1111111111111111,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.36507936507936506
+      },
+      "total_votes": 63
+    },
+    "4722": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Community Funding for TerraSpaces",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1682259260632,
+      "timeVotingStart": 1682259260632,
+      "timeVotingEnd": 1682864060632,
+      "ratios": {
+        "YES": 0.6521739130434783,
+        "NO": 0.10144927536231885,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2463768115942029
+      },
+      "total_votes": 69
+    },
+    "4716": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Lion DAO Treasury Grant",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1681310583930,
+      "timeVotingStart": 1681310583930,
+      "timeVotingEnd": 1681915383930,
+      "ratios": {
+        "YES": 0.5694444444444444,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.4305555555555556
+      },
+      "total_votes": 72
+    },
+    "4714": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Revised Redacted Grant Proposal",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1680624997600,
+      "timeVotingStart": 1680624997600,
+      "timeVotingEnd": 1681229797600,
+      "ratios": {
+        "YES": 0.11392405063291139,
+        "NO": 0.5949367088607594,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2911392405063291
+      },
+      "total_votes": 79
+    },
+    "4591": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Hermes Protocol  Community Grant for public goods development",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1675006473977,
+      "timeVotingStart": 1675006473977,
+      "timeVotingEnd": 1675611273977,
+      "ratios": {
+        "YES": 0.11475409836065574,
+        "NO": 0.5409836065573771,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3442622950819672
+      },
+      "total_votes": 61
+    },
+    "3796": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "ERIS Protocol Revised Grant Proposal",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1673600481129,
+      "timeVotingStart": 1673600481129,
+      "timeVotingEnd": 1674205281129,
+      "ratios": {
+        "YES": 0.5974025974025974,
+        "NO": 0.23376623376623376,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.16883116883116883
+      },
+      "total_votes": 77
+    },
+    "3665": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Contro Protocol Grant Proposal",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1671282663012,
+      "timeVotingStart": 1671282663012,
+      "timeVotingEnd": 1671887463012,
+      "ratios": {
+        "YES": 0.5789473684210527,
+        "NO": 0.05263157894736842,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3684210526315789
+      },
+      "total_votes": 76
+    },
+    "3533": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "KnowhereSoil Protocol Grant Prosposal",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1670214246306,
+      "timeVotingStart": 1670214246306,
+      "timeVotingEnd": 1670819046306,
+      "ratios": {
+        "YES": 0.16216216216216217,
+        "NO": 0.5405405405405406,
+        "NO_WITH_VETO": 0.013513513513513514,
+        "ABSTAIN": 0.28378378378378377
+      },
+      "total_votes": 74
+    },
+    "3460": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "ERIS Protocol Grant Proposal",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1669826417561,
+      "timeVotingStart": 1669826417561,
+      "timeVotingEnd": 1670431217561,
+      "ratios": {
+        "YES": 0.4605263157894737,
+        "NO": 0.39473684210526316,
+        "NO_WITH_VETO": 0.013157894736842105,
+        "ABSTAIN": 0.13157894736842105
+      },
+      "total_votes": 76
+    },
+    "3186": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Redacted Grant Proposal",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1669389148765,
+      "timeVotingStart": 1669389148765,
+      "timeVotingEnd": 1669993948765,
+      "ratios": {
+        "YES": 0.12857142857142856,
+        "NO": 0.4857142857142857,
+        "NO_WITH_VETO": 0.05714285714285714,
+        "ABSTAIN": 0.32857142857142857
+      },
+      "total_votes": 70
+    },
+    "2616": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Capapult Grant Proposal",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1668888029304,
+      "timeVotingStart": 1668888029304,
+      "timeVotingEnd": 1669492829304,
+      "ratios": {
+        "YES": 0.3488372093023256,
+        "NO": 0.36046511627906974,
+        "NO_WITH_VETO": 0.10465116279069768,
+        "ABSTAIN": 0.18604651162790697
+      },
+      "total_votes": 86
+    },
+    "1502": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Social KYC oracle TYC",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1665353153509,
+      "timeVotingStart": 1665353153509,
+      "timeVotingEnd": 1665957953509,
+      "ratios": {
+        "YES": 0.47619047619047616,
+        "NO": 0.20634920634920634,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.31746031746031744
+      },
+      "total_votes": 63
+    },
+    "1354": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Terra Stablecoin Infrastructure Proposal by Stably",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1663041718107,
+      "timeVotingStart": 1663041718107,
+      "timeVotingEnd": 1663646518107,
+      "ratios": {
+        "YES": 0.2976190476190476,
+        "NO": 0.40476190476190477,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2976190476190476
+      },
+      "total_votes": 84
+    },
+    "979": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Entropy Beacon Community Funding Grant",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1661292764557,
+      "timeVotingStart": 1661292764557,
+      "timeVotingEnd": 1661897564557,
+      "ratios": {
+        "YES": 0.6428571428571429,
+        "NO": 0.014285714285714285,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.34285714285714286
+      },
+      "total_votes": 70
+    },
+    "902": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "MetricsDAO OnChain Data Curation Grant",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1658789260077,
+      "timeVotingStart": 1658789260077,
+      "timeVotingEnd": 1659394060077,
+      "ratios": {
+        "YES": 0.620253164556962,
+        "NO": 0.0379746835443038,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.34177215189873417
+      },
+      "total_votes": 79
+    },
+    "874": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Reduced validator minimum commission update 5 instead of 10",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1656610642920,
+      "timeVotingStart": 1656614907554,
+      "timeVotingEnd": 1657219707554,
+      "ratios": {
+        "YES": 0.3058823529411765,
+        "NO": 0.23529411764705882,
+        "NO_WITH_VETO": 0.058823529411764705,
+        "ABSTAIN": 0.4
+      },
+      "total_votes": 85
+    },
+    "870": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Validator minimum commission update",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1656488028646,
+      "timeVotingStart": 1656491747673,
+      "timeVotingEnd": 1657096547673,
+      "ratios": {
+        "YES": 0.26732673267326734,
+        "NO": 0.33663366336633666,
+        "NO_WITH_VETO": 0.09900990099009901,
+        "ABSTAIN": 0.297029702970297
+      },
+      "total_votes": 101
+    },
+    "349": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Upgrade Terra Classic To Reenable IBC",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1654289026131,
+      "timeVotingStart": 1654289026131,
+      "timeVotingEnd": 1654893826131,
+      "ratios": {
+        "YES": 0.3695652173913043,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6304347826086957
+      },
+      "total_votes": 92
+    }
+  }
+}

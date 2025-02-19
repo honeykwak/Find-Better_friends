@@ -1,0 +1,413 @@
+{
+  "validator_count": 197,
+  "proposals": {
+    "292": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "LimitedTime Token Exchange Between Stargaze and GATA HUB to Boost Decentralization and Liquidity for StarDex",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1730591416166,
+      "timeVotingStart": 1730592879824,
+      "timeVotingEnd": 1730852079824,
+      "ratios": {
+        "YES": 0.5964912280701754,
+        "NO": 0.05263157894736842,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3508771929824561
+      },
+      "total_votes": 57
+    },
+    "272": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Joint liquidity provisioning for the STARS and NTRN tokens on Astroport on Neutron",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1716988295233,
+      "timeVotingStart": 1716988400140,
+      "timeVotingEnd": 1717247600140,
+      "ratios": {
+        "YES": 0.6538461538461539,
+        "NO": 0.11538461538461539,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.23076923076923078
+      },
+      "total_votes": 52
+    },
+    "267": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "stSTARS  STARS POL for Cosmos DeFi Applications",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "REJECTED",
+      "timeSubmit": 1712779325260,
+      "timeVotingStart": 1712779325260,
+      "timeVotingEnd": 1713038525260,
+      "ratios": {
+        "YES": 0.3684210526315789,
+        "NO": 0.4868421052631579,
+        "NO_WITH_VETO": 0.039473684210526314,
+        "ABSTAIN": 0.10526315789473684
+      },
+      "total_votes": 76
+    },
+    "265": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Stargaze Community Owned Liquid Staking with pSTAKE Finance",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "REJECTED",
+      "timeSubmit": 1712094173713,
+      "timeVotingStart": 1712094173713,
+      "timeVotingEnd": 1712353373713,
+      "ratios": {
+        "YES": 0.22666666666666666,
+        "NO": 0.5866666666666667,
+        "NO_WITH_VETO": 0.013333333333333334,
+        "ABSTAIN": 0.17333333333333334
+      },
+      "total_votes": 75
+    },
+    "242": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "STARS Incentives to bootstrap stSTARS Lending And Collateral on Demex",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1704883157700,
+      "timeVotingStart": 1704908449279,
+      "timeVotingEnd": 1705167649279,
+      "ratios": {
+        "YES": 0.5131578947368421,
+        "NO": 0.25,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.23684210526315788
+      },
+      "total_votes": 76
+    },
+    "226": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Permissionless Smart Contract Deployment",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1696801170254,
+      "timeVotingStart": 1696801170254,
+      "timeVotingEnd": 1697060370254,
+      "ratios": {
+        "YES": 0.3170731707317073,
+        "NO": 0.47560975609756095,
+        "NO_WITH_VETO": 0.024390243902439025,
+        "ABSTAIN": 0.18292682926829268
+      },
+      "total_votes": 82
+    },
+    "223": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Bootstrapping the STARS pool on Cosmos Millions",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1695803105047,
+      "timeVotingStart": 1695803105047,
+      "timeVotingEnd": 1696062305047,
+      "ratios": {
+        "YES": 0.21875,
+        "NO": 0.5104166666666666,
+        "NO_WITH_VETO": 0.052083333333333336,
+        "ABSTAIN": 0.21875
+      },
+      "total_votes": 96
+    },
+    "213": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Stargaze integration with Huddle01",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1692999351449,
+      "timeVotingStart": 1692999351449,
+      "timeVotingEnd": 1693258551449,
+      "ratios": {
+        "YES": 0.06493506493506493,
+        "NO": 0.6103896103896104,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3246753246753247
+      },
+      "total_votes": 77
+    },
+    "210": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Incentivizing DOTSTARS Pools on the Pablo DEX",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1692892548425,
+      "timeVotingStart": 1692892548425,
+      "timeVotingEnd": 1693151748425,
+      "ratios": {
+        "YES": 0.45348837209302323,
+        "NO": 0.36046511627906974,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.18604651162790697
+      },
+      "total_votes": 86
+    },
+    "144": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Stargaze Carbon Neutral Proposal",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1679531552558,
+      "timeVotingStart": 1679531552558,
+      "timeVotingEnd": 1679790752558,
+      "ratios": {
+        "YES": 0.5633802816901409,
+        "NO": 0.15492957746478872,
+        "NO_WITH_VETO": 0.028169014084507043,
+        "ABSTAIN": 0.2535211267605634
+      },
+      "total_votes": 71
+    },
+    "128": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Reduce Launchpad Fee to 5",
+      "type": "/cosmwasm.wasm.v1.SudoContractProposal",
+      "status": "PASSED",
+      "timeSubmit": 1677799553009,
+      "timeVotingStart": 1677799553009,
+      "timeVotingEnd": 1678058753009,
+      "ratios": {
+        "YES": 0.5909090909090909,
+        "NO": 0.2878787878787879,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.12121212121212122
+      },
+      "total_votes": 66
+    },
+    "104": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Incentivize STARSUSK farm on BOW for 3 months",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1673114554093,
+      "timeVotingStart": 1673114554093,
+      "timeVotingEnd": 1673373754093,
+      "ratios": {
+        "YES": 0.3918918918918919,
+        "NO": 0.32432432432432434,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.28378378378378377
+      },
+      "total_votes": 74
+    },
+    "101": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Appendable NFT Collection",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1670880977723,
+      "timeVotingStart": 1670880977723,
+      "timeVotingEnd": 1671140177723,
+      "ratios": {
+        "YES": 0.6438356164383562,
+        "NO": 0.136986301369863,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2191780821917808
+      },
+      "total_votes": 73
+    },
+    "94": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Badges v11 Update  Badge Hub",
+      "type": "/cosmwasm.wasm.v1.StoreCodeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1670449055430,
+      "timeVotingStart": 1670449055430,
+      "timeVotingEnd": 1670708255430,
+      "ratios": {
+        "YES": 0.6805555555555556,
+        "NO": 0.1111111111111111,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.20833333333333334
+      },
+      "total_votes": 72
+    },
+    "81": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Fund Deployment of Lunar Assistant",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1669201034546,
+      "timeVotingStart": 1669201034546,
+      "timeVotingEnd": 1669460234546,
+      "ratios": {
+        "YES": 0.5641025641025641,
+        "NO": 0.0641025641025641,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3717948717948718
+      },
+      "total_votes": 78
+    },
+    "59": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Raise voting deposit requirement in STARS to 50K",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1665528841479,
+      "timeVotingStart": 1665529073687,
+      "timeVotingEnd": 1665788273687,
+      "ratios": {
+        "YES": 0.6666666666666666,
+        "NO": 0.21875,
+        "NO_WITH_VETO": 0.010416666666666666,
+        "ABSTAIN": 0.10416666666666667
+      },
+      "total_votes": 96
+    },
+    "58": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Ethereum Onboarding Platform",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1665520661637,
+      "timeVotingStart": 1665520661637,
+      "timeVotingEnd": 1665779861637,
+      "ratios": {
+        "YES": 0.18888888888888888,
+        "NO": 0.43333333333333335,
+        "NO_WITH_VETO": 0.25555555555555554,
+        "ABSTAIN": 0.12222222222222222
+      },
+      "total_votes": 90
+    },
+    "57": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Levana Rekt Dragons Aidrop Proposal",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1665462999277,
+      "timeVotingStart": 1665462999277,
+      "timeVotingEnd": 1665722199277,
+      "ratios": {
+        "YES": 0.5205479452054794,
+        "NO": 0.2328767123287671,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2465753424657534
+      },
+      "total_votes": 73
+    },
+    "50": {
+      "main_category": "technical",
+      "sub_category": "infrastructure_management",
+      "title": "Increase the Stargaze active validator set from 120 to 130",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1663214914675,
+      "timeVotingStart": 1663215038172,
+      "timeVotingEnd": 1663474238172,
+      "ratios": {
+        "YES": 0.48314606741573035,
+        "NO": 0.30337078651685395,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.21348314606741572
+      },
+      "total_votes": 89
+    },
+    "35": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Development Proposal",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1657720857203,
+      "timeVotingStart": 1657720857203,
+      "timeVotingEnd": 1657980057203,
+      "ratios": {
+        "YES": 0.47692307692307695,
+        "NO": 0.4,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.12307692307692308
+      },
+      "total_votes": 65
+    },
+    "17": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Whitelist Contract",
+      "type": "/cosmwasm.wasm.v1.StoreCodeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1646152907503,
+      "timeVotingStart": 1646152907503,
+      "timeVotingEnd": 1646412107503,
+      "ratios": {
+        "YES": 0.4805194805194805,
+        "NO": 0.5064935064935064,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.012987012987012988
+      },
+      "total_votes": 77
+    },
+    "16": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Minter Contract",
+      "type": "/cosmwasm.wasm.v1.StoreCodeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1646152871548,
+      "timeVotingStart": 1646152871548,
+      "timeVotingEnd": 1646412071548,
+      "ratios": {
+        "YES": 0.4805194805194805,
+        "NO": 0.5064935064935064,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.012987012987012988
+      },
+      "total_votes": 77
+    },
+    "15": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "SG721 Contract",
+      "type": "/cosmwasm.wasm.v1.StoreCodeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1646152583921,
+      "timeVotingStart": 1646152583921,
+      "timeVotingEnd": 1646411783921,
+      "ratios": {
+        "YES": 0.48717948717948717,
+        "NO": 0.5,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.01282051282051282
+      },
+      "total_votes": 78
+    },
+    "11": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Increase MaxValidators100 to MaxValidators125",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1644819282371,
+      "timeVotingStart": 1644822042659,
+      "timeVotingEnd": 1645081242659,
+      "ratios": {
+        "YES": 0.24731182795698925,
+        "NO": 0.6774193548387096,
+        "NO_WITH_VETO": 0.010752688172043012,
+        "ABSTAIN": 0.06451612903225806
+      },
+      "total_votes": 93
+    }
+  }
+}

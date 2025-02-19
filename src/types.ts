@@ -44,10 +44,78 @@ export interface ChainAnalysis {
 
 export interface ValidatorAnalysis {
   [validator: string]: {
-    [chain: string]: ChainAnalysis;
+    [chain: string]: ChainAnalysis & {
+      votingPattern?: ValidatorVotingPattern;
+    };
   };
 }
 
+export interface ProposalData {
+  main_category: string;
+  sub_category: string;
+  title: string;
+  type: string;
+  status: string;
+  timeSubmit: number;
+  timeVotingStart: number;
+  timeVotingEnd: number;
+  ratios?: {
+    YES: number;
+    NO: number;
+    NO_WITH_VETO: number;
+    ABSTAIN: number;
+  };
+  total_votes?: number;
+}
+
 export interface ChainProposals {
-  [chain: string]: number;
+  [chainId: string]: {
+    proposals: {
+      [proposalId: string]: ProposalData;
+    };
+  };
+}
+
+export interface ValidatorVotingPattern {
+  proposal_votes: {
+    [proposalId: string]: {
+      option: 'YES' | 'NO' | 'ABSTAIN' | 'NOWITHVETO';
+      timestamp: string;
+    };
+  };
+  category_votes: {
+    [category: string]: CategoryVotes;
+  };
+  cluster: number;
+}
+
+export interface CategoryVotes {
+  total: CategoryVoteStats;
+  subcategories: {
+    [subcategory: string]: CategoryVoteStats;
+  };
+}
+
+export interface CategoryVoteStats {
+  count: number;
+  ratio: number;
+}
+
+export const handleError = (error: unknown): string => {
+  if (error instanceof Error) {
+    return error.message;
+  }
+  return String(error);
+};
+
+export function isProposalData(value: any): value is ProposalData {
+  return (
+    value &&
+    typeof value === 'object' &&
+    'title' in value &&
+    'status' in value &&
+    'main_category' in value &&
+    'sub_category' in value &&
+    'type' in value
+  );
 } 

@@ -1,0 +1,2062 @@
+{
+  "validator_count": 131,
+  "proposals": {
+    "459": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Adjust Binary Options Market Instant Listing Fee to 05 INJ",
+      "type": "/injective.exchange.v1beta1.MsgUpdateParams",
+      "status": "PASSED",
+      "timeSubmit": 1731224835082,
+      "timeVotingStart": 1731224883487,
+      "timeVotingEnd": 1731570483487,
+      "ratios": {
+        "YES": 0.6904761904761905,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.30952380952380953
+      },
+      "total_votes": 42
+    },
+    "458": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "Remove relayers for Frontrunner provider oracle",
+      "type": "/injective.oracle.v1beta1.RevokeProviderPrivilegeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1731080606928,
+      "timeVotingStart": 1731081102791,
+      "timeVotingEnd": 1731426702791,
+      "ratios": {
+        "YES": 0.6428571428571429,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.35714285714285715
+      },
+      "total_votes": 42
+    },
+    "457": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Settle 2024ELECTIONUSDT PERP and QUNTUSDT PERP markets",
+      "type": "/injective.exchange.v1beta1.BatchExchangeModificationProposal",
+      "status": "PASSED",
+      "timeSubmit": 1730943996256,
+      "timeVotingStart": 1730943996256,
+      "timeVotingEnd": 1731289596256,
+      "ratios": {
+        "YES": 0.5476190476190477,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.4523809523809524
+      },
+      "total_votes": 42
+    },
+    "453": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Whitelist Address for Wasm Upload",
+      "type": "/cosmwasm.wasm.v1.MsgAddCodeUploadParamsAddresses",
+      "status": "PASSED",
+      "timeSubmit": 1730432107192,
+      "timeVotingStart": 1730473168587,
+      "timeVotingEnd": 1730818768587,
+      "ratios": {
+        "YES": 0.6052631578947368,
+        "NO": 0.02631578947368421,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3684210526315789
+      },
+      "total_votes": 38
+    },
+    "452": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Update Kira Liquidity Pool Locker",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1730136413785,
+      "timeVotingStart": 1730136413785,
+      "timeVotingEnd": 1730482013785,
+      "ratios": {
+        "YES": 0.3170731707317073,
+        "NO": 0.024390243902439025,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6585365853658537
+      },
+      "total_votes": 41
+    },
+    "451": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Paradyze Mainnet Provider Oracle",
+      "type": "/injective.oracle.v1beta1.GrantProviderPrivilegeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1730075175760,
+      "timeVotingStart": 1730075175760,
+      "timeVotingEnd": 1730420775760,
+      "ratios": {
+        "YES": 0.35714285714285715,
+        "NO": 0.023809523809523808,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6190476190476191
+      },
+      "total_votes": 42
+    },
+    "448": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Kira Liquidity Pool Locker to be deployed on the injective mainnet",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1728498630494,
+      "timeVotingStart": 1728499051158,
+      "timeVotingEnd": 1728844651158,
+      "ratios": {
+        "YES": 0.41025641025641024,
+        "NO": 0.1282051282051282,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.46153846153846156
+      },
+      "total_votes": 39
+    },
+    "446": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Injex Finance Vesting Contract Wasm Code",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1727950717151,
+      "timeVotingStart": 1727950717151,
+      "timeVotingEnd": 1728296317151,
+      "ratios": {
+        "YES": 0.3333333333333333,
+        "NO": 0.027777777777777776,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6388888888888888
+      },
+      "total_votes": 36
+    },
+    "445": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Funding Proposal Support Development of Apello Corrected Proposal",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "REJECTED",
+      "timeSubmit": 1727696250450,
+      "timeVotingStart": 1727696250450,
+      "timeVotingEnd": 1728041850450,
+      "ratios": {
+        "YES": 0.0,
+        "NO": 0.5454545454545454,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.45454545454545453
+      },
+      "total_votes": 44
+    },
+    "444": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "FUNDING PROPOSAL Fund development of Apello",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "REJECTED",
+      "timeSubmit": 1727694598963,
+      "timeVotingStart": 1727694598963,
+      "timeVotingEnd": 1728040198963,
+      "ratios": {
+        "YES": 0.0,
+        "NO": 0.6590909090909091,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3409090909090909
+      },
+      "total_votes": 44
+    },
+    "441": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Whitelist Ark Protocol Dev Wallet Address for Wasm Upload InterChain NFT Contracts",
+      "type": "/cosmwasm.wasm.v1.MsgAddCodeUploadParamsAddresses",
+      "status": "PASSED",
+      "timeSubmit": 1727076508402,
+      "timeVotingStart": 1727083449295,
+      "timeVotingEnd": 1727429049295,
+      "ratios": {
+        "YES": 0.46511627906976744,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5348837209302325
+      },
+      "total_votes": 43
+    },
+    "440": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Add ICONBalanced Network deployment wallet to Injective whitelist",
+      "type": "/cosmwasm.wasm.v1.MsgAddCodeUploadParamsAddresses",
+      "status": "PASSED",
+      "timeSubmit": 1726729425183,
+      "timeVotingStart": 1726729425183,
+      "timeVotingEnd": 1727075025183,
+      "ratios": {
+        "YES": 0.27906976744186046,
+        "NO": 0.11627906976744186,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6046511627906976
+      },
+      "total_votes": 43
+    },
+    "439": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Whitelist Black Panther Developer Address for Wasm Upload",
+      "type": "/cosmwasm.wasm.v1.MsgAddCodeUploadParamsAddresses",
+      "status": "PASSED",
+      "timeSubmit": 1726705946774,
+      "timeVotingStart": 1726705946774,
+      "timeVotingEnd": 1727051546774,
+      "ratios": {
+        "YES": 0.2857142857142857,
+        "NO": 0.047619047619047616,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6666666666666666
+      },
+      "total_votes": 42
+    },
+    "437": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Whitelist Ninja Blaze Developer Address for Wasm Upload",
+      "type": "/cosmwasm.wasm.v1.MsgAddCodeUploadParamsAddresses",
+      "status": "PASSED",
+      "timeSubmit": 1726570507817,
+      "timeVotingStart": 1726570507817,
+      "timeVotingEnd": 1726916107817,
+      "ratios": {
+        "YES": 0.36363636363636365,
+        "NO": 0.022727272727272728,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6136363636363636
+      },
+      "total_votes": 44
+    },
+    "436": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Settle BODENUSDT PERP and BONKUSDT PERP markets",
+      "type": "/injective.exchange.v1beta1.BatchExchangeModificationProposal",
+      "status": "PASSED",
+      "timeSubmit": 1726151502404,
+      "timeVotingStart": 1726151502404,
+      "timeVotingEnd": 1726497102404,
+      "ratios": {
+        "YES": 0.65,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.35
+      },
+      "total_votes": 40
+    },
+    "432": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Deploy injinterchainpersona Contract on Injective Mainnet",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1725662238814,
+      "timeVotingStart": 1725662238814,
+      "timeVotingEnd": 1726007838814,
+      "ratios": {
+        "YES": 0.29545454545454547,
+        "NO": 0.045454545454545456,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6590909090909091
+      },
+      "total_votes": 44
+    },
+    "430": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Injex Finance Staking Contract Wasm Code",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1725220376994,
+      "timeVotingStart": 1725220376994,
+      "timeVotingEnd": 1725565976994,
+      "ratios": {
+        "YES": 0.5476190476190477,
+        "NO": 0.023809523809523808,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.42857142857142855
+      },
+      "total_votes": 42
+    },
+    "427": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Injex Finance Staking Contract Wasm Code",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "REJECTED",
+      "timeSubmit": 1724674311072,
+      "timeVotingStart": 1724674311072,
+      "timeVotingEnd": 1725019911072,
+      "ratios": {
+        "YES": 0.15555555555555556,
+        "NO": 0.2222222222222222,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6222222222222222
+      },
+      "total_votes": 45
+    },
+    "426": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Whitelist Gelotto Developer Wallet for Wasm Upload PampIT",
+      "type": "/cosmwasm.wasm.v1.MsgAddCodeUploadParamsAddresses",
+      "status": "PASSED",
+      "timeSubmit": 1724514515735,
+      "timeVotingStart": 1724514745294,
+      "timeVotingEnd": 1724860345294,
+      "ratios": {
+        "YES": 0.2682926829268293,
+        "NO": 0.04878048780487805,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6829268292682927
+      },
+      "total_votes": 41
+    },
+    "423": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Deployment of Volta Circuits Multisig Smart Contracts on Injective",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1723597857037,
+      "timeVotingStart": 1723597857037,
+      "timeVotingEnd": 1723943457037,
+      "ratios": {
+        "YES": 0.5,
+        "NO": 0.047619047619047616,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.4523809523809524
+      },
+      "total_votes": 42
+    },
+    "421": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Injex Finance Router and Limit Contract Wasm Code",
+      "type": "/injective.wasmx.v1.BatchStoreCodeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1722515224181,
+      "timeVotingStart": 1722515224181,
+      "timeVotingEnd": 1722860824181,
+      "ratios": {
+        "YES": 0.2564102564102564,
+        "NO": 0.10256410256410256,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6410256410256411
+      },
+      "total_votes": 39
+    },
+    "416": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Exotic Escrow Contract Wasm Code",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1720638289284,
+      "timeVotingStart": 1720638289284,
+      "timeVotingEnd": 1720983889284,
+      "ratios": {
+        "YES": 0.32608695652173914,
+        "NO": 0.08695652173913043,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5869565217391305
+      },
+      "total_votes": 46
+    },
+    "415": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Exotic Staking Contract Wasm Code",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1720638277196,
+      "timeVotingStart": 1720638277196,
+      "timeVotingEnd": 1720983877196,
+      "ratios": {
+        "YES": 0.32608695652173914,
+        "NO": 0.08695652173913043,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5869565217391305
+      },
+      "total_votes": 46
+    },
+    "414": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Exotic Vanilla Contract Wasm Code",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1720638231488,
+      "timeVotingStart": 1720638231488,
+      "timeVotingEnd": 1720983831488,
+      "ratios": {
+        "YES": 0.32608695652173914,
+        "NO": 0.08695652173913043,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5869565217391305
+      },
+      "total_votes": 46
+    },
+    "413": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Deployment of StreamSwap Protocol contracts on Injective Hub",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1720011744003,
+      "timeVotingStart": 1720012559050,
+      "timeVotingEnd": 1720358159050,
+      "ratios": {
+        "YES": 0.6511627906976745,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3488372093023256
+      },
+      "total_votes": 43
+    },
+    "412": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "New Quant in Town",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1719935699678,
+      "timeVotingStart": 1719935872968,
+      "timeVotingEnd": 1720281472968,
+      "ratios": {
+        "YES": 0.21739130434782608,
+        "NO": 0.06521739130434782,
+        "NO_WITH_VETO": 0.021739130434782608,
+        "ABSTAIN": 0.6956521739130435
+      },
+      "total_votes": 46
+    },
+    "410": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload ChainFactory Contract Wasm Code 22 Token",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1719520961484,
+      "timeVotingStart": 1719520961484,
+      "timeVotingEnd": 1719866561484,
+      "ratios": {
+        "YES": 0.4186046511627907,
+        "NO": 0.023255813953488372,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5581395348837209
+      },
+      "total_votes": 43
+    },
+    "408": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload ChainFactory Contract Wasm Code 12 Factory",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1719240831874,
+      "timeVotingStart": 1719240831874,
+      "timeVotingEnd": 1719586431874,
+      "ratios": {
+        "YES": 0.3469387755102041,
+        "NO": 0.061224489795918366,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5918367346938775
+      },
+      "total_votes": 49
+    },
+    "407": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload QTUM token contract",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1718100011181,
+      "timeVotingStart": 1718100011181,
+      "timeVotingEnd": 1718445611181,
+      "ratios": {
+        "YES": 0.38,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.62
+      },
+      "total_votes": 50
+    },
+    "404": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "StartCooking Upload Factory Contract",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1717580629333,
+      "timeVotingStart": 1717580629333,
+      "timeVotingEnd": 1717926229333,
+      "ratios": {
+        "YES": 0.5714285714285714,
+        "NO": 0.047619047619047616,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.38095238095238093
+      },
+      "total_votes": 42
+    },
+    "403": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "StartCooking Upload Contract",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1717580386869,
+      "timeVotingStart": 1717580386869,
+      "timeVotingEnd": 1717925986869,
+      "ratios": {
+        "YES": 0.5714285714285714,
+        "NO": 0.047619047619047616,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.38095238095238093
+      },
+      "total_votes": 42
+    },
+    "402": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload DEGA Minter Contract Wasm Code",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1717206446476,
+      "timeVotingStart": 1717206446476,
+      "timeVotingEnd": 1717552046476,
+      "ratios": {
+        "YES": 0.35555555555555557,
+        "NO": 0.044444444444444446,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6
+      },
+      "total_votes": 45
+    },
+    "401": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload DEGA Collection Contract Wasm Code",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1717205121288,
+      "timeVotingStart": 1717205121288,
+      "timeVotingEnd": 1717550721288,
+      "ratios": {
+        "YES": 0.36363636363636365,
+        "NO": 0.045454545454545456,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5909090909090909
+      },
+      "total_votes": 44
+    },
+    "400": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload NFT Injstaking Contract",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1716012963245,
+      "timeVotingStart": 1716013268088,
+      "timeVotingEnd": 1716358868088,
+      "ratios": {
+        "YES": 0.3111111111111111,
+        "NO": 0.044444444444444446,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6444444444444445
+      },
+      "total_votes": 45
+    },
+    "399": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Exotic Escrow Contract Wasm Code",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1715701792254,
+      "timeVotingStart": 1715701792254,
+      "timeVotingEnd": 1716047392254,
+      "ratios": {
+        "YES": 0.36,
+        "NO": 0.06,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.58
+      },
+      "total_votes": 50
+    },
+    "398": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "UPLOAD Discoverinj 404 Reroll",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1715699537305,
+      "timeVotingStart": 1715699537305,
+      "timeVotingEnd": 1716045137305,
+      "ratios": {
+        "YES": 0.35294117647058826,
+        "NO": 0.0196078431372549,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6274509803921569
+      },
+      "total_votes": 51
+    },
+    "397": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Gravedigger 22  staking contract",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1715527525202,
+      "timeVotingStart": 1715527680717,
+      "timeVotingEnd": 1715873280717,
+      "ratios": {
+        "YES": 0.6481481481481481,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.35185185185185186
+      },
+      "total_votes": 54
+    },
+    "396": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Gravedigger 12  feesplit",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1715527323133,
+      "timeVotingStart": 1715527657295,
+      "timeVotingEnd": 1715873257295,
+      "ratios": {
+        "YES": 0.6792452830188679,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.32075471698113206
+      },
+      "total_votes": 53
+    },
+    "394": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Ninja Blaze Contract  Jackpot",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1714844973103,
+      "timeVotingStart": 1714844973103,
+      "timeVotingEnd": 1715190573103,
+      "ratios": {
+        "YES": 0.38,
+        "NO": 0.02,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6
+      },
+      "total_votes": 50
+    },
+    "393": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Ninja Blaze Contract  Double",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1714844934238,
+      "timeVotingStart": 1714844934238,
+      "timeVotingEnd": 1715190534238,
+      "ratios": {
+        "YES": 0.36,
+        "NO": 0.02,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.62
+      },
+      "total_votes": 50
+    },
+    "390": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "UPLOAD Discoverinj 404 Mintpad",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1713060130059,
+      "timeVotingStart": 1713060130059,
+      "timeVotingEnd": 1713405730059,
+      "ratios": {
+        "YES": 0.24489795918367346,
+        "NO": 0.08163265306122448,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.673469387755102
+      },
+      "total_votes": 49
+    },
+    "387": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Balanced Contracts 1",
+      "type": "/injective.wasmx.v1.BatchStoreCodeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1712736406998,
+      "timeVotingStart": 1712736406998,
+      "timeVotingEnd": 1713082006998,
+      "ratios": {
+        "YES": 0.16326530612244897,
+        "NO": 0.14285714285714285,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6938775510204082
+      },
+      "total_votes": 49
+    },
+    "386": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Exotic Holding Contract Wasm Code",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1712692512171,
+      "timeVotingStart": 1712692512171,
+      "timeVotingEnd": 1713038112171,
+      "ratios": {
+        "YES": 0.36,
+        "NO": 0.08,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.56
+      },
+      "total_votes": 50
+    },
+    "385": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Exotic RFQ Contract Wasm Code",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1712692119768,
+      "timeVotingStart": 1712692119768,
+      "timeVotingEnd": 1713037719768,
+      "ratios": {
+        "YES": 0.36,
+        "NO": 0.08,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.56
+      },
+      "total_votes": 50
+    },
+    "384": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Exotic Vanilla Contract Wasm Code",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1712692066439,
+      "timeVotingStart": 1712692066439,
+      "timeVotingEnd": 1713037666439,
+      "ratios": {
+        "YES": 0.36,
+        "NO": 0.06,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.58
+      },
+      "total_votes": 50
+    },
+    "381": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Ninza Contract  Game",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1712425826132,
+      "timeVotingStart": 1712425826132,
+      "timeVotingEnd": 1712771426132,
+      "ratios": {
+        "YES": 0.2830188679245283,
+        "NO": 0.05660377358490566,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.660377358490566
+      },
+      "total_votes": 53
+    },
+    "380": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Blocksmith Labs Presale  Instantiate Contract",
+      "type": "/cosmwasm.wasm.v1.MsgInstantiateContract",
+      "status": "FAILED",
+      "timeSubmit": 1712006701516,
+      "timeVotingStart": 1712006701516,
+      "timeVotingEnd": 1712352301516,
+      "ratios": {
+        "YES": 0.29411764705882354,
+        "NO": 0.11764705882352941,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5882352941176471
+      },
+      "total_votes": 51
+    },
+    "378": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "UPLOAD A5TOUND Playland Plaza Contract",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1711731385163,
+      "timeVotingStart": 1711731385163,
+      "timeVotingEnd": 1712076985163,
+      "ratios": {
+        "YES": 0.19230769230769232,
+        "NO": 0.11538461538461539,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6923076923076923
+      },
+      "total_votes": 52
+    },
+    "376": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Blocksmith Labs Presale  Upload Contract",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1711658754803,
+      "timeVotingStart": 1711658754803,
+      "timeVotingEnd": 1712004354803,
+      "ratios": {
+        "YES": 0.2127659574468085,
+        "NO": 0.14893617021276595,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6382978723404256
+      },
+      "total_votes": 47
+    },
+    "375": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Ninja Labs  Chads Draw Contract Wasm Code",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1711550620340,
+      "timeVotingStart": 1711550620340,
+      "timeVotingEnd": 1711896220340,
+      "ratios": {
+        "YES": 0.1956521739130435,
+        "NO": 0.15217391304347827,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6521739130434783
+      },
+      "total_votes": 46
+    },
+    "374": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Moon App Staking  Staking contract upgrade v110",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1711547871208,
+      "timeVotingStart": 1711548263833,
+      "timeVotingEnd": 1711893863833,
+      "ratios": {
+        "YES": 0.2826086956521739,
+        "NO": 0.10869565217391304,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6086956521739131
+      },
+      "total_votes": 46
+    },
+    "373": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Ninza Contract  Referral",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1711391140599,
+      "timeVotingStart": 1711391140599,
+      "timeVotingEnd": 1711736740599,
+      "ratios": {
+        "YES": 0.3269230769230769,
+        "NO": 0.11538461538461539,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5576923076923077
+      },
+      "total_votes": 52
+    },
+    "372": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Ninza Contract  Multicall",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1711391055706,
+      "timeVotingStart": 1711391055706,
+      "timeVotingEnd": 1711736655706,
+      "ratios": {
+        "YES": 0.3076923076923077,
+        "NO": 0.11538461538461539,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5769230769230769
+      },
+      "total_votes": 52
+    },
+    "371": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Ninza Contract  Token InGame",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1711390706962,
+      "timeVotingStart": 1711390706962,
+      "timeVotingEnd": 1711736306962,
+      "ratios": {
+        "YES": 0.3076923076923077,
+        "NO": 0.11538461538461539,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5769230769230769
+      },
+      "total_votes": 52
+    },
+    "370": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Ninza Contract  Game",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1711390252450,
+      "timeVotingStart": 1711390252450,
+      "timeVotingEnd": 1711735852450,
+      "ratios": {
+        "YES": 0.3076923076923077,
+        "NO": 0.11538461538461539,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5769230769230769
+      },
+      "total_votes": 52
+    },
+    "368": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Ninja Blaze Contract  Double",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1711375405232,
+      "timeVotingStart": 1711375405232,
+      "timeVotingEnd": 1711721005232,
+      "ratios": {
+        "YES": 0.36538461538461536,
+        "NO": 0.17307692307692307,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.46153846153846156
+      },
+      "total_votes": 52
+    },
+    "367": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Ninja Blaze Contract  User profile  Fee collector",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1711375213364,
+      "timeVotingStart": 1711375213364,
+      "timeVotingEnd": 1711720813364,
+      "ratios": {
+        "YES": 0.34615384615384615,
+        "NO": 0.17307692307692307,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.4807692307692308
+      },
+      "total_votes": 52
+    },
+    "366": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Ninja Blaze Contract  User profile  Fee collector",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1711375013668,
+      "timeVotingStart": 1711375013668,
+      "timeVotingEnd": 1711720613668,
+      "ratios": {
+        "YES": 0.3269230769230769,
+        "NO": 0.17307692307692307,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5
+      },
+      "total_votes": 52
+    },
+    "365": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Ninja Blaze Contract  Jackpot",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1711374890781,
+      "timeVotingStart": 1711374890781,
+      "timeVotingEnd": 1711720490781,
+      "ratios": {
+        "YES": 0.3137254901960784,
+        "NO": 0.17647058823529413,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5098039215686274
+      },
+      "total_votes": 51
+    },
+    "364": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Ninja Labs  Ninja Coin Flip Contract Wasm Code",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1711269962575,
+      "timeVotingStart": 1711269962575,
+      "timeVotingEnd": 1711615562575,
+      "ratios": {
+        "YES": 0.3148148148148148,
+        "NO": 0.1111111111111111,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5740740740740741
+      },
+      "total_votes": 54
+    },
+    "363": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Ninja Labs  Kira Lottery Contract Wasm Code",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1711204583829,
+      "timeVotingStart": 1711204583829,
+      "timeVotingEnd": 1711550183829,
+      "ratios": {
+        "YES": 0.2830188679245283,
+        "NO": 0.1320754716981132,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5849056603773585
+      },
+      "total_votes": 53
+    },
+    "362": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Aeroscraper Lending  Borrowing Protocol Contract  Wasm Code to Injective",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1711004806912,
+      "timeVotingStart": 1711004806912,
+      "timeVotingEnd": 1711350406912,
+      "ratios": {
+        "YES": 0.6923076923076923,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3076923076923077
+      },
+      "total_votes": 52
+    },
+    "358": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "NFT Injstaking  Upload contract",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1710456233178,
+      "timeVotingStart": 1710458600828,
+      "timeVotingEnd": 1710804200828,
+      "ratios": {
+        "YES": 0.6851851851851852,
+        "NO": 0.037037037037037035,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2777777777777778
+      },
+      "total_votes": 54
+    },
+    "356": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "DegenFlips dApp  Upload Contract",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1710440116005,
+      "timeVotingStart": 1710440116005,
+      "timeVotingEnd": 1710785716005,
+      "ratios": {
+        "YES": 0.509090909090909,
+        "NO": 0.05454545454545454,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.43636363636363634
+      },
+      "total_votes": 55
+    },
+    "354": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Injex Finance Contract Wasm Code",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1709911202700,
+      "timeVotingStart": 1709911202700,
+      "timeVotingEnd": 1710256802700,
+      "ratios": {
+        "YES": 0.4528301886792453,
+        "NO": 0.03773584905660377,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5094339622641509
+      },
+      "total_votes": 53
+    },
+    "344": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Moon App Staking  Upload staking contract",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1707986752117,
+      "timeVotingStart": 1707986908992,
+      "timeVotingEnd": 1708332508992,
+      "ratios": {
+        "YES": 0.6181818181818182,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.38181818181818183
+      },
+      "total_votes": 55
+    },
+    "338": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Ninja Blaze NFT Contract",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1706740466250,
+      "timeVotingStart": 1706740466250,
+      "timeVotingEnd": 1707086066250,
+      "ratios": {
+        "YES": 0.4482758620689655,
+        "NO": 0.034482758620689655,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5172413793103449
+      },
+      "total_votes": 58
+    },
+    "337": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Exotic Holding Contract Wasm Code",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1706725663330,
+      "timeVotingStart": 1706725663330,
+      "timeVotingEnd": 1707071263330,
+      "ratios": {
+        "YES": 0.3157894736842105,
+        "NO": 0.07017543859649122,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6140350877192983
+      },
+      "total_votes": 57
+    },
+    "336": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Exotic RFQ Contract Wasm Code",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1706725509408,
+      "timeVotingStart": 1706725509408,
+      "timeVotingEnd": 1707071109408,
+      "ratios": {
+        "YES": 0.3157894736842105,
+        "NO": 0.07017543859649122,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6140350877192983
+      },
+      "total_votes": 57
+    },
+    "335": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Exotic Vanilla Contract Wasm Code",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1706725146204,
+      "timeVotingStart": 1706725146204,
+      "timeVotingEnd": 1707070746204,
+      "ratios": {
+        "YES": 0.3333333333333333,
+        "NO": 0.05263157894736842,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6140350877192983
+      },
+      "total_votes": 57
+    },
+    "333": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "NinjaVault Deployment",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1706683549096,
+      "timeVotingStart": 1706683549096,
+      "timeVotingEnd": 1707029149096,
+      "ratios": {
+        "YES": 0.2727272727272727,
+        "NO": 0.2,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5272727272727272
+      },
+      "total_votes": 55
+    },
+    "332": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Stax Coinflip Contract Wasm Code",
+      "type": "/injective.wasmx.v1.BatchStoreCodeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1706679311348,
+      "timeVotingStart": 1706679311348,
+      "timeVotingEnd": 1707024911348,
+      "ratios": {
+        "YES": 0.2545454545454545,
+        "NO": 0.09090909090909091,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6545454545454545
+      },
+      "total_votes": 55
+    },
+    "330": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Outapp Vouching System Contract Wasm Code",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1706386891159,
+      "timeVotingStart": 1706386891159,
+      "timeVotingEnd": 1706732491159,
+      "ratios": {
+        "YES": 0.5454545454545454,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.45454545454545453
+      },
+      "total_votes": 55
+    },
+    "322": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Proposal Hinata Contract Upload",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "REJECTED",
+      "timeSubmit": 1705638509531,
+      "timeVotingStart": 1705638509531,
+      "timeVotingEnd": 1705984109531,
+      "ratios": {
+        "YES": 0.07272727272727272,
+        "NO": 0.6909090909090909,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.23636363636363636
+      },
+      "total_votes": 55
+    },
+    "321": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "NinjaRoll Deployment",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1705590122875,
+      "timeVotingStart": 1705590122875,
+      "timeVotingEnd": 1705935722875,
+      "ratios": {
+        "YES": 0.6730769230769231,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3269230769230769
+      },
+      "total_votes": 52
+    },
+    "315": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload the iLend Protocol contract",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1704728269217,
+      "timeVotingStart": 1704784984971,
+      "timeVotingEnd": 1705130584971,
+      "ratios": {
+        "YES": 0.40384615384615385,
+        "NO": 0.057692307692307696,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5384615384615384
+      },
+      "total_votes": 52
+    },
+    "313": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "CryptoGopniks NFT Staking Platform Staking Platform Contract v131",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "PASSED",
+      "timeSubmit": 1704488027778,
+      "timeVotingStart": 1704489511173,
+      "timeVotingEnd": 1704835111173,
+      "ratios": {
+        "YES": 0.2982456140350877,
+        "NO": 0.3508771929824561,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3508771929824561
+      },
+      "total_votes": 57
+    },
+    "310": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Moon Pad Claim  Upload contract",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "REJECTED",
+      "timeSubmit": 1704374975888,
+      "timeVotingStart": 1704463790321,
+      "timeVotingEnd": 1704809390321,
+      "ratios": {
+        "YES": 0.19298245614035087,
+        "NO": 0.543859649122807,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2631578947368421
+      },
+      "total_votes": 57
+    },
+    "309": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Moon Pad Sale  Upload contract",
+      "type": "/cosmwasm.wasm.v1.MsgStoreCode",
+      "status": "REJECTED",
+      "timeSubmit": 1704300486713,
+      "timeVotingStart": 1704463819329,
+      "timeVotingEnd": 1704809419329,
+      "ratios": {
+        "YES": 0.15789473684210525,
+        "NO": 0.5614035087719298,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2807017543859649
+      },
+      "total_votes": 57
+    },
+    "193": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Trade  Earn rewards points adjustment for epoch ended Dec 7 2022 UTC",
+      "type": "/injective.exchange.v1beta1.TradingRewardPendingPointsUpdateProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1671206826397,
+      "timeVotingStart": 1671206887475,
+      "timeVotingEnd": 1671552487475,
+      "ratios": {
+        "YES": 0.2692307692307692,
+        "NO": 0.6153846153846154,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.11538461538461539
+      },
+      "total_votes": 26
+    },
+    "174": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Trade  Earn Rewards Adjustment",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1665479846647,
+      "timeVotingStart": 1665496133645,
+      "timeVotingEnd": 1665841733645,
+      "ratios": {
+        "YES": 0.2222222222222222,
+        "NO": 0.2222222222222222,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5555555555555556
+      },
+      "total_votes": 18
+    },
+    "171": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Increase Peggy TargetBatchTimeout",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1662632378333,
+      "timeVotingStart": 1662632449525,
+      "timeVotingEnd": 1662978049525,
+      "ratios": {
+        "YES": 0.631578947368421,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3684210526315789
+      },
+      "total_votes": 19
+    },
+    "165": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Disbursement of DMM rewards for epochs ended on 17 May 2022 and 14 June 2022",
+      "type": "/injective.exchange.v1beta1.BatchCommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1658795756858,
+      "timeVotingStart": 1658796006252,
+      "timeVotingEnd": 1659141606252,
+      "ratios": {
+        "YES": 0.6666666666666666,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3333333333333333
+      },
+      "total_votes": 12
+    },
+    "164": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Adjust Fee Discount Tiers Threshold And Maker Discount",
+      "type": "/injective.exchange.v1beta1.FeeDiscountProposal",
+      "status": "PASSED",
+      "timeSubmit": 1658136601947,
+      "timeVotingStart": 1658136678738,
+      "timeVotingEnd": 1658482278738,
+      "ratios": {
+        "YES": 0.6363636363636364,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.36363636363636365
+      },
+      "total_votes": 11
+    },
+    "161": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Dexterium grant proposal",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1656742270505,
+      "timeVotingStart": 1656742270505,
+      "timeVotingEnd": 1657087870505,
+      "ratios": {
+        "YES": 0.3333333333333333,
+        "NO": 0.3333333333333333,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3333333333333333
+      },
+      "total_votes": 15
+    },
+    "158": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Disbursement of DMM rewards for epochs ended on 17 May 2022 and 14 June 2022",
+      "type": "/injective.exchange.v1beta1.BatchCommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1656075770091,
+      "timeVotingStart": 1656152726405,
+      "timeVotingEnd": 1656498326405,
+      "ratios": {
+        "YES": 0.6363636363636364,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.36363636363636365
+      },
+      "total_votes": 11
+    },
+    "154": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Trade  Earn rewards points adjustment for epoch ended June 1 2022 UTC",
+      "type": "/injective.exchange.v1beta1.TradingRewardPendingPointsUpdateProposal",
+      "status": "PASSED",
+      "timeSubmit": 1654829255468,
+      "timeVotingStart": 1654829309571,
+      "timeVotingEnd": 1655174909571,
+      "ratios": {
+        "YES": 0.6428571428571429,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.35714285714285715
+      },
+      "total_votes": 14
+    },
+    "153": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Disbursement of DMM rewards for epochs ended on 22 Feb 2022 and 17 May 2022",
+      "type": "/injective.exchange.v1beta1.BatchCommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1654829148156,
+      "timeVotingStart": 1654831504578,
+      "timeVotingEnd": 1655177104578,
+      "ratios": {
+        "YES": 0.6428571428571429,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.35714285714285715
+      },
+      "total_votes": 14
+    },
+    "152": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Trade  Earn rewards points adjustment for epoch ended May 25 2022 UTC",
+      "type": "/injective.exchange.v1beta1.TradingRewardPendingPointsUpdateProposal",
+      "status": "PASSED",
+      "timeSubmit": 1654263909683,
+      "timeVotingStart": 1654264036248,
+      "timeVotingEnd": 1654609636248,
+      "ratios": {
+        "YES": 0.6363636363636364,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.36363636363636365
+      },
+      "total_votes": 11
+    },
+    "151": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Trade  Earn rewards points adjustment for epoch ended May 18 2022 UTC",
+      "type": "/injective.exchange.v1beta1.TradingRewardPendingPointsUpdateProposal",
+      "status": "PASSED",
+      "timeSubmit": 1653662568981,
+      "timeVotingStart": 1653663304674,
+      "timeVotingEnd": 1654008904674,
+      "ratios": {
+        "YES": 0.7,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3
+      },
+      "total_votes": 10
+    },
+    "150": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Trade  Earn rewards points adjustment for epoch ended May 11 2022 UTC",
+      "type": "/injective.exchange.v1beta1.TradingRewardPendingPointsUpdateProposal",
+      "status": "PASSED",
+      "timeSubmit": 1653034420595,
+      "timeVotingStart": 1653034449234,
+      "timeVotingEnd": 1653380049234,
+      "ratios": {
+        "YES": 0.6666666666666666,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3333333333333333
+      },
+      "total_votes": 12
+    },
+    "145": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Trade  Earn rewards points adjustment for epoch ended April 27 2022 UTC",
+      "type": "/injective.exchange.v1beta1.TradingRewardPendingPointsUpdateProposal",
+      "status": "PASSED",
+      "timeSubmit": 1651903716258,
+      "timeVotingStart": 1651904327612,
+      "timeVotingEnd": 1652249927612,
+      "ratios": {
+        "YES": 0.625,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.375
+      },
+      "total_votes": 8
+    },
+    "141": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Trade  Earn rewards points adjustment for epoch ended April 20 2022 UTC",
+      "type": "/injective.exchange.v1beta1.TradingRewardPendingPointsUpdateProposal",
+      "status": "PASSED",
+      "timeSubmit": 1651135821405,
+      "timeVotingStart": 1651138827194,
+      "timeVotingEnd": 1651484427194,
+      "ratios": {
+        "YES": 0.6666666666666666,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3333333333333333
+      },
+      "total_votes": 12
+    },
+    "139": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Disbursement of DMM rewards for epochs ended on 25 Jan 2022 and 19 April 2022",
+      "type": "/injective.exchange.v1beta1.BatchCommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1650962410671,
+      "timeVotingStart": 1651045231764,
+      "timeVotingEnd": 1651390831764,
+      "ratios": {
+        "YES": 0.6363636363636364,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.36363636363636365
+      },
+      "total_votes": 11
+    },
+    "116": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Trade  Earn rewards points adjustment for epoch ended February 16 2022 UTC",
+      "type": "/injective.exchange.v1beta1.TradingRewardPendingPointsUpdateProposal",
+      "status": "PASSED",
+      "timeSubmit": 1645381559050,
+      "timeVotingStart": 1645393820457,
+      "timeVotingEnd": 1645566620457,
+      "ratios": {
+        "YES": 0.625,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.375
+      },
+      "total_votes": 8
+    },
+    "101": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Update Fee Discounts VIP Tiers",
+      "type": "/injective.exchange.v1beta1.FeeDiscountProposal",
+      "status": "PASSED",
+      "timeSubmit": 1641635258204,
+      "timeVotingStart": 1641663285381,
+      "timeVotingEnd": 1641836085381,
+      "ratios": {
+        "YES": 0.6666666666666666,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3333333333333333
+      },
+      "total_votes": 6
+    },
+    "100": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Update staking requirement for Trade  Earn rewards",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1641552115896,
+      "timeVotingStart": 1641663257587,
+      "timeVotingEnd": 1641836057587,
+      "ratios": {
+        "YES": 0.6666666666666666,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3333333333333333
+      },
+      "total_votes": 6
+    },
+    "99": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Trading Reward Campaign Boost Update",
+      "type": "/injective.exchange.v1beta1.TradingRewardCampaignUpdateProposal",
+      "status": "PASSED",
+      "timeSubmit": 1641490509859,
+      "timeVotingStart": 1641502936844,
+      "timeVotingEnd": 1641675736844,
+      "ratios": {
+        "YES": 0.6,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.4
+      },
+      "total_votes": 5
+    },
+    "97": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Disbursement of DMM rewards as at 28 Dec 2021",
+      "type": "/injective.exchange.v1beta1.BatchCommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1641382537413,
+      "timeVotingStart": 1641383788924,
+      "timeVotingEnd": 1641556588924,
+      "ratios": {
+        "YES": 0.6666666666666666,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3333333333333333
+      },
+      "total_votes": 3
+    },
+    "95": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Band Oracle Incident Grants Part 2",
+      "type": "/injective.exchange.v1beta1.BatchCommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1641286821934,
+      "timeVotingStart": 1641286821934,
+      "timeVotingEnd": 1641459621934,
+      "ratios": {
+        "YES": 0.3333333333333333,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6666666666666666
+      },
+      "total_votes": 3
+    },
+    "63": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Stargazers Ambassador Program Launch",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1633989867236,
+      "timeVotingStart": 1634025874809,
+      "timeVotingEnd": 1634198674809,
+      "ratios": {
+        "YES": 0.5,
+        "NO": 0.5,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.0
+      },
+      "total_votes": 2
+    },
+    "47": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "BUSDUSDC Spot Market",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1626680820374,
+      "timeVotingStart": 1626680873416,
+      "timeVotingEnd": 1626853673416
+    },
+    "44": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Pause QNTUSDC spot market",
+      "type": "/injective.exchange.v1beta1.SpotMarketParamUpdateProposal",
+      "status": "PASSED",
+      "timeSubmit": 1626320399658,
+      "timeVotingStart": 1626378094690,
+      "timeVotingEnd": 1626550894690
+    },
+    "42": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "LINKUSDT Spot Market",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "PASSED",
+      "timeSubmit": 1626234824077,
+      "timeVotingStart": 1626235235888,
+      "timeVotingEnd": 1626408035888
+    },
+    "41": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "GRTUSDT Spot Market",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "PASSED",
+      "timeSubmit": 1626234736899,
+      "timeVotingStart": 1626266613542,
+      "timeVotingEnd": 1626439413542
+    },
+    "40": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "SUSHIUSDT Spot Market",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "PASSED",
+      "timeSubmit": 1626234627365,
+      "timeVotingStart": 1626266854655,
+      "timeVotingEnd": 1626439654655
+    },
+    "39": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "QNTUSDT Spot Market",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1626234527413,
+      "timeVotingStart": 1626250040486,
+      "timeVotingEnd": 1626422840486
+    },
+    "37": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "AAVEUSDT Spot Market",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "PASSED",
+      "timeSubmit": 1626234224266,
+      "timeVotingStart": 1626235799483,
+      "timeVotingEnd": 1626408599483
+    },
+    "36": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "WETHUSDT Spot Market",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "PASSED",
+      "timeSubmit": 1626234132609,
+      "timeVotingStart": 1626235614802,
+      "timeVotingEnd": 1626408414802
+    },
+    "35": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "UNI  USDC Spot Market Proposal",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "PASSED",
+      "timeSubmit": 1626101848171,
+      "timeVotingStart": 1626103229321,
+      "timeVotingEnd": 1626276029321
+    },
+    "34": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "MATIC  USDT Spot Market Proposal",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "PASSED",
+      "timeSubmit": 1626078987995,
+      "timeVotingStart": 1626080980791,
+      "timeVotingEnd": 1626253780791
+    },
+    "31": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "INJ  USDT Spot Market Proposal",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "PASSED",
+      "timeSubmit": 1625852874051,
+      "timeVotingStart": 1625997276019,
+      "timeVotingEnd": 1626170076019
+    },
+    "30": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "CHZ  USDC Spot Market Proposal",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1625851842202,
+      "timeVotingStart": 1625881491391,
+      "timeVotingEnd": 1626054291391
+    },
+    "29": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "GRT USDC Spot Market Proposal",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "PASSED",
+      "timeSubmit": 1625847127599,
+      "timeVotingStart": 1625854513302,
+      "timeVotingEnd": 1626027313302
+    },
+    "28": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "DEFI5  USDC Spot Market Proposal",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1625846915659,
+      "timeVotingStart": 1625850413677,
+      "timeVotingEnd": 1626023213677
+    },
+    "27": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "STARSUSDC Spot Market",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1625829558078,
+      "timeVotingStart": 1625854608547,
+      "timeVotingEnd": 1626027408547
+    },
+    "26": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "OCEAN USDC Spot Market Proposal",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1625826429678,
+      "timeVotingStart": 1625852347820,
+      "timeVotingEnd": 1626025147820
+    },
+    "25": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "UTK  USDC Spot Market",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1625822794717,
+      "timeVotingStart": 1625827692859,
+      "timeVotingEnd": 1626000492859
+    },
+    "23": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "RUNE  USDC Spot Market Proposal",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1625811198111,
+      "timeVotingStart": 1625850344554,
+      "timeVotingEnd": 1626023144554
+    },
+    "22": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "SWAP  USDC Spot Market",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1625787102052,
+      "timeVotingStart": 1625787102052,
+      "timeVotingEnd": 1625959902052
+    },
+    "21": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "1 INCH  USDC Spot Market Proposal",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1625760104465,
+      "timeVotingStart": 1625821670140,
+      "timeVotingEnd": 1625994470140
+    },
+    "20": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "ENJIN  USDC Spot Market",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1625759851574,
+      "timeVotingStart": 1625821323917,
+      "timeVotingEnd": 1625994123917
+    },
+    "18": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "PAXG  USDC Spot Market",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1625709418782,
+      "timeVotingStart": 1625731087055,
+      "timeVotingEnd": 1625903887055
+    },
+    "17": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "SUSHIUSDC Spot Market",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "PASSED",
+      "timeSubmit": 1625681499132,
+      "timeVotingStart": 1625681677941,
+      "timeVotingEnd": 1625854477941
+    },
+    "16": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "QNT USDC Spot Market Proposal",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "PASSED",
+      "timeSubmit": 1625678535410,
+      "timeVotingStart": 1625681080585,
+      "timeVotingEnd": 1625853880585
+    },
+    "15": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "LINK USDC Spot Market",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "PASSED",
+      "timeSubmit": 1625650797204,
+      "timeVotingStart": 1625654568827,
+      "timeVotingEnd": 1625827368827
+    },
+    "12": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "AAVE USDC Spot Market",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "PASSED",
+      "timeSubmit": 1625628768519,
+      "timeVotingStart": 1625674456791,
+      "timeVotingEnd": 1625847256791
+    },
+    "11": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "MATIC USDC Spot Market",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "PASSED",
+      "timeSubmit": 1625579706916,
+      "timeVotingStart": 1625677472310,
+      "timeVotingEnd": 1625850272310
+    },
+    "10": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "UNIUSDT Spot Market",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "PASSED",
+      "timeSubmit": 1625562067918,
+      "timeVotingStart": 1625677709377,
+      "timeVotingEnd": 1625850509377
+    },
+    "9": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "USDTUSDC Spot Market",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "PASSED",
+      "timeSubmit": 1625554589505,
+      "timeVotingStart": 1625561749546,
+      "timeVotingEnd": 1625734549546
+    },
+    "8": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "LINKUSDC Spot Proposal",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1625554461781,
+      "timeVotingStart": 1625648486414,
+      "timeVotingEnd": 1625821286414
+    },
+    "7": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "USDTUSDC spot market",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1625488967818,
+      "timeVotingStart": 1625502489331,
+      "timeVotingEnd": 1625675289331
+    },
+    "6": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "INJUSDC",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "PASSED",
+      "timeSubmit": 1625415641888,
+      "timeVotingStart": 1625503875634,
+      "timeVotingEnd": 1625676675634
+    },
+    "5": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "WETH USDC Spot Market",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "PASSED",
+      "timeSubmit": 1625414893507,
+      "timeVotingStart": 1625450292446,
+      "timeVotingEnd": 1625623092446
+    },
+    "1": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "wETHUSDC Spot Market Proposal",
+      "type": "/injective.exchange.v1beta1.SpotMarketLaunchProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1625217987097,
+      "timeVotingStart": 1625237497784,
+      "timeVotingEnd": 1625410297784
+    }
+  }
+}

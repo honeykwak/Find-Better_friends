@@ -1,0 +1,962 @@
+{
+  "validator_count": 387,
+  "proposals": {
+    "956": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Update the Hubs stATOMATOM POL position on Osmosis",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1724926719430,
+      "timeVotingStart": 1724943616352,
+      "timeVotingEnd": 1726153216352,
+      "ratios": {
+        "YES": 0.06666666666666667,
+        "NO": 0.6476190476190476,
+        "NO_WITH_VETO": 0.06666666666666667,
+        "ABSTAIN": 0.21904761904761905
+      },
+      "total_votes": 105
+    },
+    "954": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Permissionless ICS 3rd Party Audit",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1724760207956,
+      "timeVotingStart": 1724761084373,
+      "timeVotingEnd": 1725970684373,
+      "ratios": {
+        "YES": 0.6306306306306306,
+        "NO": 0.09009009009009009,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.27927927927927926
+      },
+      "total_votes": 111
+    },
+    "952": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Declaration of No Confidence in the Interchain Foundation ICF Leadership A Call to Action",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1724390115999,
+      "timeVotingStart": 1724390115999,
+      "timeVotingEnd": 1725599715999,
+      "ratios": {
+        "YES": 0.2702702702702703,
+        "NO": 0.18018018018018017,
+        "NO_WITH_VETO": 0.08108108108108109,
+        "ABSTAIN": 0.46846846846846846
+      },
+      "total_votes": 111
+    },
+    "946": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Lend ATOM on Mars v2 on Neutron",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1723043034643,
+      "timeVotingStart": 1723043034643,
+      "timeVotingEnd": 1724252634643,
+      "ratios": {
+        "YES": 0.3761467889908257,
+        "NO": 0.30275229357798167,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3211009174311927
+      },
+      "total_votes": 109
+    },
+    "922": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "AADAO Oversight Election Vote for Clyde Carver",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1715365693585,
+      "timeVotingStart": 1715365693585,
+      "timeVotingEnd": 1716575293585,
+      "ratios": {
+        "YES": 0.2807017543859649,
+        "NO": 0.043859649122807015,
+        "NO_WITH_VETO": 0.008771929824561403,
+        "ABSTAIN": 0.6666666666666666
+      },
+      "total_votes": 114
+    },
+    "920": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "AADAO Oversight Election Vote for Grace Cosmos Nanny",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1715365412789,
+      "timeVotingStart": 1715365412789,
+      "timeVotingEnd": 1716575012789,
+      "ratios": {
+        "YES": 0.39473684210526316,
+        "NO": 0.07017543859649122,
+        "NO_WITH_VETO": 0.008771929824561403,
+        "ABSTAIN": 0.5263157894736842
+      },
+      "total_votes": 114
+    },
+    "916": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "DoraHacks AEZ Quadratic Funding Program",
+      "type": "unknown",
+      "status": "REJECTED",
+      "timeSubmit": 1714414830997,
+      "timeVotingStart": 1714414830997,
+      "timeVotingEnd": 1715624430997,
+      "ratios": {
+        "YES": 0.24299065420560748,
+        "NO": 0.5420560747663551,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.21495327102803738
+      },
+      "total_votes": 107
+    },
+    "899": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "DCF   Agoric Cosmos Hub Proposal",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1712097112395,
+      "timeVotingStart": 1712097112395,
+      "timeVotingEnd": 1713306712395,
+      "ratios": {
+        "YES": 0.6607142857142857,
+        "NO": 0.10714285714285714,
+        "NO_WITH_VETO": 0.008928571428571428,
+        "ABSTAIN": 0.22321428571428573
+      },
+      "total_votes": 112
+    },
+    "895": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Signaling Proposal Permissioned CosmWasm",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1711420381393,
+      "timeVotingStart": 1711425218530,
+      "timeVotingEnd": 1712634818530,
+      "ratios": {
+        "YES": 0.45161290322580644,
+        "NO": 0.21774193548387097,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.33064516129032256
+      },
+      "total_votes": 124
+    },
+    "868": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Decrease InflationMin parameter to 0",
+      "type": "ParameterChange",
+      "status": "REJECTED",
+      "timeSubmit": 1703981713641,
+      "timeVotingStart": 1704774642507,
+      "timeVotingEnd": 1705984242507,
+      "ratios": {
+        "YES": 0.36423841059602646,
+        "NO": 0.48344370860927155,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.152317880794702
+      },
+      "total_votes": 151
+    },
+    "861": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Increase Active Set of Validators from 180 to 190",
+      "type": "ParameterChange",
+      "status": "REJECTED",
+      "timeSubmit": 1702322900885,
+      "timeVotingStart": 1702322900885,
+      "timeVotingEnd": 1703532500885,
+      "ratios": {
+        "YES": 0.2152777777777778,
+        "NO": 0.5486111111111112,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2361111111111111
+      },
+      "total_votes": 144
+    },
+    "853": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Allocate 600k ATOM for liquid staking growth to pSTAKE",
+      "type": "CommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1700577674046,
+      "timeVotingStart": 1700577930682,
+      "timeVotingEnd": 1701787530682,
+      "ratios": {
+        "YES": 0.4868421052631579,
+        "NO": 0.23026315789473684,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.28289473684210525
+      },
+      "total_votes": 152
+    },
+    "848": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "ATOM Halving Set the max Inflation Rate to 10",
+      "type": "ParameterChange",
+      "status": "PASSED",
+      "timeSubmit": 1699736427879,
+      "timeVotingStart": 1699736427879,
+      "timeVotingEnd": 1700946027879,
+      "ratios": {
+        "YES": 0.6094674556213018,
+        "NO": 0.24260355029585798,
+        "NO_WITH_VETO": 0.011834319526627219,
+        "ABSTAIN": 0.13609467455621302
+      },
+      "total_votes": 169
+    },
+    "839": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Fund 2024 Hub development by Informal Systems and Hypha Worker Coop",
+      "type": "CommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1698365046510,
+      "timeVotingStart": 1698365304992,
+      "timeVotingEnd": 1699574904992,
+      "ratios": {
+        "YES": 0.4934210526315789,
+        "NO": 0.21052631578947367,
+        "NO_WITH_VETO": 0.02631578947368421,
+        "ABSTAIN": 0.26973684210526316
+      },
+      "total_votes": 152
+    },
+    "836": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Vitwits Funding Proposal Support Resolute",
+      "type": "CommunityPoolSpend",
+      "status": "REJECTED",
+      "timeSubmit": 1697655930320,
+      "timeVotingStart": 1697656130879,
+      "timeVotingEnd": 1698865730879,
+      "ratios": {
+        "YES": 0.36363636363636365,
+        "NO": 0.36363636363636365,
+        "NO_WITH_VETO": 0.013986013986013986,
+        "ABSTAIN": 0.25874125874125875
+      },
+      "total_votes": 143
+    },
+    "827": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Reduce Maximum Block Size",
+      "type": "ParameterChange",
+      "status": "REJECTED",
+      "timeSubmit": 1696153542814,
+      "timeVotingStart": 1696153542814,
+      "timeVotingEnd": 1697363142814,
+      "ratios": {
+        "YES": 0.3197278911564626,
+        "NO": 0.48299319727891155,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.19727891156462585
+      },
+      "total_votes": 147
+    },
+    "818": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "Punish Equivocation on Neutron by Pupmos and Citizen Cosmos",
+      "type": "Equivocation",
+      "status": "REJECTED",
+      "timeSubmit": 1691634507980,
+      "timeVotingStart": 1691634507980,
+      "timeVotingEnd": 1692844107980,
+      "ratios": {
+        "YES": 0.2214765100671141,
+        "NO": 0.6375838926174496,
+        "NO_WITH_VETO": 0.03355704697986577,
+        "ABSTAIN": 0.10738255033557047
+      },
+      "total_votes": 149
+    },
+    "796": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "Nullify proposal 75",
+      "type": "Text",
+      "status": "REJECTED",
+      "timeSubmit": 1683304209404,
+      "timeVotingStart": 1683309651810,
+      "timeVotingEnd": 1684519251810,
+      "ratios": {
+        "YES": 0.3865546218487395,
+        "NO": 0.23529411764705882,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.37815126050420167
+      },
+      "total_votes": 119
+    },
+    "793": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "Request to Drop the Lawsuit All in Bits Inc vs Grace Yu",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1682258636287,
+      "timeVotingStart": 1682258636287,
+      "timeVotingEnd": 1683468236287,
+      "ratios": {
+        "YES": 0.5298507462686567,
+        "NO": 0.022388059701492536,
+        "NO_WITH_VETO": 0.06716417910447761,
+        "ABSTAIN": 0.3805970149253731
+      },
+      "total_votes": 134
+    },
+    "791": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Legal Defense Fund Proposal",
+      "type": "CommunityPoolSpend",
+      "status": "REJECTED",
+      "timeSubmit": 1681969405937,
+      "timeVotingStart": 1681969405937,
+      "timeVotingEnd": 1683179005937,
+      "ratios": {
+        "YES": 0.11029411764705882,
+        "NO": 0.5514705882352942,
+        "NO_WITH_VETO": 0.14705882352941177,
+        "ABSTAIN": 0.19117647058823528
+      },
+      "total_votes": 136
+    },
+    "787": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "Formally request full financial transparency from the Interchain Foundation",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1680341655309,
+      "timeVotingStart": 1680341655309,
+      "timeVotingEnd": 1681551255309,
+      "ratios": {
+        "YES": 0.47692307692307695,
+        "NO": 0.05384615384615385,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.46923076923076923
+      },
+      "total_votes": 130
+    },
+    "202": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Interchain Info Funding",
+      "type": "CommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1677006700431,
+      "timeVotingStart": 1677027012536,
+      "timeVotingEnd": 1678236612536,
+      "ratios": {
+        "YES": 0.4728682170542636,
+        "NO": 0.20155038759689922,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.32558139534883723
+      },
+      "total_votes": 129
+    },
+    "155": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Spacebox  Tool for chain Indexation and Storage in the Cosmos Hub",
+      "type": "CommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1676981365526,
+      "timeVotingStart": 1677145586694,
+      "timeVotingEnd": 1678355186694,
+      "ratios": {
+        "YES": 0.2661290322580645,
+        "NO": 0.3467741935483871,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3870967741935484
+      },
+      "total_votes": 124
+    },
+    "104": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Fund notional to work on the Cosmos Hub",
+      "type": "CommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1676478759024,
+      "timeVotingStart": 1676479751930,
+      "timeVotingEnd": 1677689351930,
+      "ratios": {
+        "YES": 0.5746268656716418,
+        "NO": 0.16417910447761194,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.26119402985074625
+      },
+      "total_votes": 134
+    },
+    "101": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Aid Proposal for Earthquake Survivors in Trkiye",
+      "type": "CommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1676026906316,
+      "timeVotingStart": 1676030132002,
+      "timeVotingEnd": 1677239732002,
+      "ratios": {
+        "YES": 0.29457364341085274,
+        "NO": 0.2868217054263566,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.4186046511627907
+      },
+      "total_votes": 129
+    },
+    "99": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "Censure allnodes for insecure VaaS practices",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1675686020794,
+      "timeVotingStart": 1676362818941,
+      "timeVotingEnd": 1677572418941,
+      "ratios": {
+        "YES": 0.2892561983471074,
+        "NO": 0.12396694214876033,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5867768595041323
+      },
+      "total_votes": 121
+    },
+    "90": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Community Health research analytics and benchmarking",
+      "type": "CommunityPoolSpend",
+      "status": "REJECTED",
+      "timeSubmit": 1671104164306,
+      "timeVotingStart": 1671104164306,
+      "timeVotingEnd": 1672313764306,
+      "ratios": {
+        "YES": 0.1487603305785124,
+        "NO": 0.5537190082644629,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2975206611570248
+      },
+      "total_votes": 121
+    },
+    "89": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Cosmos Ecosystem News Videos",
+      "type": "CommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1670676553399,
+      "timeVotingStart": 1670678655949,
+      "timeVotingEnd": 1671888255949,
+      "ratios": {
+        "YES": 0.1865671641791045,
+        "NO": 0.43283582089552236,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3805970149253731
+      },
+      "total_votes": 134
+    },
+    "86": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "ATOM20 will split the community in half",
+      "type": "Text",
+      "status": "REJECTED",
+      "timeSubmit": 1668189373088,
+      "timeVotingStart": 1668189730798,
+      "timeVotingEnd": 1669399330798,
+      "ratios": {
+        "YES": 0.04310344827586207,
+        "NO": 0.25862068965517243,
+        "NO_WITH_VETO": 0.21551724137931033,
+        "ABSTAIN": 0.4827586206896552
+      },
+      "total_votes": 116
+    },
+    "83": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Atom One Constitution sentiment proposal",
+      "type": "Text",
+      "status": "REJECTED",
+      "timeSubmit": 1667224394524,
+      "timeVotingStart": 1667224394524,
+      "timeVotingEnd": 1668433994524,
+      "ratios": {
+        "YES": 0.0440251572327044,
+        "NO": 0.6540880503144654,
+        "NO_WITH_VETO": 0.05660377358490566,
+        "ABSTAIN": 0.24528301886792453
+      },
+      "total_votes": 159
+    },
+    "82": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "ATOM 20 A new vision for Cosmos Hub",
+      "type": "Text",
+      "status": "REJECTED",
+      "timeSubmit": 1667215558153,
+      "timeVotingStart": 1667215984557,
+      "timeVotingEnd": 1668425584557,
+      "ratios": {
+        "YES": 0.5672514619883041,
+        "NO": 0.07017543859649122,
+        "NO_WITH_VETO": 0.26900584795321636,
+        "ABSTAIN": 0.0935672514619883
+      },
+      "total_votes": 171
+    },
+    "80": {
+      "main_category": "organizational",
+      "sub_category": "emergency_response",
+      "title": "Risk and financial analysis of ATOM20",
+      "type": "Text",
+      "status": "REJECTED",
+      "timeSubmit": 1666644730914,
+      "timeVotingStart": 1666644895966,
+      "timeVotingEnd": 1667854495966,
+      "ratios": {
+        "YES": 0.053691275167785234,
+        "NO": 0.5369127516778524,
+        "NO_WITH_VETO": 0.14093959731543623,
+        "ABSTAIN": 0.2684563758389262
+      },
+      "total_votes": 149
+    },
+    "79": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Adan nonprofit fighting for sound crypto regulation",
+      "type": "CommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1666640739969,
+      "timeVotingStart": 1666640739969,
+      "timeVotingEnd": 1667850339969,
+      "ratios": {
+        "YES": 0.6357615894039735,
+        "NO": 0.11920529801324503,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.24503311258278146
+      },
+      "total_votes": 151
+    },
+    "78": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "Letter from many Cosmos maximalists to the hub",
+      "type": "Text",
+      "status": "REJECTED",
+      "timeSubmit": 1665397831195,
+      "timeVotingStart": 1665409955181,
+      "timeVotingEnd": 1666619555181,
+      "ratios": {
+        "YES": 0.03418803418803419,
+        "NO": 0.4358974358974359,
+        "NO_WITH_VETO": 0.15384615384615385,
+        "ABSTAIN": 0.37606837606837606
+      },
+      "total_votes": 117
+    },
+    "76": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": " Require a minimum 5 commission for all validator nodes",
+      "type": "Text",
+      "status": "REJECTED",
+      "timeSubmit": 1661458705683,
+      "timeVotingStart": 1661459015633,
+      "timeVotingEnd": 1662668615633,
+      "ratios": {
+        "YES": 0.4778761061946903,
+        "NO": 0.39823008849557523,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.12389380530973451
+      },
+      "total_votes": 113
+    },
+    "75": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "Establishing a definition of NoWithVeto",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1660313580890,
+      "timeVotingStart": 1660588708357,
+      "timeVotingEnd": 1661798308357,
+      "ratios": {
+        "YES": 0.39823008849557523,
+        "NO": 0.21238938053097345,
+        "NO_WITH_VETO": 0.008849557522123894,
+        "ABSTAIN": 0.3805309734513274
+      },
+      "total_votes": 113
+    },
+    "73": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "Gift to Cosmos stakeholders",
+      "type": "Text",
+      "status": "REJECTED",
+      "timeSubmit": 1657627957224,
+      "timeVotingStart": 1657627957224,
+      "timeVotingEnd": 1658837557224,
+      "ratios": {
+        "YES": 0.009345794392523364,
+        "NO": 0.21495327102803738,
+        "NO_WITH_VETO": 0.6542056074766355,
+        "ABSTAIN": 0.12149532710280374
+      },
+      "total_votes": 107
+    },
+    "69": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Include CosmWasm in Rho Upgrade",
+      "type": "Text",
+      "status": "REJECTED",
+      "timeSubmit": 1651151183247,
+      "timeVotingStart": 1651244420648,
+      "timeVotingEnd": 1652454020648,
+      "ratios": {
+        "YES": 0.23140495867768596,
+        "NO": 0.5867768595041323,
+        "NO_WITH_VETO": 0.06611570247933884,
+        "ABSTAIN": 0.11570247933884298
+      },
+      "total_votes": 121
+    },
+    "63": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Activate governance discussions on the Discourse forum using community pool funds",
+      "type": "CommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1647374719867,
+      "timeVotingStart": 1647389713284,
+      "timeVotingEnd": 1648599313284,
+      "ratios": {
+        "YES": 0.673469387755102,
+        "NO": 0.04081632653061224,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2857142857142857
+      },
+      "total_votes": 98
+    },
+    "60": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "Use EVM instead of EVMOS as the symbol for Evmos native coin",
+      "type": "Text",
+      "status": "REJECTED",
+      "timeSubmit": 1641688184639,
+      "timeVotingStart": 1641689702437,
+      "timeVotingEnd": 1642899302437,
+      "ratios": {
+        "YES": 0.36363636363636365,
+        "NO": 0.19696969696969696,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.4393939393939394
+      },
+      "total_votes": 66
+    },
+    "52": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "ATOM  Osmosis  Allocate Community Pool to ATOM Liquidity Incentives",
+      "type": "CommunityPoolSpend",
+      "status": "REJECTED",
+      "timeSubmit": 1626037826141,
+      "timeVotingStart": 1626037826141,
+      "timeVotingEnd": 1627247426141,
+      "ratios": {
+        "YES": 0.5319148936170213,
+        "NO": 0.3829787234042553,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.0851063829787234
+      },
+      "total_votes": 47
+    },
+    "37": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Stargate Upgrade Second time is a charm",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1611868050044,
+      "timeVotingStart": 1611898554623,
+      "timeVotingEnd": 1613108154623
+    },
+    "36": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Delay of Hub Stargate Upgrade for approximately 2 weeks",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1611503512051,
+      "timeVotingStart": 1611508959722,
+      "timeVotingEnd": 1612718559722
+    },
+    "35": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Cosmos Stargate Hub Upgrade Proposal 2 Time to Upgrade",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1610415427471,
+      "timeVotingStart": 1610421419677,
+      "timeVotingEnd": 1611631019677
+    },
+    "34": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Luna Mission  Funding ATOM",
+      "type": "CommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1609888166477,
+      "timeVotingStart": 1609952988361,
+      "timeVotingEnd": 1611162588361
+    },
+    "32": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Funding for Development of Governance Split Votes",
+      "type": "CommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1606238556584,
+      "timeVotingStart": 1606244751541,
+      "timeVotingEnd": 1607454351541
+    },
+    "31": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Governance Split Votes",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1606092818508,
+      "timeVotingStart": 1606093437407,
+      "timeVotingEnd": 1607303037407
+    },
+    "30": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Adjust Blocks Per Year to 436M",
+      "type": "ParameterChange",
+      "status": "PASSED",
+      "timeSubmit": 1604370905578,
+      "timeVotingStart": 1604484916314,
+      "timeVotingEnd": 1605694516314
+    },
+    "29": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Genesis fund recovery proposal on behalf of fundraiser participants unable to access their ATOMs",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1599634066521,
+      "timeVotingStart": 1599634066521,
+      "timeVotingEnd": 1600843666521
+    },
+    "27": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Stargate Upgrade Proposal 1",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1594534982440,
+      "timeVotingStart": 1594604267298,
+      "timeVotingEnd": 1595813867298
+    },
+    "26": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Takeoff Proposal from Cyber to Cosmos",
+      "type": "CommunityPoolSpend",
+      "status": "REJECTED",
+      "timeSubmit": 1590084011292,
+      "timeVotingStart": 1590084011292,
+      "timeVotingEnd": 1591293611292
+    },
+    "25": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "CosmWasm Integration 1  Permissions and Upgrades",
+      "type": "CommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1589303400465,
+      "timeVotingStart": 1589319291554,
+      "timeVotingEnd": 1590528891554
+    },
+    "23": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Cosmos Governance Working Group  Q1 2020",
+      "type": "CommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1579071108001,
+      "timeVotingStart": 1579115768573,
+      "timeVotingEnd": 1580325368573
+    },
+    "19": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Cosmos Hub 3 Upgrade Proposal E",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1573751611985,
+      "timeVotingStart": 1573797430911,
+      "timeVotingEnd": 1575007030911
+    },
+    "16": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Cosmos Hub 3 Upgrade Proposal D",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1567719152253,
+      "timeVotingStart": 1567737001287,
+      "timeVotingEnd": 1568946601287
+    },
+    "14": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Cosmos Hub 3 Upgrade Proposal B",
+      "type": "Text",
+      "status": "REJECTED",
+      "timeSubmit": 1566576979814,
+      "timeVotingStart": 1566582195034,
+      "timeVotingEnd": 1567791795034
+    },
+    "13": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Cosmos Hub 3 Upgrade Proposal A",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1564164250416,
+      "timeVotingStart": 1564411038454,
+      "timeVotingEnd": 1565620638454
+    },
+    "12": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "Are Validators Charging 0 Commission Harmful to the Success of the Cosmos Hub",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1563841695881,
+      "timeVotingStart": 1563872377718,
+      "timeVotingEnd": 1565081977718
+    },
+    "10": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Increase Max Validator Set Size to 125",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1561990165508,
+      "timeVotingStart": 1562151719653,
+      "timeVotingEnd": 1563361319653
+    },
+    "8": {
+      "main_category": "organizational",
+      "sub_category": "emergency_response",
+      "title": "Notification for Security Critical Hard Fork at Block 482100",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1559245382870,
+      "timeVotingStart": 1559245695472,
+      "timeVotingEnd": 1560455295472
+    },
+    "7": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Activate the Community Pool",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1556917705443,
+      "timeVotingStart": 1556985753246,
+      "timeVotingEnd": 1558195353246
+    },
+    "6": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Dont Burn Deposits for Rejected Governance Proposals Unless Vetoed",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1556907273209,
+      "timeVotingStart": 1556913058076,
+      "timeVotingEnd": 1558122658076
+    },
+    "5": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Expedited Cosmos Upgrade Proposal",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1555634995251,
+      "timeVotingStart": 1555642081207,
+      "timeVotingEnd": 1556851681207
+    },
+    "4": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "Proposal for issuance of fungible tokens directly on the Cosmos Hub",
+      "type": "Text",
+      "status": "REJECTED",
+      "timeSubmit": 1555317939072,
+      "timeVotingStart": 1555341948465,
+      "timeVotingEnd": 1556551548465
+    },
+    "3": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "ATOM Transfer Enablement v2",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1554286522291,
+      "timeVotingStart": 1554312912673,
+      "timeVotingEnd": 1555522512673
+    },
+    "2": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "ATOM Transfer Enablement",
+      "type": "Text",
+      "status": "REJECTED",
+      "timeSubmit": 1553550139240,
+      "timeVotingStart": 1553557444098,
+      "timeVotingEnd": 1554767044098
+    },
+    "1": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Adjustment of blocksperyear to come aligned with actual block time",
+      "type": "Text",
+      "status": "PASSED",
+      "timeSubmit": 1553064087040,
+      "timeVotingStart": 1553114639630,
+      "timeVotingEnd": 1554324239630
+    }
+  }
+}

@@ -103,10 +103,8 @@ export interface ChainState {
   }
 
 export interface ValidatorState {
-  validators: Validator[];
-  selectedValidator: string | null;
-  validatorSummary: ValidatorSummary | null;
-  validatorDetails: ValidatorDetails[];
+  selectedValidator: ValidatorData | null;
+  validatorChains: string[];
 }
 
 export interface ProposalState {
@@ -119,5 +117,63 @@ export interface ProposalState {
 
 export interface RootState {
     chain: ChainState;
+    validator: ValidatorState;
+    proposal: ProposalState;
   }
+
+export interface CategoryVoteStats {
+  count: number;
+  ratio: number;
+}
+
+export interface CategoryVotes {
+  total: CategoryVoteStats;
+  subcategories: {
+    [key: string]: CategoryVoteStats;
+  };
+}
+
+export interface ProposalVote {
+  option: string;
+  votingPower: number;
+}
+
+export interface ValidatorVotingPattern {
+  category_votes: {
+    [category: string]: {
+      total: {
+        count: number;
+        ratio: number;
+      };
+      subcategories: {
+        [subcategory: string]: {
+          count: number;
+          ratio: number;
+        };
+      };
+    };
+  };
+  proposal_votes: {
+    [proposalId: string]: ProposalVote;
+  };
+}
+
+export interface VotingPatternsData {
+  [validator: string]: ValidatorVotingPattern;
+}
+
+export interface ProposalData {
+  title: string;
+  main_category: string;
+  sub_category: string;
+  status: 'PASSED' | 'REJECTED';
+  // 필요한 다른 필드들...
+}
+
+export interface ChainProposalData {
+  validator_count: number;
+  proposals: {
+    [proposalId: string]: ProposalData;
+  };
+}
 

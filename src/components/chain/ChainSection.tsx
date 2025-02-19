@@ -7,6 +7,8 @@ import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { selectChain } from '../../store/slices/chainSlice';
 import { ClusterType, CoordinateData, ValidatorData, ChainProposals } from '../../types';
 import { CLUSTER_COLORS, CLUSTER_LABELS } from '../../constants';
+import { setChainProposals } from '../../store/slices/proposalSlice';
+import { setSelectedClusters } from '../../store/slices/chainSlice';
 
 const CLUSTERS: readonly ClusterType[] = [1, 2, 3, 4, 5];
 
@@ -23,27 +25,97 @@ const loadChainLogo = (chainName: string): string | undefined => {
   }
 };
 
+const ChainInfo = ({ 
+  chainData, 
+  proposalCount 
+}: { 
+  chainData: any, 
+  proposalCount: number 
+}) => (
+  <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+    <div className="flex items-center gap-3">
+      <img 
+        src={loadChainLogo(chainData.name)}
+        alt={`${chainData.name} logo`}
+        className="w-8 h-8 object-contain"
+        onError={(e) => {
+          (e.target as HTMLImageElement).style.display = 'none';
+        }}
+      />
+      <h3 className="font-semibold mb-2">
+        {chainData.name}
+      </h3>
+    </div>
+    <div className="space-y-2">
+      <p>Total Validators: {chainData.validators_count}</p>
+      <p>Total Proposals: {proposalCount}</p>
+      <div className="grid grid-cols-5 gap-4 mt-2">
+        {Object.entries(chainData.cluster_distribution as Record<string, number>)
+          .map(([clusterStr, count]) => {
+            const cluster = Number(clusterStr) as ClusterType;
+            return (
+              <div 
+                key={cluster}
+                className="text-sm"
+                style={{ color: CLUSTER_COLORS[cluster] }}
+              >
+                {CLUSTER_LABELS[cluster]}: {count}
+              </div>
+            );
+          })}
+      </div>
+    </div>
+  </div>
+);
+
 export const ChainSection = () => {
-  const [coordinateData, setCoordinateData] = useState<CoordinateData | null>(null);
-  const [chainProposals, setChainProposals] = useState<ChainProposals | null>(null);
   const dispatch = useAppDispatch();
+  const [coordinateData, setCoordinateData] = useState<CoordinateData | null>(null);
   const selectedClusters = useAppSelector(state => state.chain.selectedClusters);
   const selectedChain = useAppSelector(state => state.chain.selectedChain);
   const selectedValidator = useAppSelector(state => state.validator.selectedValidator);
+  const chainProposals = useAppSelector(state => state.proposal.chainProposals);
   
   // validatorChainMap을 props로 받거나 context로 관리하도록 수정
   const [validatorChainMap, setValidatorChainMap] = useState<Map<string, Set<string>>>(new Map());
 
+  // validatorChains 계산
+  const validatorChains = useMemo(() => {
+    if (!selectedValidator) return [];
+    return Array.from(validatorChainMap.get(selectedValidator.voter) || []);
+  }, [selectedValidator, validatorChainMap]);
+
+  // 모든 체인의 validator 수 중 최대값 계산
+  const maxValidators = useMemo(() => {
+    if (!coordinateData) return 0;
+    return Math.max(
+      ...Object.values(coordinateData.chain_info).map(info => info.validators_count)
+    );
+  }, [coordinateData]);
+
+  // 체인 데이터 메모이제이션
+  const memoizedChainData = useMemo(() => {
+    if (!coordinateData) return null;
+    return Object.entries(coordinateData.chain_info).map(([chainId, info]) => ({
+      chainId,
+      info,
+      validatorCount: info.validators_count,
+      percentage: (info.validators_count / maxValidators) * 100
+    }));
+  }, [coordinateData, maxValidators]);
+
   useEffect(() => {
     const loadData = async () => {
       try {
+        // 좌표 데이터 로드
         const coordResponse = await fetch('/data/coordinates/coordinates.json');
         const coordData: CoordinateData = await coordResponse.json();
         setCoordinateData(coordData);
         
+        // 프로포절 데이터 로드 및 전역 상태로 저장
         const proposalsResponse = await fetch('/data/analysis/chain_proposals.json');
-        const proposalsData: ChainProposals = await proposalsResponse.json();
-        setChainProposals(proposalsData);
+        const proposalsData = await proposalsResponse.json();
+        dispatch(setChainProposals(proposalsData));
 
         // validatorChainMap 생성
         const mapping = new Map<string, Set<string>>();
@@ -60,44 +132,40 @@ export const ChainSection = () => {
       }
     };
     loadData();
-  }, []);
-
-  // validatorChains 계산
-  const validatorChains = useMemo(() => {
-    if (!selectedValidator) return [];
-    return Array.from(validatorChainMap.get(selectedValidator.voter) || []);
-  }, [selectedValidator, validatorChainMap]);
+  }, [dispatch]);
 
   if (!coordinateData) return <div>Loading...</div>;
-
-  // 모든 체인의 validator 수 중 최대값 계산
-  const maxValidators = Math.max(
-    ...Object.values(coordinateData.chain_info).map(info => info.validators_count)
-  );
 
   const handleChainClick = (chainId: string) => {
     dispatch(selectChain(chainId === selectedChain ? null : chainId));
   };
 
+  const handleClusterClick = (cluster: ClusterType) => {
+    // 클러스터 선택 로직 구현
+    const newSelectedClusters = selectedClusters.includes(cluster)
+      ? selectedClusters.filter(c => c !== cluster)
+      : [...selectedClusters, cluster];
+    dispatch(setSelectedClusters(newSelectedClusters));
+  };
+
   return (
-    <div className="space-y-4">
-      {/* Clusters 제목과 버튼들 */}
-      <div className="space-y-2">
-        <h2 className="text-xl font-semibold">Clusters</h2>
-        <div className="grid grid-cols-5 gap-1.5 w-full">
-          {CLUSTERS.map((cluster) => (
-            <ClusterButton 
-              key={cluster}
-              cluster={cluster}
-              label={CLUSTER_LABELS[cluster]}
-            />
-          ))}
+    <div className="h-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">
+      <div className="flex-none space-y-4">
+        <div className="flex justify-between items-center">
+          <h2 className="text-xl font-semibold">Chains</h2>
+          <div className="flex gap-2">
+            {CLUSTERS.map((cluster) => (
+              <ClusterButton
+                key={cluster}
+                cluster={cluster}
+                isSelected={selectedClusters.includes(cluster)}
+                onClick={() => handleClusterClick(cluster)}
+              />
+            ))}
+          </div>
         </div>
       </div>
-
-      {/* Chains 섹션 */}
-      <div className="mt-6">
-        <h2 className="text-xl font-semibold mb-4">Chains</h2>
+      <div className="flex-1 min-h-0 overflow-auto mt-4">
         <div className="space-y-2">
           {Object.entries(coordinateData.chain_info).map(([chainId, info]) => (
             <div
@@ -169,40 +237,13 @@ export const ChainSection = () => {
 
       {/* 선택된 체인 정보 섹션 */}
       {selectedChain && coordinateData.chain_info[selectedChain] && (
-        <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-          <div className="flex items-center gap-3">
-            <img 
-              src={loadChainLogo(coordinateData.chain_info[selectedChain].name)}
-              alt={`${coordinateData.chain_info[selectedChain].name} logo`}
-              className="w-8 h-8 object-contain"
-              onError={(e) => {
-                (e.target as HTMLImageElement).style.display = 'none';
-              }}
-            />
-            <h3 className="font-semibold mb-2">
-              {coordinateData.chain_info[selectedChain].name}
-            </h3>
-          </div>
-          <div className="space-y-2">
-            <p>Total Validators: {coordinateData.chain_info[selectedChain].validators_count}</p>
-            <p>Total Proposals: {chainProposals?.[selectedChain] || 0}</p>
-            <div className="grid grid-cols-5 gap-4 mt-2">
-              {Object.entries(coordinateData.chain_info[selectedChain].cluster_distribution)
-                .map(([clusterStr, count]) => {
-                  const cluster = Number(clusterStr) as ClusterType;
-                  return (
-                    <div 
-                      key={cluster}
-                      className="text-sm"
-                      style={{ color: CLUSTER_COLORS[cluster] }}
-                    >
-                      {CLUSTER_LABELS[cluster]}: {count}
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
-        </div>
+        <ChainInfo 
+          chainData={{
+            ...coordinateData.chain_info[selectedChain],
+            chainId: selectedChain
+          }} 
+          proposalCount={chainProposals[selectedChain] || 0}
+        />
       )}
     </div>
   );

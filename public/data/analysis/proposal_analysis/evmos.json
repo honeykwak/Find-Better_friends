@@ -1,0 +1,889 @@
+{
+  "validator_count": 326,
+  "proposals": {
+    "314": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "ECP3 Renewal of the Evmos DAO Governance Workstream  2024",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1728673137644,
+      "timeVotingStart": 1728673686351,
+      "timeVotingEnd": 1729105686351,
+      "ratios": {
+        "YES": 0.5,
+        "NO": 0.05,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.45
+      },
+      "total_votes": 20
+    },
+    "313": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Fast and reliable public RPC  powered by Lava",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1727697303507,
+      "timeVotingStart": 1727697393636,
+      "timeVotingEnd": 1728129393636,
+      "ratios": {
+        "YES": 0.4,
+        "NO": 0.3,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3
+      },
+      "total_votes": 20
+    },
+    "306": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Reduce Max Validators to 20",
+      "type": "/cosmos.staking.v1beta1.MsgUpdateParams",
+      "status": "PASSED",
+      "timeSubmit": 1724060500623,
+      "timeVotingStart": 1724061287313,
+      "timeVotingEnd": 1724493287313,
+      "ratios": {
+        "YES": 0.2987012987012987,
+        "NO": 0.5584415584415584,
+        "NO_WITH_VETO": 0.025974025974025976,
+        "ABSTAIN": 0.11688311688311688
+      },
+      "total_votes": 77
+    },
+    "305": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Inferno 60  Continuation of Forge Incentives",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "REJECTED",
+      "timeSubmit": 1723865907554,
+      "timeVotingStart": 1723866518990,
+      "timeVotingEnd": 1724298518990,
+      "ratios": {
+        "YES": 0.14084507042253522,
+        "NO": 0.5352112676056338,
+        "NO_WITH_VETO": 0.014084507042253521,
+        "ABSTAIN": 0.30985915492957744
+      },
+      "total_votes": 71
+    },
+    "304": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Reduce Inflation from 5 to 1",
+      "type": "/evmos.inflation.v1.MsgUpdateParams",
+      "status": "PASSED",
+      "timeSubmit": 1722927434052,
+      "timeVotingStart": 1722935382782,
+      "timeVotingEnd": 1723367382782,
+      "ratios": {
+        "YES": 0.5492957746478874,
+        "NO": 0.19718309859154928,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2535211267605634
+      },
+      "total_votes": 71
+    },
+    "295": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Combined Proposal for Leveraging Liquidity and Continuation of Liquidity Mining Incentives",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "REJECTED",
+      "timeSubmit": 1718050669017,
+      "timeVotingStart": 1718051617532,
+      "timeVotingEnd": 1718483617532,
+      "ratios": {
+        "YES": 0.06097560975609756,
+        "NO": 0.524390243902439,
+        "NO_WITH_VETO": 0.012195121951219513,
+        "ABSTAIN": 0.4024390243902439
+      },
+      "total_votes": 82
+    },
+    "290": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Inferno 50  Continuing Forge LP Incentives",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1715742521496,
+      "timeVotingStart": 1715742998673,
+      "timeVotingEnd": 1716174998673,
+      "ratios": {
+        "YES": 0.5789473684210527,
+        "NO": 0.02631578947368421,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.39473684210526316
+      },
+      "total_votes": 76
+    },
+    "283": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Utilizing Community Owned TASHI",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1713459841975,
+      "timeVotingStart": 1713460807568,
+      "timeVotingEnd": 1713892807568,
+      "ratios": {
+        "YES": 0.425,
+        "NO": 0.0125,
+        "NO_WITH_VETO": 0.0125,
+        "ABSTAIN": 0.55
+      },
+      "total_votes": 80
+    },
+    "267": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Align Inflation Distribution Between Staking Rewards And Community Pool",
+      "type": "/evmos.inflation.v1.MsgUpdateParams",
+      "status": "PASSED",
+      "timeSubmit": 1705406079632,
+      "timeVotingStart": 1705406424009,
+      "timeVotingEnd": 1705838424009,
+      "ratios": {
+        "YES": 0.44680851063829785,
+        "NO": 0.20212765957446807,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.35106382978723405
+      },
+      "total_votes": 94
+    },
+    "264": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Community Owned Liquidity on UniDex 500k Evmos",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1704213560713,
+      "timeVotingStart": 1704305870692,
+      "timeVotingEnd": 1704737870692,
+      "ratios": {
+        "YES": 0.638095238095238,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3619047619047619
+      },
+      "total_votes": 105
+    },
+    "263": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Proposal B Transfer 136M EVMOS from the Usage Incentives Pool to the Community Pool",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1704207379534,
+      "timeVotingStart": 1704216029448,
+      "timeVotingEnd": 1704648029448,
+      "ratios": {
+        "YES": 0.16822429906542055,
+        "NO": 0.6728971962616822,
+        "NO_WITH_VETO": 0.009345794392523364,
+        "ABSTAIN": 0.14953271028037382
+      },
+      "total_votes": 107
+    },
+    "261": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Enhancing Liquidity for TASHI Token and Ecosystem Growth ICHI Vaults on Tashi and Steer Incentives",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1703865633997,
+      "timeVotingStart": 1703866140473,
+      "timeVotingEnd": 1704298140473,
+      "ratios": {
+        "YES": 0.40425531914893614,
+        "NO": 0.14893617021276595,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.44680851063829785
+      },
+      "total_votes": 94
+    },
+    "259": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Proposal for Extending Liquidity Mining for Tashi on Evmos A 3Month Plan",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1703103170901,
+      "timeVotingStart": 1703187269032,
+      "timeVotingEnd": 1703619269032,
+      "ratios": {
+        "YES": 0.5454545454545454,
+        "NO": 0.022727272727272728,
+        "NO_WITH_VETO": 0.011363636363636364,
+        "ABSTAIN": 0.42045454545454547
+      },
+      "total_votes": 88
+    },
+    "256": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Catalyst  UniDex Perpetual Options Trading Incentives Program",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1702039193623,
+      "timeVotingStart": 1702050895302,
+      "timeVotingEnd": 1702482895302,
+      "ratios": {
+        "YES": 0.6078431372549019,
+        "NO": 0.0196078431372549,
+        "NO_WITH_VETO": 0.00980392156862745,
+        "ABSTAIN": 0.3627450980392157
+      },
+      "total_votes": 102
+    },
+    "245": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Lunar Launch  Tashi Launch Liquidity Incentives Phase 2",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1699887347476,
+      "timeVotingStart": 1699887440469,
+      "timeVotingEnd": 1700319440469,
+      "ratios": {
+        "YES": 0.6630434782608695,
+        "NO": 0.010869565217391304,
+        "NO_WITH_VETO": 0.010869565217391304,
+        "ABSTAIN": 0.31521739130434784
+      },
+      "total_votes": 92
+    },
+    "243": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Lunar Launch  Tashi Launch Liquidity Incentives Phase 2",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "FAILED",
+      "timeSubmit": 1699389458338,
+      "timeVotingStart": 1699389894547,
+      "timeVotingEnd": 1699821894547,
+      "ratios": {
+        "YES": 0.5729166666666666,
+        "NO": 0.041666666666666664,
+        "NO_WITH_VETO": 0.010416666666666666,
+        "ABSTAIN": 0.375
+      },
+      "total_votes": 96
+    },
+    "236": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Evmos DAO Participation in Tashi Genesis Pools Phase 2",
+      "type": "unknown",
+      "status": "PASSED",
+      "timeSubmit": 1698241432141,
+      "timeVotingStart": 1698242283239,
+      "timeVotingEnd": 1698674283239,
+      "ratios": {
+        "YES": 0.527027027027027,
+        "NO": 0.02702702702702703,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.44594594594594594
+      },
+      "total_votes": 74
+    },
+    "214": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Proposal for Evmos Incentives Forge Dex and Tashi Collaboration",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1696615962925,
+      "timeVotingStart": 1696616271868,
+      "timeVotingEnd": 1697048271868,
+      "ratios": {
+        "YES": 0.4479166666666667,
+        "NO": 0.041666666666666664,
+        "NO_WITH_VETO": 0.010416666666666666,
+        "ABSTAIN": 0.5
+      },
+      "total_votes": 96
+    },
+    "206": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Community to Sponsor Development of LSDFI on EVMOS",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1695423402181,
+      "timeVotingStart": 1695423661530,
+      "timeVotingEnd": 1695855661530,
+      "ratios": {
+        "YES": 0.09574468085106383,
+        "NO": 0.6276595744680851,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2765957446808511
+      },
+      "total_votes": 94
+    },
+    "166": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Inferno 2  Continuing Forge LP incentives with Revert Finance",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1692849957268,
+      "timeVotingStart": 1692934933482,
+      "timeVotingEnd": 1693366933482,
+      "ratios": {
+        "YES": 0.6382978723404256,
+        "NO": 0.07446808510638298,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2872340425531915
+      },
+      "total_votes": 94
+    },
+    "165": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Lunar Launch  Tashi Launch Liquidity Incentives",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1692820281318,
+      "timeVotingStart": 1692838175200,
+      "timeVotingEnd": 1693270175200,
+      "ratios": {
+        "YES": 0.48,
+        "NO": 0.16,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.36
+      },
+      "total_votes": 100
+    },
+    "151": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Participation in Genesis Pools on Tashi An Opportunity for Evmos Community",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1689354912623,
+      "timeVotingStart": 1689596673320,
+      "timeVotingEnd": 1690028673320,
+      "ratios": {
+        "YES": 0.35051546391752575,
+        "NO": 0.18556701030927836,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.4639175257731959
+      },
+      "total_votes": 97
+    },
+    "147": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Build a Decentralized Derivatives Exchange on EVMOS",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1685813474131,
+      "timeVotingStart": 1685815374027,
+      "timeVotingEnd": 1686247374027,
+      "ratios": {
+        "YES": 0.1262135922330097,
+        "NO": 0.6116504854368932,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2621359223300971
+      },
+      "total_votes": 103
+    },
+    "134": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "ECP2B Formalizing and Funding of the Community Mod  Support Workstream",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1677692679162,
+      "timeVotingStart": 1677702413059,
+      "timeVotingEnd": 1678134413059,
+      "ratios": {
+        "YES": 0.21212121212121213,
+        "NO": 0.41414141414141414,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.37373737373737376
+      },
+      "total_votes": 99
+    },
+    "133": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Kick off ReFi on Evmos offset Evmoss carbon emission for 2022",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1677613721179,
+      "timeVotingStart": 1677613832797,
+      "timeVotingEnd": 1678045832797,
+      "ratios": {
+        "YES": 0.4326923076923077,
+        "NO": 0.3173076923076923,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.25
+      },
+      "total_votes": 104
+    },
+    "128": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Build A Community Owned DEX UniV3",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1677518854584,
+      "timeVotingStart": 1677519221420,
+      "timeVotingEnd": 1677951221420,
+      "ratios": {
+        "YES": 0.6306306306306306,
+        "NO": 0.04504504504504504,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.32432432432432434
+      },
+      "total_votes": 111
+    },
+    "121": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Crescent External Incentives",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1676880242068,
+      "timeVotingStart": 1676880242068,
+      "timeVotingEnd": 1677312242068,
+      "ratios": {
+        "YES": 0.2672413793103448,
+        "NO": 0.43103448275862066,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3017241379310345
+      },
+      "total_votes": 116
+    },
+    "114": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Register ERC20 for yEVMOS Liquid Staking Token",
+      "type": "/evmos.erc20.v1.RegisterCoinProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1675617368077,
+      "timeVotingStart": 1675620655186,
+      "timeVotingEnd": 1676052655186,
+      "ratios": {
+        "YES": 0.38596491228070173,
+        "NO": 0.4298245614035088,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.18421052631578946
+      },
+      "total_votes": 114
+    },
+    "113": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "ECP2A Formalizing and Funding the Governance Council Workstream Rev 2",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1675095951456,
+      "timeVotingStart": 1675103320002,
+      "timeVotingEnd": 1675535320002,
+      "ratios": {
+        "YES": 0.4152542372881356,
+        "NO": 0.09322033898305085,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.4915254237288136
+      },
+      "total_votes": 118
+    },
+    "109": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "New Evmos Liquidity Incentive and SpaceFi Whole Launching",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1674230271742,
+      "timeVotingStart": 1674231792516,
+      "timeVotingEnd": 1674663792516,
+      "ratios": {
+        "YES": 0.43137254901960786,
+        "NO": 0.23529411764705882,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3333333333333333
+      },
+      "total_votes": 102
+    },
+    "106": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Consensus Test",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1673197402286,
+      "timeVotingStart": 1673198019621,
+      "timeVotingEnd": 1673630019621,
+      "ratios": {
+        "YES": 0.024193548387096774,
+        "NO": 0.08870967741935484,
+        "NO_WITH_VETO": 0.6935483870967742,
+        "ABSTAIN": 0.1935483870967742
+      },
+      "total_votes": 124
+    },
+    "105": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Governance Consensus Governance Immunity",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1673122573458,
+      "timeVotingStart": 1673122675073,
+      "timeVotingEnd": 1673554675073,
+      "ratios": {
+        "YES": 0.0703125,
+        "NO": 0.140625,
+        "NO_WITH_VETO": 0.4765625,
+        "ABSTAIN": 0.3125
+      },
+      "total_votes": 128
+    },
+    "100": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Retroactive Payment for Public Goods Evmos Development for 2022",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1673043063369,
+      "timeVotingStart": 1673043172679,
+      "timeVotingEnd": 1673475172679,
+      "ratios": {
+        "YES": 0.008,
+        "NO": 0.424,
+        "NO_WITH_VETO": 0.472,
+        "ABSTAIN": 0.096
+      },
+      "total_votes": 125
+    },
+    "99": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Governance Consensus No Criminal Decisions",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1672939012306,
+      "timeVotingStart": 1672939189527,
+      "timeVotingEnd": 1673371189527,
+      "ratios": {
+        "YES": 0.023622047244094488,
+        "NO": 0.2440944881889764,
+        "NO_WITH_VETO": 0.4881889763779528,
+        "ABSTAIN": 0.2440944881889764
+      },
+      "total_votes": 127
+    },
+    "98": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Governance Consensus Only Elected Officers May Represent the Will of the Chain",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1672862746735,
+      "timeVotingStart": 1672862932743,
+      "timeVotingEnd": 1673294932743,
+      "ratios": {
+        "YES": 0.03968253968253968,
+        "NO": 0.373015873015873,
+        "NO_WITH_VETO": 0.46825396825396826,
+        "ABSTAIN": 0.11904761904761904
+      },
+      "total_votes": 126
+    },
+    "95": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Retroactive Payment for Public Goods Evmos Development for March 2022",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1672518504375,
+      "timeVotingStart": 1672518654790,
+      "timeVotingEnd": 1672950654790,
+      "ratios": {
+        "YES": 0.008547008547008548,
+        "NO": 0.4700854700854701,
+        "NO_WITH_VETO": 0.3504273504273504,
+        "ABSTAIN": 0.17094017094017094
+      },
+      "total_votes": 117
+    },
+    "93": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Governance Consensus The Governance Language is English",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1672058796599,
+      "timeVotingStart": 1672059175884,
+      "timeVotingEnd": 1672491175884,
+      "ratios": {
+        "YES": 0.16806722689075632,
+        "NO": 0.3697478991596639,
+        "NO_WITH_VETO": 0.06722689075630252,
+        "ABSTAIN": 0.3949579831932773
+      },
+      "total_votes": 119
+    },
+    "92": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Funding Request  MetaTank",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1671804943980,
+      "timeVotingStart": 1671806750021,
+      "timeVotingEnd": 1672238750021,
+      "ratios": {
+        "YES": 0.5700934579439252,
+        "NO": 0.14953271028037382,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2803738317757009
+      },
+      "total_votes": 107
+    },
+    "88": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Common Sense Setting No Payment For Unsolicited Services",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1671138512426,
+      "timeVotingStart": 1671138791954,
+      "timeVotingEnd": 1671570791954,
+      "ratios": {
+        "YES": 0.18627450980392157,
+        "NO": 0.47058823529411764,
+        "NO_WITH_VETO": 0.00980392156862745,
+        "ABSTAIN": 0.3333333333333333
+      },
+      "total_votes": 102
+    },
+    "86": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "ECP2A Formalizing and Funding the Governance Council Workstream",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1670543569870,
+      "timeVotingStart": 1670553350650,
+      "timeVotingEnd": 1670985350650,
+      "ratios": {
+        "YES": 0.20689655172413793,
+        "NO": 0.47413793103448276,
+        "NO_WITH_VETO": 0.008620689655172414,
+        "ABSTAIN": 0.3103448275862069
+      },
+      "total_votes": 116
+    },
+    "84": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "The Alternative An Honest DAO and an Independent Evmos Chain",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1669721347857,
+      "timeVotingStart": 1669722473190,
+      "timeVotingEnd": 1670154473190,
+      "ratios": {
+        "YES": 0.1,
+        "NO": 0.4636363636363636,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.43636363636363634
+      },
+      "total_votes": 110
+    },
+    "82": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Evmos Ecosystem Campaign by Galxe",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1669067076063,
+      "timeVotingStart": 1669067747520,
+      "timeVotingEnd": 1669499747520,
+      "ratios": {
+        "YES": 0.33070866141732286,
+        "NO": 0.3543307086614173,
+        "NO_WITH_VETO": 0.007874015748031496,
+        "ABSTAIN": 0.30708661417322836
+      },
+      "total_votes": 127
+    },
+    "80": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Dystopia Labs  Evmos Developer Acquisition Grant Request",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1668526355459,
+      "timeVotingStart": 1668550169130,
+      "timeVotingEnd": 1668982169130,
+      "ratios": {
+        "YES": 0.6440677966101694,
+        "NO": 0.059322033898305086,
+        "NO_WITH_VETO": 0.00847457627118644,
+        "ABSTAIN": 0.288135593220339
+      },
+      "total_votes": 118
+    },
+    "77": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "FootieSZN initial funding proposal",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1667079030118,
+      "timeVotingStart": 1667111846261,
+      "timeVotingEnd": 1667543846261,
+      "ratios": {
+        "YES": 0.2222222222222222,
+        "NO": 0.48412698412698413,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.29365079365079366
+      },
+      "total_votes": 126
+    },
+    "69": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Incubation Proposal from Chainhub",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1665097050442,
+      "timeVotingStart": 1665097050442,
+      "timeVotingEnd": 1665529050442,
+      "ratios": {
+        "YES": 0.11864406779661017,
+        "NO": 0.6186440677966102,
+        "NO_WITH_VETO": 0.01694915254237288,
+        "ABSTAIN": 0.2457627118644068
+      },
+      "total_votes": 118
+    },
+    "43": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Airdrop claim courtesy proposal",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1659154180865,
+      "timeVotingStart": 1659154924271,
+      "timeVotingEnd": 1659586924271,
+      "ratios": {
+        "YES": 0.2926829268292683,
+        "NO": 0.06504065040650407,
+        "NO_WITH_VETO": 0.008130081300813009,
+        "ABSTAIN": 0.6341463414634146
+      },
+      "total_votes": 123
+    },
+    "38": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Gift to Ethereum stakeholders",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1657629353227,
+      "timeVotingStart": 1657629353227,
+      "timeVotingEnd": 1658061353227,
+      "ratios": {
+        "YES": 0.013888888888888888,
+        "NO": 0.25,
+        "NO_WITH_VETO": 0.6666666666666666,
+        "ABSTAIN": 0.06944444444444445
+      },
+      "total_votes": 144
+    },
+    "32": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Bootstrap liquidity on Evmos dapps",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1656389526233,
+      "timeVotingStart": 1656389526233,
+      "timeVotingEnd": 1656821526233,
+      "ratios": {
+        "YES": 0.2013888888888889,
+        "NO": 0.5972222222222222,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2013888888888889
+      },
+      "total_votes": 144
+    },
+    "30": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Exswap Bootstrap Proposal ",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1655481531178,
+      "timeVotingStart": 1655481531178,
+      "timeVotingEnd": 1655913531178,
+      "ratios": {
+        "YES": 0.21481481481481482,
+        "NO": 0.562962962962963,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2222222222222222
+      },
+      "total_votes": 135
+    },
+    "28": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "EVMOS GRANT  Airdrop Calculator built by Cryptech",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1654579935472,
+      "timeVotingStart": 1654579935472,
+      "timeVotingEnd": 1655011935472,
+      "ratios": {
+        "YES": 0.125,
+        "NO": 0.375,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5
+      },
+      "total_votes": 120
+    },
+    "6": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Transfer Expandingspace validator to another wallet",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1651614755740,
+      "timeVotingStart": 1651614755740,
+      "timeVotingEnd": 1652046755740,
+      "ratios": {
+        "YES": 0.15789473684210525,
+        "NO": 0.5701754385964912,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2719298245614035
+      },
+      "total_votes": 114
+    },
+    "3": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Evmos",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1651249350876,
+      "timeVotingStart": 1651249350876,
+      "timeVotingEnd": 1651681350876,
+      "ratios": {
+        "YES": 0.6974789915966386,
+        "NO": 0.008403361344537815,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.29411764705882354
+      },
+      "total_votes": 119
+    }
+  }
+}

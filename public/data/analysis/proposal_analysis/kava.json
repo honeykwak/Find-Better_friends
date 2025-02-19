@@ -1,0 +1,1063 @@
+{
+  "validator_count": 172,
+  "proposals": {
+    "191": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Adds MerlinBTC to Kava Lend",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1728586321600,
+      "timeVotingStart": 1728586321600,
+      "timeVotingEnd": 1729191121600,
+      "ratios": {
+        "YES": 0.5454545454545454,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.45454545454545453
+      },
+      "total_votes": 33
+    },
+    "189": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Extend incentive reward periods for Kava Earn and Kava Lend",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1728323522374,
+      "timeVotingStart": 1728323522374,
+      "timeVotingEnd": 1728928322374,
+      "ratios": {
+        "YES": 0.6875,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3125
+      },
+      "total_votes": 32
+    },
+    "187": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Enable Committee MsgVote for EIP712",
+      "type": "/ethermint.evm.v1.MsgUpdateParams",
+      "status": "PASSED",
+      "timeSubmit": 1723840600057,
+      "timeVotingStart": 1723840600057,
+      "timeVotingEnd": 1724445400057,
+      "ratios": {
+        "YES": 0.6857142857142857,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3142857142857143
+      },
+      "total_votes": 35
+    },
+    "176": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "Kava Rise payouts for February 2024",
+      "type": "/cosmos.authz.v1beta1.MsgExec",
+      "status": "PASSED",
+      "timeSubmit": 1709924018751,
+      "timeVotingStart": 1709924018751,
+      "timeVotingEnd": 1710528818751,
+      "ratios": {
+        "YES": 0.6808510638297872,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3191489361702128
+      },
+      "total_votes": 47
+    },
+    "175": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "WAGMIwKAVA LP Authorization",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1709593867774,
+      "timeVotingStart": 1709593867774,
+      "timeVotingEnd": 1710198667774,
+      "ratios": {
+        "YES": 0.6956521739130435,
+        "NO": 0.021739130434782608,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2826086956521739
+      },
+      "total_votes": 46
+    },
+    "172": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "WAGMI Pool Creation on Kinetix",
+      "type": "/cosmos.authz.v1beta1.MsgExec",
+      "status": "PASSED",
+      "timeSubmit": 1705459711376,
+      "timeVotingStart": 1705459711376,
+      "timeVotingEnd": 1706064511376,
+      "ratios": {
+        "YES": 0.5384615384615384,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.46153846153846156
+      },
+      "total_votes": 39
+    },
+    "171": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "cosmosauthzv1beta1MsgExec",
+      "type": "/cosmos.authz.v1beta1.MsgExec",
+      "status": "PASSED",
+      "timeSubmit": 1704851117165,
+      "timeVotingStart": 1704851117165,
+      "timeVotingEnd": 1705455917165,
+      "ratios": {
+        "YES": 0.5714285714285714,
+        "NO": 0.061224489795918366,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3673469387755102
+      },
+      "total_votes": 49
+    },
+    "169": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "WAGMI Token Transfer",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1701718866143,
+      "timeVotingStart": 1701718866143,
+      "timeVotingEnd": 1702323666143,
+      "ratios": {
+        "YES": 0.25,
+        "NO": 0.4166666666666667,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3333333333333333
+      },
+      "total_votes": 48
+    },
+    "166": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Supply Funds into Kava Mint",
+      "type": "/cosmos.authz.v1beta1.MsgExec",
+      "status": "REJECTED",
+      "timeSubmit": 1697825414122,
+      "timeVotingStart": 1697825414122,
+      "timeVotingEnd": 1698430214122,
+      "ratios": {
+        "YES": 0.20930232558139536,
+        "NO": 0.4418604651162791,
+        "NO_WITH_VETO": 0.023255813953488372,
+        "ABSTAIN": 0.32558139534883723
+      },
+      "total_votes": 43
+    },
+    "154": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Kava Rise payouts for July 2023",
+      "type": "/kava.kavadist.v1beta1.CommunityPoolMultiSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1691430862887,
+      "timeVotingStart": 1691430862887,
+      "timeVotingEnd": 1692035662887,
+      "ratios": {
+        "YES": 0.3541666666666667,
+        "NO": 0.4166666666666667,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.22916666666666666
+      },
+      "total_votes": 48
+    },
+    "149": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Adds EIP712 allowed messages",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1689349058528,
+      "timeVotingStart": 1689349058528,
+      "timeVotingEnd": 1689953858528,
+      "ratios": {
+        "YES": 0.4,
+        "NO": 0.509090909090909,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.09090909090909091
+      },
+      "total_votes": 55
+    },
+    "141": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Kava Horizon signaling proposal",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1683924893371,
+      "timeVotingStart": 1683924893371,
+      "timeVotingEnd": 1684529693371,
+      "ratios": {
+        "YES": 0.6037735849056604,
+        "NO": 0.16981132075471697,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.22641509433962265
+      },
+      "total_votes": 53
+    },
+    "137": {
+      "main_category": "organizational",
+      "sub_category": "emergency_response",
+      "title": "Add Kava Origin to Kava Infrastructure and Security Rewards",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1682638562590,
+      "timeVotingStart": 1682638562590,
+      "timeVotingEnd": 1683243362590,
+      "ratios": {
+        "YES": 0.6122448979591837,
+        "NO": 0.1836734693877551,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.20408163265306123
+      },
+      "total_votes": 49
+    },
+    "135": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Establish Kava Origin foundation",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1680819999232,
+      "timeVotingStart": 1680819999232,
+      "timeVotingEnd": 1681424799232,
+      "ratios": {
+        "YES": 0.2727272727272727,
+        "NO": 0.18181818181818182,
+        "NO_WITH_VETO": 0.13636363636363635,
+        "ABSTAIN": 0.4090909090909091
+      },
+      "total_votes": 44
+    },
+    "121": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Kava 12 Software Upgrade Proposal",
+      "type": "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1674019194908,
+      "timeVotingStart": 1674019194908,
+      "timeVotingEnd": 1674623994908,
+      "ratios": {
+        "YES": 0.5217391304347826,
+        "NO": 0.4782608695652174,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.0
+      },
+      "total_votes": 46
+    },
+    "120": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Kava 12 Software Upgrade Proposal",
+      "type": "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1673404864894,
+      "timeVotingStart": 1673404864894,
+      "timeVotingEnd": 1674009664894,
+      "ratios": {
+        "YES": 0.4528301886792453,
+        "NO": 0.5471698113207547,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.0
+      },
+      "total_votes": 53
+    },
+    "101": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Ethermint Funding Proposal For Past Development Addressed from The Evmos Community to The Kava Community",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1665506177982,
+      "timeVotingStart": 1665864628186,
+      "timeVotingEnd": 1666469428186,
+      "ratios": {
+        "YES": 0.11363636363636363,
+        "NO": 0.45454545454545453,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.4318181818181818
+      },
+      "total_votes": 44
+    },
+    "100": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Kava 11 Software Upgrade Proposal",
+      "type": "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1664947471415,
+      "timeVotingStart": 1664947471415,
+      "timeVotingEnd": 1665552271415,
+      "ratios": {
+        "YES": 0.4,
+        "NO": 0.6,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.0
+      },
+      "total_votes": 50
+    },
+    "88": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Adjust annual inflation for Kava stakers from 20 to 17",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1655233623687,
+      "timeVotingStart": 1655233623687,
+      "timeVotingEnd": 1655838423687,
+      "ratios": {
+        "YES": 0.2647058823529412,
+        "NO": 0.6764705882352942,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.058823529411764705
+      },
+      "total_votes": 34
+    },
+    "82": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Adjust UST in Kava Mint",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1652420631720,
+      "timeVotingStart": 1652420631720,
+      "timeVotingEnd": 1653025431720,
+      "ratios": {
+        "YES": 0.6744186046511628,
+        "NO": 0.13953488372093023,
+        "NO_WITH_VETO": 0.023255813953488372,
+        "ABSTAIN": 0.16279069767441862
+      },
+      "total_votes": 43
+    },
+    "80": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Kava 10 Software Upgrade Proposal",
+      "type": "/ibc.core.client.v1.UpgradeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1651529942184,
+      "timeVotingStart": 1651529942184,
+      "timeVotingEnd": 1652134742184,
+      "ratios": {
+        "YES": 0.34545454545454546,
+        "NO": 0.6363636363636364,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.01818181818181818
+      },
+      "total_votes": 55
+    },
+    "75": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Turn off AKT Stake drop",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1645234374701,
+      "timeVotingStart": 1645234374701,
+      "timeVotingEnd": 1645839174701,
+      "ratios": {
+        "YES": 0.4583333333333333,
+        "NO": 0.2708333333333333,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2708333333333333
+      },
+      "total_votes": 48
+    },
+    "73": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Kava LoanWars Payouts",
+      "type": "/kava.kavadist.v1beta1.CommunityPoolMultiSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1643943248214,
+      "timeVotingStart": 1643943248214,
+      "timeVotingEnd": 1644548048214,
+      "ratios": {
+        "YES": 0.6818181818181818,
+        "NO": 0.11363636363636363,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.20454545454545456
+      },
+      "total_votes": 44
+    },
+    "71": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Kava Swap incentivized testnet winner payouts",
+      "type": "/kava.kavadist.v1beta1.CommunityPoolMultiSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1643930660454,
+      "timeVotingStart": 1643930660454,
+      "timeVotingEnd": 1644535460454,
+      "ratios": {
+        "YES": 0.1111111111111111,
+        "NO": 0.5277777777777778,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3611111111111111
+      },
+      "total_votes": 36
+    },
+    "69": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Kava Anniversary Trading Competition winner payouts",
+      "type": "/kava.kavadist.v1beta1.CommunityPoolMultiSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1641961311493,
+      "timeVotingStart": 1641961311493,
+      "timeVotingEnd": 1642566111493
+    },
+    "68": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Kava9 Software Upgrade Proposal",
+      "type": "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1641868073353,
+      "timeVotingStart": 1641868073353,
+      "timeVotingEnd": 1642472873353
+    },
+    "67": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Increase Kava Lend debt limit for XRPB collateral",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1637336550897,
+      "timeVotingStart": 1637336550897,
+      "timeVotingEnd": 1637941350897
+    },
+    "66": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Add SWP as a collateral for Kava Mint",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1635437313101,
+      "timeVotingStart": 1635437313101,
+      "timeVotingEnd": 1636042113101
+    },
+    "65": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Add swpusdx TWAPS to pricefeed",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1633385864432,
+      "timeVotingStart": 1633386006046,
+      "timeVotingEnd": 1633990806046
+    },
+    "64": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Kava Swap Trading Competition winner payouts",
+      "type": "/kava.kavadist.v1beta1.CommunityPoolMultiSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1633035538226,
+      "timeVotingStart": 1633035538226,
+      "timeVotingEnd": 1633640338226
+    },
+    "63": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Kava Swap incentivized testnet winner payouts",
+      "type": "/kava.kavadist.v1beta1.CommunityPoolMultiSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1632752166431,
+      "timeVotingStart": 1632752166431,
+      "timeVotingEnd": 1633356966431
+    },
+    "62": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Kava Swap incentivized testnet winner payouts",
+      "type": "/kava.kavadist.v1beta1.CommunityPoolMultiSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1631652737898,
+      "timeVotingStart": 1631652737898,
+      "timeVotingEnd": 1632257537898
+    },
+    "61": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Kava Swap SWP 100000 Trading Competition",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1629979601431,
+      "timeVotingStart": 1629979601431,
+      "timeVotingEnd": 1630584401431
+    },
+    "60": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Kava8 Software Upgrade Proposal",
+      "type": "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1629438131649,
+      "timeVotingStart": 1629438131649,
+      "timeVotingEnd": 1630042931649
+    },
+    "59": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Kava 8 Upgrade Signaling Proposal",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1628738000495,
+      "timeVotingStart": 1628738000495,
+      "timeVotingEnd": 1629342800495
+    },
+    "58": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "SAFU Fund Payouts for Missing Rewards from Kava7 Migration Part 4 of 4",
+      "type": "/kava.kavadist.v1beta1.CommunityPoolMultiSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1626981544928,
+      "timeVotingStart": 1626981544928,
+      "timeVotingEnd": 1627586344928
+    },
+    "57": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "SAFU Fund Payouts for Missing Rewards from Kava7 Migration Part 3 of 4",
+      "type": "/kava.kavadist.v1beta1.CommunityPoolMultiSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1626981006005,
+      "timeVotingStart": 1626981006005,
+      "timeVotingEnd": 1627585806005
+    },
+    "56": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "SAFU Fund Payouts for Missing Rewards from Kava7 Migration Part 2 of 4",
+      "type": "/kava.kavadist.v1beta1.CommunityPoolMultiSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1626980739310,
+      "timeVotingStart": 1626980739310,
+      "timeVotingEnd": 1627585539310
+    },
+    "55": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "SAFU Fund Payouts for Missing Rewards from Kava7 Migration Part 1 of 4",
+      "type": "/kava.kavadist.v1beta1.CommunityPoolMultiSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1626980572859,
+      "timeVotingStart": 1626980572859,
+      "timeVotingEnd": 1627585372859
+    },
+    "54": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Decrease BUSDA CDP APY to 0",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1626455802224,
+      "timeVotingStart": 1626455802224,
+      "timeVotingEnd": 1627060602224
+    },
+    "53": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Add 30 minute TWAP pricefeed for USDX",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1626366527868,
+      "timeVotingStart": 1626366527868,
+      "timeVotingEnd": 1626971327868
+    },
+    "52": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Adjust HARD protocol supply and borrow rewards",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1625079818566,
+      "timeVotingStart": 1625079818566,
+      "timeVotingEnd": 1625684618566
+    },
+    "51": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Decrease APYs for CDPS from 5 to 25",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1625079174907,
+      "timeVotingStart": 1625079174907,
+      "timeVotingEnd": 1625683974907
+    },
+    "50": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Migrates Hard protocol to 30min TWAP pricefeeds",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1624541437828,
+      "timeVotingStart": 1624541437828,
+      "timeVotingEnd": 1625146237828
+    },
+    "49": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "SAFU Fund Payouts for May 19th Liquidations",
+      "type": "/kava.kavadist.v1beta1.CommunityPoolMultiSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1624541104475,
+      "timeVotingStart": 1624541104475,
+      "timeVotingEnd": 1625145904475
+    },
+    "48": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Complete SAFU fund funding by reducing community pool and inflation",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1623631363808,
+      "timeVotingStart": 1623631363808,
+      "timeVotingEnd": 1624236163808
+    },
+    "47": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Removes KAVA rewards for USDX minters and redirects those rewards to Hard protocol",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1622738589783,
+      "timeVotingStart": 1622738589783,
+      "timeVotingEnd": 1623343389783
+    },
+    "46": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Halves KAVA rewards for USDX minters and redirects those rewards to Hard protocol",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1621868357893,
+      "timeVotingStart": 1621868357893,
+      "timeVotingEnd": 1622473157893
+    },
+    "45": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Create SAFU fund via the community pool",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1620256334631,
+      "timeVotingStart": 1620256334631,
+      "timeVotingEnd": 1620861134631
+    },
+    "44": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Add KAVA rewards for USDX suppliers to Hard protocol",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1618934845297,
+      "timeVotingStart": 1618934845297,
+      "timeVotingEnd": 1619539645297
+    },
+    "43": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Decrease HARD rewards for KAVA delegators",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1618333535826,
+      "timeVotingStart": 1618333535826,
+      "timeVotingEnd": 1618938335826
+    },
+    "42": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Increase Minimum Staking Inflation Param",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1618332983840,
+      "timeVotingStart": 1618332983840,
+      "timeVotingEnd": 1618937783840
+    },
+    "41": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Kava 7 Upgrade Proposal",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1617214625836,
+      "timeVotingStart": 1617214625836,
+      "timeVotingEnd": 1617819425836
+    },
+    "40": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Kava 51 Upgrade Proposal",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1616557352912,
+      "timeVotingStart": 1616557352912,
+      "timeVotingEnd": 1617162152912
+    },
+    "39": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Kava 51 Upgrade Proposal",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1615918851198,
+      "timeVotingStart": 1615918851198,
+      "timeVotingEnd": 1616523651198
+    },
+    "38": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Add USDX incentives for HBTC update BTCB incentives",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1615252126714,
+      "timeVotingStart": 1615252126714,
+      "timeVotingEnd": 1615856926714
+    },
+    "37": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Kava 5 Upgrade Proposal",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1614114622693,
+      "timeVotingStart": 1614114622693,
+      "timeVotingEnd": 1614719422693
+    },
+    "36": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Increase Minimum Staking Inflation Param",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1613496601186,
+      "timeVotingStart": 1613496601186,
+      "timeVotingEnd": 1614101401186
+    },
+    "35": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Increase USDX debt limits",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1613496241683,
+      "timeVotingStart": 1613496241683,
+      "timeVotingEnd": 1614101041683
+    },
+    "34": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Add HBTC to the list of allowed CDP collaterals",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1612926256938,
+      "timeVotingStart": 1612926256938,
+      "timeVotingEnd": 1613531056938
+    },
+    "33": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Add HBTC to Kava",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1612222773320,
+      "timeVotingStart": 1612222773320,
+      "timeVotingEnd": 1612827573320
+    },
+    "32": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Update USDX minting incentives",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1610145434431,
+      "timeVotingStart": 1610145434431,
+      "timeVotingEnd": 1610750234431
+    },
+    "31": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Adjust HARD incentives for liquidity providers",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1610145308635,
+      "timeVotingStart": 1610145308635,
+      "timeVotingEnd": 1610750108635
+    },
+    "30": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Reduce BUSD incentives by 50",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1608231233581,
+      "timeVotingStart": 1608231233581,
+      "timeVotingEnd": 1608836033581
+    },
+    "29": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Add HARD to the list of allowed CDP collaterals",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1608231120530,
+      "timeVotingStart": 1608231120530,
+      "timeVotingEnd": 1608835920530
+    },
+    "28": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Add HARD to the pricefeed",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1607402306964,
+      "timeVotingStart": 1607402306964,
+      "timeVotingEnd": 1608007106964
+    },
+    "27": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Add USDX Incentives for KAVA",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1607360447155,
+      "timeVotingStart": 1607360447155,
+      "timeVotingEnd": 1607965247155
+    },
+    "26": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Set BUSD interest rate to 5 APY",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1607359420947,
+      "timeVotingStart": 1607359420947,
+      "timeVotingEnd": 1607964220947
+    },
+    "25": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Add KAVA to the list of allowed CDP collaterals",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1606330414815,
+      "timeVotingStart": 1606330414815,
+      "timeVotingEnd": 1606935214815
+    },
+    "24": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "A USDX Incentives for XRP",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1606328974529,
+      "timeVotingStart": 1606328974529,
+      "timeVotingEnd": 1606933774529
+    },
+    "23": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Add assets to hard protocol distribution",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1605150717570,
+      "timeVotingStart": 1605150717570,
+      "timeVotingEnd": 1605755517570
+    },
+    "22": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Update CDP debt limits",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1604979426778,
+      "timeVotingStart": 1604979426778,
+      "timeVotingEnd": 1605584226778
+    },
+    "21": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "A USDX Incentives for BTC",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1604932098663,
+      "timeVotingStart": 1604932098663,
+      "timeVotingEnd": 1605536898663
+    },
+    "20": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "A USDX Incentives for BUSD",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1604325460332,
+      "timeVotingStart": 1604325460332,
+      "timeVotingEnd": 1604930260332
+    },
+    "19": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "A USDX Incentives for BUSD",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1603548684087,
+      "timeVotingStart": 1603548684087,
+      "timeVotingEnd": 1604153484087
+    },
+    "18": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "A USDX Incentives for BUSD",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1602943515541,
+      "timeVotingStart": 1602943515541,
+      "timeVotingEnd": 1603548315541
+    },
+    "17": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Kava 4 Upgrade Proposal",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1601526022581,
+      "timeVotingStart": 1601526022581,
+      "timeVotingEnd": 1602735622581
+    },
+    "16": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Harvest Proposal",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1600739622631,
+      "timeVotingStart": 1600739622631,
+      "timeVotingEnd": 1601949222631
+    },
+    "15": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Activate usdx incentive rewards",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1594821602207,
+      "timeVotingStart": 1594821602207,
+      "timeVotingEnd": 1596031202207
+    },
+    "11": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Activate usdx incentive rewards",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1593616127061,
+      "timeVotingStart": 1593616127061,
+      "timeVotingEnd": 1594825727061
+    },
+    "10": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Activate usdx incentive rewards",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1592401805887,
+      "timeVotingStart": 1592402387475,
+      "timeVotingEnd": 1593611987475
+    },
+    "8": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Kava 3 Upgrade Proposal B",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1590551869001,
+      "timeVotingStart": 1590552007724,
+      "timeVotingEnd": 1591761607724
+    },
+    "7": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Kava 3 Upgrade Proposal",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1589744965511,
+      "timeVotingStart": 1589745048493,
+      "timeVotingEnd": 1590954648493
+    },
+    "6": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Nominate Kava Safety Committee",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1589328625092,
+      "timeVotingStart": 1589595258636,
+      "timeVotingEnd": 1590804858636
+    },
+    "5": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Nominate Kava Stability Committee",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1589328228610,
+      "timeVotingStart": 1589595196534,
+      "timeVotingEnd": 1590804796534
+    },
+    "4": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "BNB Collateral and USDX Minting Rewards",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1589327742006,
+      "timeVotingStart": 1589595161979,
+      "timeVotingEnd": 1590804761979
+    },
+    "3": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Nominate Kava Oracle Providers",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1589327283536,
+      "timeVotingStart": 1589351033099,
+      "timeVotingEnd": 1590560633099
+    },
+    "2": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Kava Incentives Proposal",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1584727427344,
+      "timeVotingStart": 1585033860433,
+      "timeVotingEnd": 1586243460433
+    },
+    "1": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Enable Transactions Param Change",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1573929075707,
+      "timeVotingStart": 1574131696507,
+      "timeVotingEnd": 1575341296507
+    }
+  }
+}

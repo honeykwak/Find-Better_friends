@@ -1,0 +1,617 @@
+{
+  "validator_count": 280,
+  "proposals": {
+    "353": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Juno Communications SubDAO Funding Proposal 3 months",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1721857432490,
+      "timeVotingStart": 1721857432490,
+      "timeVotingEnd": 1722289432490,
+      "ratios": {
+        "YES": 0.546875,
+        "NO": 0.0625,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.390625
+      },
+      "total_votes": 64
+    },
+    "349": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signal proposal for the council to put dapps as the first priority",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1715171761822,
+      "timeVotingStart": 1715171761822,
+      "timeVotingEnd": 1715603761822,
+      "ratios": {
+        "YES": 0.2159090909090909,
+        "NO": 0.10227272727272728,
+        "NO_WITH_VETO": 0.011363636363636364,
+        "ABSTAIN": 0.6704545454545454
+      },
+      "total_votes": 88
+    },
+    "339": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Development Election Kopeboy",
+      "type": "/cosmwasm.wasm.v1.MsgExecuteContract",
+      "status": "FAILED",
+      "timeSubmit": 1708370698969,
+      "timeVotingStart": 1708370904852,
+      "timeVotingEnd": 1708802904852,
+      "ratios": {
+        "YES": 0.26744186046511625,
+        "NO": 0.05813953488372093,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6744186046511628
+      },
+      "total_votes": 86
+    },
+    "338": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Development Election Andr",
+      "type": "/cosmwasm.wasm.v1.MsgExecuteContract",
+      "status": "FAILED",
+      "timeSubmit": 1708370612338,
+      "timeVotingStart": 1708370919468,
+      "timeVotingEnd": 1708802919468,
+      "ratios": {
+        "YES": 0.29069767441860467,
+        "NO": 0.046511627906976744,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6627906976744186
+      },
+      "total_votes": 86
+    },
+    "337": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Development Election Ray Raspberry",
+      "type": "/cosmwasm.wasm.v1.MsgExecuteContract",
+      "status": "FAILED",
+      "timeSubmit": 1708370505659,
+      "timeVotingStart": 1708370941748,
+      "timeVotingEnd": 1708802941748,
+      "ratios": {
+        "YES": 0.34523809523809523,
+        "NO": 0.047619047619047616,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6071428571428571
+      },
+      "total_votes": 84
+    },
+    "336": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "Operations Election Ninjaxan",
+      "type": "unknown",
+      "status": "PASSED",
+      "timeSubmit": 1708367955496,
+      "timeVotingStart": 1708368188077,
+      "timeVotingEnd": 1708800188077,
+      "ratios": {
+        "YES": 0.3563218390804598,
+        "NO": 0.034482758620689655,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6091954022988506
+      },
+      "total_votes": 87
+    },
+    "335": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "Operations Election Lil D",
+      "type": "unknown",
+      "status": "REJECTED",
+      "timeSubmit": 1708367567084,
+      "timeVotingStart": 1708368188077,
+      "timeVotingEnd": 1708800188077,
+      "ratios": {
+        "YES": 0.1744186046511628,
+        "NO": 0.1511627906976744,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6744186046511628
+      },
+      "total_votes": 86
+    },
+    "331": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Shift focus from feature upgrades to finishing dApps and dev onboarding",
+      "type": "unknown",
+      "status": "REJECTED",
+      "timeSubmit": 1704685502360,
+      "timeVotingStart": 1704685502360,
+      "timeVotingEnd": 1705117502360,
+      "ratios": {
+        "YES": 0.32989690721649484,
+        "NO": 0.31958762886597936,
+        "NO_WITH_VETO": 0.08247422680412371,
+        "ABSTAIN": 0.26804123711340205
+      },
+      "total_votes": 97
+    },
+    "330": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "Remove BlockCreators from Core1  Cancel Vesting",
+      "type": "unknown",
+      "status": "REJECTED",
+      "timeSubmit": 1703124210958,
+      "timeVotingStart": 1703124374467,
+      "timeVotingEnd": 1703556374467,
+      "ratios": {
+        "YES": 0.189873417721519,
+        "NO": 0.06329113924050633,
+        "NO_WITH_VETO": 0.06329113924050633,
+        "ABSTAIN": 0.6835443037974683
+      },
+      "total_votes": 79
+    },
+    "329": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "Community Relations Elections 22 Tonyler",
+      "type": "unknown",
+      "status": "PASSED",
+      "timeSubmit": 1702913764651,
+      "timeVotingStart": 1702916411993,
+      "timeVotingEnd": 1703348411993,
+      "ratios": {
+        "YES": 0.35294117647058826,
+        "NO": 0.047058823529411764,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6
+      },
+      "total_votes": 85
+    },
+    "328": {
+      "main_category": "organizational",
+      "sub_category": "community_policy",
+      "title": "Community Relations Election 12 DragonMonk111",
+      "type": "unknown",
+      "status": "REJECTED",
+      "timeSubmit": 1702913528922,
+      "timeVotingStart": 1702917488010,
+      "timeVotingEnd": 1703349488010,
+      "ratios": {
+        "YES": 0.1744186046511628,
+        "NO": 0.18604651162790697,
+        "NO_WITH_VETO": 0.011627906976744186,
+        "ABSTAIN": 0.627906976744186
+      },
+      "total_votes": 86
+    },
+    "324": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Operations Election 44 Panos",
+      "type": "/cosmwasm.wasm.v1.MsgExecuteContract",
+      "status": "REJECTED",
+      "timeSubmit": 1701384022620,
+      "timeVotingStart": 1701384637262,
+      "timeVotingEnd": 1701816637262,
+      "ratios": {
+        "YES": 0.24489795918367346,
+        "NO": 0.22448979591836735,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5306122448979592
+      },
+      "total_votes": 98
+    },
+    "323": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Operations Election 34 Macks Wolfard",
+      "type": "/cosmwasm.wasm.v1.MsgExecuteContract",
+      "status": "PASSED",
+      "timeSubmit": 1701383785839,
+      "timeVotingStart": 1701383785839,
+      "timeVotingEnd": 1701815785839,
+      "ratios": {
+        "YES": 0.2755102040816326,
+        "NO": 0.22448979591836735,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5
+      },
+      "total_votes": 98
+    },
+    "322": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Operations Election 24 Schweinebacke Cristiano",
+      "type": "/cosmwasm.wasm.v1.MsgExecuteContract",
+      "status": "PASSED",
+      "timeSubmit": 1701383531096,
+      "timeVotingStart": 1701383531096,
+      "timeVotingEnd": 1701815531096,
+      "ratios": {
+        "YES": 0.35051546391752575,
+        "NO": 0.1958762886597938,
+        "NO_WITH_VETO": 0.010309278350515464,
+        "ABSTAIN": 0.44329896907216493
+      },
+      "total_votes": 97
+    },
+    "321": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Operations Election 14 CryptoTank",
+      "type": "/cosmwasm.wasm.v1.MsgExecuteContract",
+      "status": "PASSED",
+      "timeSubmit": 1701383351943,
+      "timeVotingStart": 1701383351943,
+      "timeVotingEnd": 1701815351943,
+      "ratios": {
+        "YES": 0.3333333333333333,
+        "NO": 0.15151515151515152,
+        "NO_WITH_VETO": 0.020202020202020204,
+        "ABSTAIN": 0.494949494949495
+      },
+      "total_votes": 99
+    },
+    "318": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "OverTheCounter OTC Funding Proposal",
+      "type": "unknown",
+      "status": "REJECTED",
+      "timeSubmit": 1695926791166,
+      "timeVotingStart": 1695926791166,
+      "timeVotingEnd": 1696358791166,
+      "ratios": {
+        "YES": 0.2631578947368421,
+        "NO": 0.4473684210526316,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2894736842105263
+      },
+      "total_votes": 76
+    },
+    "314": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Sail with the Whale",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "REJECTED",
+      "timeSubmit": 1693574889096,
+      "timeVotingStart": 1693574889096,
+      "timeVotingEnd": 1694006889096,
+      "ratios": {
+        "YES": 0.3617021276595745,
+        "NO": 0.3829787234042553,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2553191489361702
+      },
+      "total_votes": 94
+    },
+    "313": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Deploy 2M Additional JUNO to the stJUNOJUNO pool on Osmosis",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1693493544986,
+      "timeVotingStart": 1693494624387,
+      "timeVotingEnd": 1693926624387,
+      "ratios": {
+        "YES": 0.6853932584269663,
+        "NO": 0.0898876404494382,
+        "NO_WITH_VETO": 0.056179775280898875,
+        "ABSTAIN": 0.16853932584269662
+      },
+      "total_votes": 89
+    },
+    "307": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Reduce Network Fees in JUNO to 10 of current level",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1688833623098,
+      "timeVotingStart": 1688841053267,
+      "timeVotingEnd": 1689273053267,
+      "ratios": {
+        "YES": 0.3148148148148148,
+        "NO": 0.3611111111111111,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.32407407407407407
+      },
+      "total_votes": 108
+    },
+    "306": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Waive Fees for Ojo Network Oracle",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1686414328749,
+      "timeVotingStart": 1686414328749,
+      "timeVotingEnd": 1686846328749,
+      "ratios": {
+        "YES": 0.4854368932038835,
+        "NO": 0.30097087378640774,
+        "NO_WITH_VETO": 0.019417475728155338,
+        "ABSTAIN": 0.1941747572815534
+      },
+      "total_votes": 103
+    },
+    "286": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Remove Lobo from Core1",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1682426694424,
+      "timeVotingStart": 1682915879325,
+      "timeVotingEnd": 1683347879325,
+      "ratios": {
+        "YES": 0.009523809523809525,
+        "NO": 0.45714285714285713,
+        "NO_WITH_VETO": 0.11428571428571428,
+        "ABSTAIN": 0.41904761904761906
+      },
+      "total_votes": 105
+    },
+    "284": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "WYND DEX External Incentives for WYNDJUNO Pool",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1681482859032,
+      "timeVotingStart": 1681482859032,
+      "timeVotingEnd": 1681914859032,
+      "ratios": {
+        "YES": 0.49074074074074076,
+        "NO": 0.17592592592592593,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3333333333333333
+      },
+      "total_votes": 108
+    },
+    "280": {
+      "main_category": "technical",
+      "sub_category": "infrastructure_management",
+      "title": "Increase Validator Set to 160",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1680093145222,
+      "timeVotingStart": 1680184492989,
+      "timeVotingEnd": 1680616492989,
+      "ratios": {
+        "YES": 0.3047619047619048,
+        "NO": 0.5047619047619047,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.19047619047619047
+      },
+      "total_votes": 105
+    },
+    "279": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Protocol owned liquidity seJUNOJUNO on Wynd DEX",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1679779499928,
+      "timeVotingStart": 1679817678755,
+      "timeVotingEnd": 1680249678755,
+      "ratios": {
+        "YES": 0.18867924528301888,
+        "NO": 0.24528301886792453,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5660377358490566
+      },
+      "total_votes": 106
+    },
+    "89": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Cosmos Option Vaults by CzarDAO",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1673891794347,
+      "timeVotingStart": 1673893664259,
+      "timeVotingEnd": 1674325664259,
+      "ratios": {
+        "YES": 0.2980769230769231,
+        "NO": 0.25,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.4519230769230769
+      },
+      "total_votes": 104
+    },
+    "85": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "CORRECTED Make JUNO Carbon Neutral by Purchasing EcoCredits",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1673220759054,
+      "timeVotingStart": 1673220759054,
+      "timeVotingEnd": 1673652759054,
+      "ratios": {
+        "YES": 0.24242424242424243,
+        "NO": 0.5959595959595959,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.16161616161616163
+      },
+      "total_votes": 99
+    },
+    "72": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Community consent Cosmos Pay supporting JUNO",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1671564149844,
+      "timeVotingStart": 1671564368966,
+      "timeVotingEnd": 1671996368966,
+      "ratios": {
+        "YES": 0.5595238095238095,
+        "NO": 0.03571428571428571,
+        "NO_WITH_VETO": 0.05952380952380952,
+        "ABSTAIN": 0.34523809523809523
+      },
+      "total_votes": 84
+    },
+    "60": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Loop Finance  Juno Terra Developer Grant Final Tranche Payment",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1669833605502,
+      "timeVotingStart": 1669835431773,
+      "timeVotingEnd": 1670267431773,
+      "ratios": {
+        "YES": 0.37272727272727274,
+        "NO": 0.12727272727272726,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5
+      },
+      "total_votes": 110
+    },
+    "59": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Fund only open source software",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1669782729533,
+      "timeVotingStart": 1669783562141,
+      "timeVotingEnd": 1670215562141,
+      "ratios": {
+        "YES": 0.41964285714285715,
+        "NO": 0.3392857142857143,
+        "NO_WITH_VETO": 0.017857142857142856,
+        "ABSTAIN": 0.22321428571428573
+      },
+      "total_votes": 112
+    },
+    "39": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Komple Framework KompleJS  Marketplace Builder Proposal",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1663703194520,
+      "timeVotingStart": 1663703194520,
+      "timeVotingEnd": 1664135194520,
+      "ratios": {
+        "YES": 0.6017699115044248,
+        "NO": 0.05309734513274336,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.34513274336283184
+      },
+      "total_votes": 113
+    },
+    "19": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Confirmation by CCN to agree to Unity Prop",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1650297777549,
+      "timeVotingStart": 1650298080724,
+      "timeVotingEnd": 1650730080724,
+      "ratios": {
+        "YES": 0.023529411764705882,
+        "NO": 0.6,
+        "NO_WITH_VETO": 0.10588235294117647,
+        "ABSTAIN": 0.27058823529411763
+      },
+      "total_votes": 85
+    },
+    "18": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Harmony Proposal to end FUD",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1649862653829,
+      "timeVotingStart": 1649862889819,
+      "timeVotingEnd": 1650294889819,
+      "ratios": {
+        "YES": 0.01,
+        "NO": 0.4,
+        "NO_WITH_VETO": 0.38,
+        "ABSTAIN": 0.21
+      },
+      "total_votes": 100
+    },
+    "16": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Correcting the gamed stakedrop",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1646928556285,
+      "timeVotingStart": 1646929262860,
+      "timeVotingEnd": 1647361262860,
+      "ratios": {
+        "YES": 0.336,
+        "NO": 0.408,
+        "NO_WITH_VETO": 0.04,
+        "ABSTAIN": 0.216
+      },
+      "total_votes": 125
+    },
+    "15": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "JunoSwap Signaling Proposal Allow permissionless listing of bridged assets from Sifchains Peggy bridge",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1645634649514,
+      "timeVotingStart": 1645634649514,
+      "timeVotingEnd": 1646066649514,
+      "ratios": {
+        "YES": 0.16470588235294117,
+        "NO": 0.47058823529411764,
+        "NO_WITH_VETO": 0.011764705882352941,
+        "ABSTAIN": 0.35294117647058826
+      },
+      "total_votes": 85
+    },
+    "7": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Community Spend Proposal for Liquidity Funding on JUNOXKI Incentivized Pool",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1637760033183,
+      "timeVotingStart": 1637762684051,
+      "timeVotingEnd": 1638194684051,
+      "ratios": {
+        "YES": 0.40816326530612246,
+        "NO": 0.3877551020408163,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.20408163265306123
+      },
+      "total_votes": 49
+    },
+    "4": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Fixing Centralization From Gamed Stakedrop",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1633611341941,
+      "timeVotingStart": 1634041738307,
+      "timeVotingEnd": 1634473738307,
+      "ratios": {
+        "YES": 0.11627906976744186,
+        "NO": 0.6046511627906976,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.27906976744186046
+      },
+      "total_votes": 43
+    }
+  }
+}

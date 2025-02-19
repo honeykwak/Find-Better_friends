@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import chainReducer from './slices/chainSlice';
 import validatorReducer from './slices/validatorSlice';
+import proposalReducer from './slices/proposalSlice';
 
 export const store = configureStore({
   reducer: {
     chain: chainReducer,
-    validator: validatorReducer
+    validator: validatorReducer,
+    proposal: proposalReducer
   },
 });
 

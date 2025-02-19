@@ -528,34 +528,171 @@ export const ValidatorOverview = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full h-[600px] bg-white rounded-lg shadow-lg p-6 flex items-center justify-center">
-        <div className="text-lg text-gray-600">Loading validator data...</div>
+      <div className="h-full min-h-0 bg-white rounded-lg shadow-lg p-4 flex flex-col">
+        <div className="shrink-0 mb-2">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-4">
+              <h2 className="text-xl font-semibold">Validator Overview</h2>
+              <button
+                className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                onClick={resetZoomPan}
+              >
+                Reset View
+              </button>
+            </div>
+            <div className="relative search-container">
+              <div className="relative">
+                <input
+                  type="text"
+                  className="w-64 px-4 py-2 pr-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Search validators..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onFocus={() => setIsSearchFocused(true)}
+                />
+                {searchTerm && (
+                  <button
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    onClick={() => {
+                      setSearchTerm('');
+                      setIsSearchFocused(false);
+                    }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                )}
+              </div>
+              {isSearchFocused && (
+                <div className="absolute z-10 w-64 mt-1 border rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                  <div className="absolute inset-0 bg-white opacity-80 backdrop-blur-sm rounded-lg" />
+                  {filteredValidators.map((validator) => (
+                    <div
+                      key={validator.voter}
+                      className={`
+                        relative px-4 py-2 cursor-pointer
+                        hover:bg-gray-100/70
+                        ${currentValidator?.voter === validator.voter 
+                          ? 'bg-blue-50/70 text-blue-600' 
+                          : ''
+                        }
+                      `}
+                      onClick={() => {
+                        dispatch(setSelectedValidator(validator));
+                        setIsSearchFocused(false);
+                        setSearchTerm('');
+                      }}
+                      onMouseEnter={() => setHoveredValidator(validator.voter)}
+                      onMouseLeave={() => setHoveredValidator(null)}
+                    >
+                      {validator.voter}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        
+        <div className="min-h-0 flex-1 overflow-auto">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-lg text-gray-600">Loading validator data...</div>
+          </div>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="w-full h-[600px] bg-white rounded-lg shadow-lg p-6 flex items-center justify-center">
-        <div className="text-lg text-red-600">{error}</div>
+      <div className="h-full min-h-0 bg-white rounded-lg shadow-lg p-4 flex flex-col">
+        <div className="shrink-0 mb-2">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-4">
+              <h2 className="text-xl font-semibold">Validator Overview</h2>
+              <button
+                className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                onClick={resetZoomPan}
+              >
+                Reset View
+              </button>
+            </div>
+            <div className="relative search-container">
+              <div className="relative">
+                <input
+                  type="text"
+                  className="w-64 px-4 py-2 pr-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Search validators..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onFocus={() => setIsSearchFocused(true)}
+                />
+                {searchTerm && (
+                  <button
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    onClick={() => {
+                      setSearchTerm('');
+                      setIsSearchFocused(false);
+                    }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                )}
+              </div>
+              {isSearchFocused && (
+                <div className="absolute z-10 w-64 mt-1 border rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                  <div className="absolute inset-0 bg-white opacity-80 backdrop-blur-sm rounded-lg" />
+                  {filteredValidators.map((validator) => (
+                    <div
+                      key={validator.voter}
+                      className={`
+                        relative px-4 py-2 cursor-pointer
+                        hover:bg-gray-100/70
+                        ${currentValidator?.voter === validator.voter 
+                          ? 'bg-blue-50/70 text-blue-600' 
+                          : ''
+                        }
+                      `}
+                      onClick={() => {
+                        dispatch(setSelectedValidator(validator));
+                        setIsSearchFocused(false);
+                        setSearchTerm('');
+                      }}
+                      onMouseEnter={() => setHoveredValidator(validator.voter)}
+                      onMouseLeave={() => setHoveredValidator(null)}
+                    >
+                      {validator.voter}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        
+        <div className="min-h-0 flex-1 overflow-auto">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-lg text-red-600">{error}</div>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      <div className="w-full h-[600px] bg-white rounded-lg shadow-lg p-6">
-        <div className="flex justify-between items-center mb-4">
+    <div className="h-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">
+      <div className="shrink-0 mb-2">
+        <div className="flex justify-between items-center flex-wrap gap-2">
           <div className="flex items-center space-x-4">
             <h2 className="text-xl font-semibold">Validator Overview</h2>
             <button
               className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
               onClick={resetZoomPan}
-              title="Reset zoom and position"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M4 2a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H4zm0 2h12v12H4V4zm3 3a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1z" clipRule="evenodd"/>
-              </svg>
+              Reset View
             </button>
           </div>
           <div className="relative search-container">
@@ -583,18 +720,13 @@ export const ValidatorOverview = () => {
               )}
             </div>
             {isSearchFocused && (
-              <div className="absolute z-10 w-64 mt-1 border rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                <div className="absolute inset-0 bg-white opacity-80 backdrop-blur-sm rounded-lg" />
+              <div className="absolute z-10 w-64 mt-1 border rounded-lg shadow-lg max-h-60 overflow-y-auto bg-white">
                 {filteredValidators.map((validator) => (
                   <div
                     key={validator.voter}
                     className={`
-                      relative px-4 py-2 cursor-pointer
-                      hover:bg-gray-100/70
-                      ${currentValidator?.voter === validator.voter 
-                        ? 'bg-blue-50/70 text-blue-600' 
-                        : ''
-                      }
+                      px-4 py-2 cursor-pointer hover:bg-gray-100
+                      ${currentValidator?.voter === validator.voter ? 'bg-blue-50 text-blue-600' : ''}
                     `}
                     onClick={() => {
                       dispatch(setSelectedValidator(validator));
@@ -611,39 +743,35 @@ export const ValidatorOverview = () => {
             )}
           </div>
         </div>
-
-        <div className="relative w-full h-[90%]">
-          <svg
-            ref={svgRef}
-            className="w-full h-full"
-            style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
-            onMouseDown={(e: React.MouseEvent) => {
-              handleMouseDown(e.nativeEvent);
+      </div>
+      <div className="min-h-0 flex-1 overflow-hidden relative">
+        <svg
+          ref={svgRef}
+          className="w-full h-full"
+          style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+        >
+          <g ref={gRef} />
+        </svg>
+        {tooltipData && (
+          <div 
+            className={`
+              absolute bg-white p-3 border rounded shadow
+              ${currentValidator?.voter === tooltipData.voter ? 'ring-2 ring-blue-500 bg-blue-50' : ''}
+            `}
+            style={{ 
+              left: (tooltipData.x * scale + position.x) + 15,  // 줌과 패닝을 고려한 위치 계산
+              top: (tooltipData.y * scale + position.y) - 10,   // 줌과 패닝을 고려한 위치 계산
+              transformOrigin: 'top left',
+              pointerEvents: 'none'
+              // transform 속성 제거 - 툴팁 크기는 고정
             }}
           >
-            <g ref={gRef} />
-          </svg>
-          {tooltipData && (
-            <div 
-              className={`
-                absolute bg-white p-3 border rounded shadow
-                ${currentValidator?.voter === tooltipData.voter ? 'ring-2 ring-blue-500 bg-blue-50' : ''}
-              `}
-              style={{ 
-                left: (tooltipData.x * scale + position.x) + 15,  // 줌과 패닝을 고려한 위치 계산
-                top: (tooltipData.y * scale + position.y) - 10,   // 줌과 패닝을 고려한 위치 계산
-                transformOrigin: 'top left',
-                pointerEvents: 'none'
-                // transform 속성 제거 - 툴팁 크기는 고정
-              }}
-            >
-              <p className={`font-medium ${currentValidator?.voter === tooltipData.voter ? 'text-blue-600' : ''}`}>
-                {tooltipData.voter}
-                {currentValidator?.voter === tooltipData.voter && <span className="ml-2 text-xs">(Selected)</span>}
-              </p>
-            </div>
-          )}
-        </div>
+            <p className={`font-medium ${currentValidator?.voter === tooltipData.voter ? 'text-blue-600' : ''}`}>
+              {tooltipData.voter}
+              {currentValidator?.voter === tooltipData.voter && <span className="ml-2 text-xs">(Selected)</span>}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

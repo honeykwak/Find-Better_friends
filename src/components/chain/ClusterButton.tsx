@@ -4,11 +4,13 @@ import { ClusterType } from '../../types';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { toggleCluster } from '../../store/slices/chainSlice';
+import { CLUSTER_LABELS } from '../../constants';
 import classNames from 'classnames';
 
 interface ClusterButtonProps {
   cluster: ClusterType;
-  label: string;
+  isSelected: boolean;
+  onClick: () => void;
 }
 
 const clusterColors: Record<ClusterType, string> = {
@@ -19,10 +21,9 @@ const clusterColors: Record<ClusterType, string> = {
   5: 'bg-green-200 hover:bg-green-300',
 };
 
-export const ClusterButton: React.FC<ClusterButtonProps> = ({ cluster, label }) => {
+export const ClusterButton: React.FC<ClusterButtonProps> = ({ cluster, isSelected, onClick }) => {
   const dispatch = useAppDispatch();
   const selectedClusters = useAppSelector(state => state.chain.selectedClusters);
-  const isSelected = selectedClusters.includes(cluster);
 
   return (
     <button
@@ -33,7 +34,7 @@ export const ClusterButton: React.FC<ClusterButtonProps> = ({ cluster, label }) 
       )}
       onClick={() => dispatch(toggleCluster(cluster))}
     >
-      {label}
+      {CLUSTER_LABELS[cluster]}
     </button>
   );
 };

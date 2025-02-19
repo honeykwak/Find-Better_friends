@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ClusterType, ValidatorData } from '../../types';
+import { ClusterType, ValidatorData, CoordinateData } from '../../types';
 
 interface ValidatorSelectionPayload {
   validator: ValidatorData | null;
@@ -10,14 +10,16 @@ interface ChainState {
   selectedChain: string | null;
   selectedClusters: ClusterType[];
   selectedValidator: ValidatorData | null;
-  validatorChains: Set<string>;
+  validatorChains: string[];
+  coordinateData: CoordinateData | null;
 }
 
 const initialState: ChainState = {
   selectedChain: null,
   selectedClusters: [],
   selectedValidator: null,
-  validatorChains: new Set()
+  validatorChains: [],
+  coordinateData: null
 };
 
 export const chainSlice = createSlice({
@@ -28,19 +30,26 @@ export const chainSlice = createSlice({
       state.selectedChain = action.payload;
     },
     toggleCluster: (state, action: PayloadAction<ClusterType>) => {
-      const index = state.selectedClusters.indexOf(action.payload);
-      if (index > -1) {
-        state.selectedClusters.splice(index, 1);
+      const cluster = action.payload;
+      const index = state.selectedClusters.indexOf(cluster);
+      if (index === -1) {
+        state.selectedClusters.push(cluster);
       } else {
-        state.selectedClusters.push(action.payload);
+        state.selectedClusters.splice(index, 1);
       }
     },
     updateValidatorSelection: (state, action: PayloadAction<ValidatorSelectionPayload>) => {
       state.selectedValidator = action.payload.validator;
-      state.validatorChains = new Set(action.payload.validatorChains);
+      state.validatorChains = action.payload.validatorChains;
+    },
+    setCoordinateData: (state, action: PayloadAction<CoordinateData>) => {
+      state.coordinateData = action.payload;
+    },
+    setSelectedClusters: (state, action: PayloadAction<ClusterType[]>) => {
+      state.selectedClusters = action.payload;
     }
   }
 });
 
-export const { selectChain, toggleCluster, updateValidatorSelection } = chainSlice.actions;
+export const { selectChain, toggleCluster, updateValidatorSelection, setCoordinateData, setSelectedClusters } = chainSlice.actions;
 export default chainSlice.reducer;

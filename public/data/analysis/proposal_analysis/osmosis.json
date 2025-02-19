@@ -1,0 +1,2691 @@
+{
+  "validator_count": 313,
+  "proposals": {
+    "850": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Whitelist Ark Protocol Developer Wallets for InterChain NFT Contracts",
+      "type": "/cosmwasm.wasm.v1.MsgAddCodeUploadParamsAddresses",
+      "status": "PASSED",
+      "timeSubmit": 1727681559733,
+      "timeVotingStart": 1727681904526,
+      "timeVotingEnd": 1728113904526,
+      "ratios": {
+        "YES": 0.4675324675324675,
+        "NO": 0.025974025974025976,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5064935064935064
+      },
+      "total_votes": 77
+    },
+    "841": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Osmosis Representation at Crypto Summit del Caribe II",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1726591645190,
+      "timeVotingStart": 1726591645190,
+      "timeVotingEnd": 1727023645190,
+      "ratios": {
+        "YES": 0.3176470588235294,
+        "NO": 0.24705882352941178,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.43529411764705883
+      },
+      "total_votes": 85
+    },
+    "834": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Update Incentives in line with inflation reduction",
+      "type": "/osmosis.poolincentives.v1beta1.UpdatePoolIncentivesProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1724855267068,
+      "timeVotingStart": 1724855267068,
+      "timeVotingEnd": 1725287267068,
+      "ratios": {
+        "YES": 0.1827956989247312,
+        "NO": 0.5483870967741935,
+        "NO_WITH_VETO": 0.010752688172043012,
+        "ABSTAIN": 0.25806451612903225
+      },
+      "total_votes": 93
+    },
+    "833": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Osmosis Inflation Reduction proposal",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1724854970271,
+      "timeVotingStart": 1724854970271,
+      "timeVotingEnd": 1725286970271,
+      "ratios": {
+        "YES": 0.1827956989247312,
+        "NO": 0.5268817204301075,
+        "NO_WITH_VETO": 0.010752688172043012,
+        "ABSTAIN": 0.27956989247311825
+      },
+      "total_votes": 93
+    },
+    "812": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Claw Back SAIL DAO Funding",
+      "type": "/cosmos.authz.v1beta1.MsgExec",
+      "status": "PASSED",
+      "timeSubmit": 1721248830230,
+      "timeVotingStart": 1721248830230,
+      "timeVotingEnd": 1721680830230,
+      "ratios": {
+        "YES": 0.5979381443298969,
+        "NO": 0.10309278350515463,
+        "NO_WITH_VETO": 0.020618556701030927,
+        "ABSTAIN": 0.27835051546391754
+      },
+      "total_votes": 97
+    },
+    "798": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Deployment of stOSMO liquidity from stableswap into Locust vault",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1719420518274,
+      "timeVotingStart": 1719420518274,
+      "timeVotingEnd": 1719852518274,
+      "ratios": {
+        "YES": 0.5357142857142857,
+        "NO": 0.011904761904761904,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.4523809523809524
+      },
+      "total_votes": 84
+    },
+    "789": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Whitelist Lion DAO Deployment Address to Upload Contracts",
+      "type": "/cosmwasm.wasm.v1.MsgAddCodeUploadParamsAddresses",
+      "status": "PASSED",
+      "timeSubmit": 1717845194363,
+      "timeVotingStart": 1717845194363,
+      "timeVotingEnd": 1718277194363,
+      "ratios": {
+        "YES": 0.6853932584269663,
+        "NO": 0.10112359550561797,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.21348314606741572
+      },
+      "total_votes": 89
+    },
+    "786": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Matching incentives for Frax assets on Osmosis with Picasso",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1717002921189,
+      "timeVotingStart": 1717002921189,
+      "timeVotingEnd": 1717434921189,
+      "ratios": {
+        "YES": 0.27472527472527475,
+        "NO": 0.14285714285714285,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5824175824175825
+      },
+      "total_votes": 91
+    },
+    "785": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Whitelist Address for Mad Pots Game Deployment",
+      "type": "/cosmwasm.wasm.v1.MsgUpdateParams",
+      "status": "PASSED",
+      "timeSubmit": 1716940510936,
+      "timeVotingStart": 1716940510936,
+      "timeVotingEnd": 1717372510936,
+      "ratios": {
+        "YES": 0.574468085106383,
+        "NO": 0.02127659574468085,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.40425531914893614
+      },
+      "total_votes": 94
+    },
+    "784": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Review Downtime Jailing Parameters",
+      "type": "/cosmos.slashing.v1beta1.MsgUpdateParams",
+      "status": "PASSED",
+      "timeSubmit": 1716898521069,
+      "timeVotingStart": 1716898521069,
+      "timeVotingEnd": 1717330521069,
+      "ratios": {
+        "YES": 0.6818181818181818,
+        "NO": 0.125,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.19318181818181818
+      },
+      "total_votes": 88
+    },
+    "772": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Demand return of IonDAO funding",
+      "type": "unknown",
+      "status": "PASSED",
+      "timeSubmit": 1713339996921,
+      "timeVotingStart": 1713339996921,
+      "timeVotingEnd": 1713771996921,
+      "ratios": {
+        "YES": 0.5454545454545454,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.45454545454545453
+      },
+      "total_votes": 88
+    },
+    "771": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Reevaluation of Liquid Staked OSMO held by the Community Pool stkOSMO Liquidity",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1713278387678,
+      "timeVotingStart": 1713278387678,
+      "timeVotingEnd": 1713710387678,
+      "ratios": {
+        "YES": 0.6526315789473685,
+        "NO": 0.05263157894736842,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.29473684210526313
+      },
+      "total_votes": 95
+    },
+    "770": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Reevaluation of Liquid Staked OSMO held by the Community Pool qOSMO Liquidity",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1713278224588,
+      "timeVotingStart": 1713278224588,
+      "timeVotingEnd": 1713710224588,
+      "ratios": {
+        "YES": 0.6041666666666666,
+        "NO": 0.052083333333333336,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.34375
+      },
+      "total_votes": 96
+    },
+    "769": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Reevaluation of Liquid Staked OSMO held by the Community Pool stOSMO concentration",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1713277491412,
+      "timeVotingStart": 1713277491412,
+      "timeVotingEnd": 1713709491412,
+      "ratios": {
+        "YES": 0.6907216494845361,
+        "NO": 0.020618556701030927,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.28865979381443296
+      },
+      "total_votes": 97
+    },
+    "764": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "proposal 0",
+      "type": "/ibc.core.client.v1.UpgradeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1712507094137,
+      "timeVotingStart": 1712510789128,
+      "timeVotingEnd": 1712942789128,
+      "ratios": {
+        "YES": 0.021739130434782608,
+        "NO": 0.41304347826086957,
+        "NO_WITH_VETO": 0.5434782608695652,
+        "ABSTAIN": 0.021739130434782608
+      },
+      "total_votes": 92
+    },
+    "741": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Whitelist Address for Banana Vaults Deployment",
+      "type": "/cosmwasm.wasm.v1.MsgUpdateParams",
+      "status": "PASSED",
+      "timeSubmit": 1709012093293,
+      "timeVotingStart": 1709012537372,
+      "timeVotingEnd": 1709444537372,
+      "ratios": {
+        "YES": 0.6354166666666666,
+        "NO": 0.13541666666666666,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.22916666666666666
+      },
+      "total_votes": 96
+    },
+    "712": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Allocate 7m OSMO to the OGP Multisig to Fund Market Making Operations for 12 Months",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1704770377612,
+      "timeVotingStart": 1704770606119,
+      "timeVotingEnd": 1705202606119,
+      "ratios": {
+        "YES": 0.5204081632653061,
+        "NO": 0.1836734693877551,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.29591836734693877
+      },
+      "total_votes": 98
+    },
+    "707": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Allocate 7m OSMO to the OGP Multisig to Fund Market Making Operations for 12 Months",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "FAILED",
+      "timeSubmit": 1704310425917,
+      "timeVotingStart": 1704310930779,
+      "timeVotingEnd": 1704742930779,
+      "ratios": {
+        "YES": 0.25,
+        "NO": 0.2631578947368421,
+        "NO_WITH_VETO": 0.013157894736842105,
+        "ABSTAIN": 0.47368421052631576
+      },
+      "total_votes": 76
+    },
+    "706": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Osmosis Grants Program v3 Renewal",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "FAILED",
+      "timeSubmit": 1704305088826,
+      "timeVotingStart": 1704305912918,
+      "timeVotingEnd": 1704737912918,
+      "ratios": {
+        "YES": 0.5584415584415584,
+        "NO": 0.05194805194805195,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.38961038961038963
+      },
+      "total_votes": 77
+    },
+    "700": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Neutron  Osmosis Alignment",
+      "type": "/cosmos.distribution.v1beta1.MsgCommunityPoolSpend",
+      "status": "PASSED",
+      "timeSubmit": 1703686686398,
+      "timeVotingStart": 1704812552923,
+      "timeVotingEnd": 1705244552923,
+      "ratios": {
+        "YES": 0.42105263157894735,
+        "NO": 0.18421052631578946,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.39473684210526316
+      },
+      "total_votes": 76
+    },
+    "694": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Sail with the Whale",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1702122551087,
+      "timeVotingStart": 1702122551087,
+      "timeVotingEnd": 1702554551087,
+      "ratios": {
+        "YES": 0.40540540540540543,
+        "NO": 0.32432432432432434,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2702702702702703
+      },
+      "total_votes": 111
+    },
+    "688": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling Proposal Verify TORI Token as a Verified Asset on Osmosis",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1700870633193,
+      "timeVotingStart": 1701082206046,
+      "timeVotingEnd": 1701514206046,
+      "ratios": {
+        "YES": 0.6914893617021277,
+        "NO": 0.11702127659574468,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.19148936170212766
+      },
+      "total_votes": 94
+    },
+    "666": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Margined Protocol Whitelisted Address for Deployment of Power Perpetuals Contracts",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1698242257278,
+      "timeVotingStart": 1698242257278,
+      "timeVotingEnd": 1698674257278,
+      "ratios": {
+        "YES": 0.7,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3
+      },
+      "total_votes": 90
+    },
+    "655": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Deposit 350K OSMO to the Levana Osmo Liquidity Pool",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1697106790185,
+      "timeVotingStart": 1697106790185,
+      "timeVotingEnd": 1697538790185,
+      "ratios": {
+        "YES": 0.42424242424242425,
+        "NO": 0.10101010101010101,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.47474747474747475
+      },
+      "total_votes": 99
+    },
+    "652": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Update medasdigital1 07tendermint2372 client",
+      "type": "/ibc.core.client.v1.ClientUpdateProposal",
+      "status": "PASSED",
+      "timeSubmit": 1696865439511,
+      "timeVotingStart": 1696865756509,
+      "timeVotingEnd": 1697297756509,
+      "ratios": {
+        "YES": 0.6597938144329897,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.010309278350515464,
+        "ABSTAIN": 0.32989690721649484
+      },
+      "total_votes": 97
+    },
+    "650": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Deploy 2M OSMO to an ampOSMO Supercharged Pool",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1696511841917,
+      "timeVotingStart": 1696511841917,
+      "timeVotingEnd": 1696943841917,
+      "ratios": {
+        "YES": 0.09375,
+        "NO": 0.4479166666666667,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.4583333333333333
+      },
+      "total_votes": 96
+    },
+    "645": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Reduce Maximum Block Size",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1696152993062,
+      "timeVotingStart": 1696152993062,
+      "timeVotingEnd": 1696584993062,
+      "ratios": {
+        "YES": 0.5544554455445545,
+        "NO": 0.2871287128712871,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.15841584158415842
+      },
+      "total_votes": 101
+    },
+    "641": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Deploy 20M OSMO to the stOSMO Pool",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1695998926677,
+      "timeVotingStart": 1695999074372,
+      "timeVotingEnd": 1696431074372,
+      "ratios": {
+        "YES": 0.5729166666666666,
+        "NO": 0.2708333333333333,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.15625
+      },
+      "total_votes": 96
+    },
+    "640": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Allow Genie contracts to be uploaded",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1695822886625,
+      "timeVotingStart": 1695822886625,
+      "timeVotingEnd": 1696254886625,
+      "ratios": {
+        "YES": 0.5053763440860215,
+        "NO": 0.12903225806451613,
+        "NO_WITH_VETO": 0.021505376344086023,
+        "ABSTAIN": 0.34408602150537637
+      },
+      "total_votes": 93
+    },
+    "639": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Mutual token swap between Osmosis and MantaDAO",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1695749715216,
+      "timeVotingStart": 1695749715216,
+      "timeVotingEnd": 1696181715216,
+      "ratios": {
+        "YES": 0.30526315789473685,
+        "NO": 0.12631578947368421,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5684210526315789
+      },
+      "total_votes": 95
+    },
+    "635": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling proposal to match external XPLA incentives to XPLAOSMO pool 1173 on Osmosis AMM",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1695520810929,
+      "timeVotingStart": 1695520810929,
+      "timeVotingEnd": 1695952810929,
+      "ratios": {
+        "YES": 0.13861386138613863,
+        "NO": 0.5445544554455446,
+        "NO_WITH_VETO": 0.009900990099009901,
+        "ABSTAIN": 0.3069306930693069
+      },
+      "total_votes": 101
+    },
+    "620": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Alpine Pay Core contract",
+      "type": "/cosmwasm.wasm.v1.StoreCodeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1694142694369,
+      "timeVotingStart": 1694142694369,
+      "timeVotingEnd": 1694574694369,
+      "ratios": {
+        "YES": 0.07058823529411765,
+        "NO": 0.47058823529411764,
+        "NO_WITH_VETO": 0.023529411764705882,
+        "ABSTAIN": 0.43529411764705883
+      },
+      "total_votes": 85
+    },
+    "610": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Expedited Repair migration for already approved CL pools",
+      "type": "/osmosis.gamm.v1beta1.UpdateMigrationRecordsProposal",
+      "status": "PASSED",
+      "timeSubmit": 1693728430907,
+      "timeVotingStart": 1693728430907,
+      "timeVotingEnd": 1694160430907,
+      "ratios": {
+        "YES": 0.43137254901960786,
+        "NO": 0.46078431372549017,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.10784313725490197
+      },
+      "total_votes": 102
+    },
+    "605": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling Proposal Remove Unverified Status from Gelotto GLTO Token",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1693410154295,
+      "timeVotingStart": 1693410154295,
+      "timeVotingEnd": 1693842154295,
+      "ratios": {
+        "YES": 0.43157894736842106,
+        "NO": 0.1368421052631579,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.43157894736842106
+      },
+      "total_votes": 95
+    },
+    "577": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling Proposal for WHALEOSMO External Incentive Match Extension",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1690988365271,
+      "timeVotingStart": 1690988365271,
+      "timeVotingEnd": 1691420365271,
+      "ratios": {
+        "YES": 0.046511627906976744,
+        "NO": 0.6744186046511628,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.27906976744186046
+      },
+      "total_votes": 86
+    },
+    "576": {
+      "main_category": "organizational",
+      "sub_category": "emergency_response",
+      "title": "Add NOMOSMO 882 to External Incentive Matching program",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1690833681078,
+      "timeVotingStart": 1690834810148,
+      "timeVotingEnd": 1691266810148,
+      "ratios": {
+        "YES": 0.21739130434782608,
+        "NO": 0.40217391304347827,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3804347826086957
+      },
+      "total_votes": 92
+    },
+    "569": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling Proposal for WHALEOSMO into Regular Incentive Program on Osmosis",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1690491047752,
+      "timeVotingStart": 1690491047752,
+      "timeVotingEnd": 1690923047752,
+      "ratios": {
+        "YES": 0.2111111111111111,
+        "NO": 0.4444444444444444,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.34444444444444444
+      },
+      "total_votes": 90
+    },
+    "568": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Create Supercharged Pools for CRO MATIC and BNB",
+      "type": "/osmosis.concentratedliquidity.v1beta1.CreateConcentratedLiquidityPoolsProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1690367928055,
+      "timeVotingStart": 1690368185277,
+      "timeVotingEnd": 1690800185277,
+      "ratios": {
+        "YES": 0.3023255813953488,
+        "NO": 0.5348837209302325,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.16279069767441862
+      },
+      "total_votes": 86
+    },
+    "567": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Disposition of ProtoRev Collected Revenues",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1690213820692,
+      "timeVotingStart": 1690214440241,
+      "timeVotingEnd": 1690646440241,
+      "ratios": {
+        "YES": 0.27586206896551724,
+        "NO": 0.3563218390804598,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.367816091954023
+      },
+      "total_votes": 87
+    },
+    "564": {
+      "main_category": "organizational",
+      "sub_category": "emergency_response",
+      "title": "Add PICAOSMO to External Incentive Matching Program",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1689588239953,
+      "timeVotingStart": 1689588239953,
+      "timeVotingEnd": 1690020239953,
+      "ratios": {
+        "YES": 0.4,
+        "NO": 0.06666666666666667,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5333333333333333
+      },
+      "total_votes": 90
+    },
+    "561": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling proposal for adding LOREOSMO to External Incentive Matching program",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1689343519745,
+      "timeVotingStart": 1689343519745,
+      "timeVotingEnd": 1689775519745,
+      "ratios": {
+        "YES": 0.6702127659574468,
+        "NO": 0.031914893617021274,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2978723404255319
+      },
+      "total_votes": 94
+    },
+    "548": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Allow Levana Contracts upload",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1687967815098,
+      "timeVotingStart": 1687967815098,
+      "timeVotingEnd": 1688399815098,
+      "ratios": {
+        "YES": 0.6075949367088608,
+        "NO": 0.13924050632911392,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.25316455696202533
+      },
+      "total_votes": 79
+    },
+    "544": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Community Enabled Analytics Program Renewal July 2023  June 2024",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1687726379042,
+      "timeVotingStart": 1687726674736,
+      "timeVotingEnd": 1688158674736,
+      "ratios": {
+        "YES": 0.047058823529411764,
+        "NO": 0.5882352941176471,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.36470588235294116
+      },
+      "total_votes": 85
+    },
+    "530": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Introduce a Protocol Taker Fee for Osmosis swaps",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1686595035198,
+      "timeVotingStart": 1686596973085,
+      "timeVotingEnd": 1687028973085,
+      "ratios": {
+        "YES": 0.6808510638297872,
+        "NO": 0.18085106382978725,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.13829787234042554
+      },
+      "total_votes": 94
+    },
+    "528": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Decide Whats Shown on the Main Osmosis Website",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1686524278399,
+      "timeVotingStart": 1686524278399,
+      "timeVotingEnd": 1686956278399,
+      "ratios": {
+        "YES": 0.10869565217391304,
+        "NO": 0.5,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.391304347826087
+      },
+      "total_votes": 92
+    },
+    "527": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Suitdrop Redeem Contract",
+      "type": "/cosmwasm.wasm.v1.StoreCodeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1686280619632,
+      "timeVotingStart": 1686280966620,
+      "timeVotingEnd": 1686712966620,
+      "ratios": {
+        "YES": 0.654320987654321,
+        "NO": 0.024691358024691357,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.32098765432098764
+      },
+      "total_votes": 81
+    },
+    "523": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling Proposal for WHALEOSMO External Incentive Match Extension ",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1685559649333,
+      "timeVotingStart": 1685559649333,
+      "timeVotingEnd": 1685991649333,
+      "ratios": {
+        "YES": 0.36470588235294116,
+        "NO": 0.17647058823529413,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.4588235294117647
+      },
+      "total_votes": 85
+    },
+    "520": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Alpine Pay Core Contract",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1685166047199,
+      "timeVotingStart": 1685166047199,
+      "timeVotingEnd": 1685598047199,
+      "ratios": {
+        "YES": 0.09574468085106383,
+        "NO": 0.425531914893617,
+        "NO_WITH_VETO": 0.010638297872340425,
+        "ABSTAIN": 0.46808510638297873
+      },
+      "total_votes": 94
+    },
+    "519": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Alternative Signalling Proposal for use of ProtoRev Funds",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1685136302616,
+      "timeVotingStart": 1685136367641,
+      "timeVotingEnd": 1685568367641,
+      "ratios": {
+        "YES": 0.17582417582417584,
+        "NO": 0.4725274725274725,
+        "NO_WITH_VETO": 0.01098901098901099,
+        "ABSTAIN": 0.34065934065934067
+      },
+      "total_votes": 91
+    },
+    "512": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Suitdrop Commonwealth Proposal",
+      "type": "/cosmwasm.wasm.v1.StoreCodeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1684514522385,
+      "timeVotingStart": 1684514935460,
+      "timeVotingEnd": 1684946935460,
+      "ratios": {
+        "YES": 0.6470588235294118,
+        "NO": 0.047058823529411764,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3058823529411765
+      },
+      "total_votes": 85
+    },
+    "500": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "ShapeShift Bounty Completion",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1683552243440,
+      "timeVotingStart": 1683552457774,
+      "timeVotingEnd": 1683984457774,
+      "ratios": {
+        "YES": 0.651685393258427,
+        "NO": 0.06741573033707865,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2808988764044944
+      },
+      "total_votes": 89
+    },
+    "498": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling Proposal for OSMOFIL incentivised pool",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1683112232138,
+      "timeVotingStart": 1683114586870,
+      "timeVotingEnd": 1683546586870,
+      "ratios": {
+        "YES": 0.611764705882353,
+        "NO": 0.011764705882352941,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3764705882352941
+      },
+      "total_votes": 85
+    },
+    "497": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling Proposal for LIKEOSMO External Incentive Match Renewal",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1683017334175,
+      "timeVotingStart": 1683305861381,
+      "timeVotingEnd": 1683737861381,
+      "ratios": {
+        "YES": 0.20987654320987653,
+        "NO": 0.2962962962962963,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.49382716049382713
+      },
+      "total_votes": 81
+    },
+    "492": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling Proposal for JKLOSMO Incentivized Liquidity Pool ",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1682002718740,
+      "timeVotingStart": 1682002718740,
+      "timeVotingEnd": 1682434718740,
+      "ratios": {
+        "YES": 0.34782608695652173,
+        "NO": 0.22826086956521738,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.42391304347826086
+      },
+      "total_votes": 92
+    },
+    "482": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling Proposal for OSMONCT incentives",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1681311843645,
+      "timeVotingStart": 1681312038858,
+      "timeVotingEnd": 1681744038858,
+      "ratios": {
+        "YES": 0.675,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.325
+      },
+      "total_votes": 80
+    },
+    "480": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling Proposal for WHALEOSMO External Incentive Match",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1680890976037,
+      "timeVotingStart": 1680890976037,
+      "timeVotingEnd": 1681322976037,
+      "ratios": {
+        "YES": 0.6813186813186813,
+        "NO": 0.03296703296703297,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2857142857142857
+      },
+      "total_votes": 91
+    },
+    "475": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Autonomy Network LimitsStops Wrapper Contract",
+      "type": "/cosmwasm.wasm.v1.StoreCodeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1679987707140,
+      "timeVotingStart": 1679987707140,
+      "timeVotingEnd": 1680419707140,
+      "ratios": {
+        "YES": 0.6506024096385542,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.024096385542168676,
+        "ABSTAIN": 0.3253012048192771
+      },
+      "total_votes": 83
+    },
+    "474": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Autonomy Network Registry Stake Contract V2",
+      "type": "/cosmwasm.wasm.v1.StoreCodeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1679987489188,
+      "timeVotingStart": 1679987489188,
+      "timeVotingEnd": 1680419489188,
+      "ratios": {
+        "YES": 0.6296296296296297,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.024691358024691357,
+        "ABSTAIN": 0.345679012345679
+      },
+      "total_votes": 81
+    },
+    "473": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Allow Kado Router Contracts to be Uploaded",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1679938358515,
+      "timeVotingStart": 1679953930595,
+      "timeVotingEnd": 1680385930595,
+      "ratios": {
+        "YES": 0.6444444444444445,
+        "NO": 0.011111111111111112,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.34444444444444444
+      },
+      "total_votes": 90
+    },
+    "464": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Match External Incentives to extended STARSOSMO pair",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1679172975408,
+      "timeVotingStart": 1679263868274,
+      "timeVotingEnd": 1679695868274,
+      "ratios": {
+        "YES": 0.6057692307692307,
+        "NO": 0.07692307692307693,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3173076923076923
+      },
+      "total_votes": 104
+    },
+    "457": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling Proposal for OSMOCMST incentives",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1678256504358,
+      "timeVotingStart": 1678256504358,
+      "timeVotingEnd": 1678688504358,
+      "ratios": {
+        "YES": 0.4666666666666667,
+        "NO": 0.03333333333333333,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5
+      },
+      "total_votes": 90
+    },
+    "447": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload CW721 Base Contract",
+      "type": "/cosmwasm.wasm.v1.StoreCodeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1677515706469,
+      "timeVotingStart": 1677517467736,
+      "timeVotingEnd": 1677949467736,
+      "ratios": {
+        "YES": 0.5681818181818182,
+        "NO": 0.06818181818181818,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.36363636363636365
+      },
+      "total_votes": 88
+    },
+    "444": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Composability Incentives Category",
+      "type": "/osmosis.poolincentives.v1beta1.UpdatePoolIncentivesProposal",
+      "status": "PASSED",
+      "timeSubmit": 1677169959204,
+      "timeVotingStart": 1677170409558,
+      "timeVotingEnd": 1677602409558,
+      "ratios": {
+        "YES": 0.6024096385542169,
+        "NO": 0.012048192771084338,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3855421686746988
+      },
+      "total_votes": 83
+    },
+    "442": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling Proposal  Recognise CMST as a Stablecoin asset",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1677077691813,
+      "timeVotingStart": 1677077691813,
+      "timeVotingEnd": 1677509691813,
+      "ratios": {
+        "YES": 0.6428571428571429,
+        "NO": 0.011904761904761904,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.34523809523809523
+      },
+      "total_votes": 84
+    },
+    "431": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling Proposal  Define New Stable Asset IST and incentivize stable swap pool DAI  CMST  IST with OSMO rewards",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1676330406658,
+      "timeVotingStart": 1676482558291,
+      "timeVotingEnd": 1676914558291,
+      "ratios": {
+        "YES": 0.44871794871794873,
+        "NO": 0.14102564102564102,
+        "NO_WITH_VETO": 0.02564102564102564,
+        "ABSTAIN": 0.38461538461538464
+      },
+      "total_votes": 78
+    },
+    "430": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling Proposal for ISTOSMO External Incentive Match",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1676328234524,
+      "timeVotingStart": 1676482408191,
+      "timeVotingEnd": 1676914408191,
+      "ratios": {
+        "YES": 0.4939759036144578,
+        "NO": 0.14457831325301204,
+        "NO_WITH_VETO": 0.024096385542168676,
+        "ABSTAIN": 0.3373493975903614
+      },
+      "total_votes": 83
+    },
+    "424": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling Proposal for ATOMstkATOM Stableswap Pool External Incentive Match",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1675718434290,
+      "timeVotingStart": 1675718434290,
+      "timeVotingEnd": 1676150434290,
+      "ratios": {
+        "YES": 0.36363636363636365,
+        "NO": 0.19318181818181818,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.4431818181818182
+      },
+      "total_votes": 88
+    },
+    "421": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "ProtoRev Revenue Allocation",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1675365672627,
+      "timeVotingStart": 1675365970865,
+      "timeVotingEnd": 1675797970865,
+      "ratios": {
+        "YES": 0.686046511627907,
+        "NO": 0.023255813953488372,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.29069767441860467
+      },
+      "total_votes": 86
+    },
+    "420": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "OSMOWYND Token Swap for Protocol Liquidity",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1675356360671,
+      "timeVotingStart": 1675356714888,
+      "timeVotingEnd": 1675788714888,
+      "ratios": {
+        "YES": 0.5157894736842106,
+        "NO": 0.07368421052631578,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.4105263157894737
+      },
+      "total_votes": 95
+    },
+    "406": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Regular Incentive adjustment for 20230123",
+      "type": "/osmosis.poolincentives.v1beta1.UpdatePoolIncentivesProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1674488117706,
+      "timeVotingStart": 1674491144191,
+      "timeVotingEnd": 1674923144191,
+      "ratios": {
+        "YES": 0.2727272727272727,
+        "NO": 0.18181818181818182,
+        "NO_WITH_VETO": 0.011363636363636364,
+        "ABSTAIN": 0.5340909090909091
+      },
+      "total_votes": 88
+    },
+    "400": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Phase out 1 and 7 day liquidity bonds",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1673941908268,
+      "timeVotingStart": 1673941908268,
+      "timeVotingEnd": 1674373908268,
+      "ratios": {
+        "YES": 0.57,
+        "NO": 0.1,
+        "NO_WITH_VETO": 0.01,
+        "ABSTAIN": 0.32
+      },
+      "total_votes": 100
+    },
+    "389": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Remove NonOSMO pool incentives",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1671628016188,
+      "timeVotingStart": 1671629383583,
+      "timeVotingEnd": 1672061383583,
+      "ratios": {
+        "YES": 0.6190476190476191,
+        "NO": 0.03571428571428571,
+        "NO_WITH_VETO": 0.011904761904761904,
+        "ABSTAIN": 0.3333333333333333
+      },
+      "total_votes": 84
+    },
+    "388": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Community consent Cosmos Pay supporting OSMO",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1671565448596,
+      "timeVotingStart": 1671565842349,
+      "timeVotingEnd": 1671997842349,
+      "ratios": {
+        "YES": 0.27710843373493976,
+        "NO": 0.3253012048192771,
+        "NO_WITH_VETO": 0.024096385542168676,
+        "ABSTAIN": 0.37349397590361444
+      },
+      "total_votes": 83
+    },
+    "375": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Proposal on Transferring ION to ION DAO Treasury",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1670334625348,
+      "timeVotingStart": 1670334625348,
+      "timeVotingEnd": 1670766625348,
+      "ratios": {
+        "YES": 0.6153846153846154,
+        "NO": 0.04395604395604396,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.34065934065934067
+      },
+      "total_votes": 91
+    },
+    "372": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Match External Incentives to extended STARSOSMO and ATOMSTARS pairs",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1670122872878,
+      "timeVotingStart": 1670122872878,
+      "timeVotingEnd": 1670554872878,
+      "ratios": {
+        "YES": 0.6796116504854369,
+        "NO": 0.08737864077669903,
+        "NO_WITH_VETO": 0.02912621359223301,
+        "ABSTAIN": 0.20388349514563106
+      },
+      "total_votes": 103
+    },
+    "367": {
+      "main_category": "technical",
+      "sub_category": "infrastructure_management",
+      "title": "Revive IBC Client to Dig",
+      "type": "/ibc.core.client.v1.ClientUpdateProposal",
+      "status": "PASSED",
+      "timeSubmit": 1669238878583,
+      "timeVotingStart": 1669255540682,
+      "timeVotingEnd": 1669687540682,
+      "ratios": {
+        "YES": 0.6363636363636364,
+        "NO": 0.012987012987012988,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.35064935064935066
+      },
+      "total_votes": 77
+    },
+    "362": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Osmosis Grants Program OGP Renewal",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1668389859559,
+      "timeVotingStart": 1668440318078,
+      "timeVotingEnd": 1668872318078,
+      "ratios": {
+        "YES": 0.3958333333333333,
+        "NO": 0.25,
+        "NO_WITH_VETO": 0.07291666666666667,
+        "ABSTAIN": 0.28125
+      },
+      "total_votes": 96
+    },
+    "352": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling Proposal for LIKEOSMO External Incentive Match",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1666682077345,
+      "timeVotingStart": 1666764964089,
+      "timeVotingEnd": 1667196964089,
+      "ratios": {
+        "YES": 0.4,
+        "NO": 0.24705882352941178,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.35294117647058826
+      },
+      "total_votes": 85
+    },
+    "350": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Match External Incentives for GRAV incentivised pairs",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1666042927278,
+      "timeVotingStart": 1666207604139,
+      "timeVotingEnd": 1666639604139,
+      "ratios": {
+        "YES": 0.32222222222222224,
+        "NO": 0.28888888888888886,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3888888888888889
+      },
+      "total_votes": 90
+    },
+    "349": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Remove Incentives from OSMOROWAN 629",
+      "type": "/osmosis.poolincentives.v1beta1.UpdatePoolIncentivesProposal",
+      "status": "PASSED",
+      "timeSubmit": 1666020965427,
+      "timeVotingStart": 1666021263640,
+      "timeVotingEnd": 1666453263640,
+      "ratios": {
+        "YES": 0.574468085106383,
+        "NO": 0.02127659574468085,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.40425531914893614
+      },
+      "total_votes": 94
+    },
+    "343": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Autonomy Network StopsLimits Wrapper Contract",
+      "type": "/cosmwasm.wasm.v1.StoreCodeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1665157272907,
+      "timeVotingStart": 1665157272907,
+      "timeVotingEnd": 1665589272907,
+      "ratios": {
+        "YES": 0.30612244897959184,
+        "NO": 0.5,
+        "NO_WITH_VETO": 0.01020408163265306,
+        "ABSTAIN": 0.1836734693877551
+      },
+      "total_votes": 98
+    },
+    "342": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Autonomy Network Regsitry Stake Contract",
+      "type": "/cosmwasm.wasm.v1.StoreCodeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1665156759661,
+      "timeVotingStart": 1665156759661,
+      "timeVotingEnd": 1665588759661,
+      "ratios": {
+        "YES": 0.29591836734693877,
+        "NO": 0.5102040816326531,
+        "NO_WITH_VETO": 0.01020408163265306,
+        "ABSTAIN": 0.1836734693877551
+      },
+      "total_votes": 98
+    },
+    "339": {
+      "main_category": "technical",
+      "sub_category": "smart_contract_administration",
+      "title": "Upload Apollo Liquid Staking Contract",
+      "type": "/cosmwasm.wasm.v1.StoreCodeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1664571272577,
+      "timeVotingStart": 1664574365948,
+      "timeVotingEnd": 1665006365948,
+      "ratios": {
+        "YES": 0.26666666666666666,
+        "NO": 0.18666666666666668,
+        "NO_WITH_VETO": 0.05333333333333334,
+        "ABSTAIN": 0.49333333333333335
+      },
+      "total_votes": 75
+    },
+    "326": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling Proposal for OSMOBLD pool 795 incentivised pool",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1662235240601,
+      "timeVotingStart": 1662235335129,
+      "timeVotingEnd": 1662667335129,
+      "ratios": {
+        "YES": 0.6547619047619048,
+        "NO": 0.08333333333333333,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2619047619047619
+      },
+      "total_votes": 84
+    },
+    "323": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling Proposal Removal of incentives from pool 690 MNTLOSMO",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1661745719984,
+      "timeVotingStart": 1661926037874,
+      "timeVotingEnd": 1662358037874,
+      "ratios": {
+        "YES": 0.6901408450704225,
+        "NO": 0.028169014084507043,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.28169014084507044
+      },
+      "total_votes": 71
+    },
+    "320": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Remove blockedgo from Osmosis",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1661390595608,
+      "timeVotingStart": 1661535022274,
+      "timeVotingEnd": 1661967022274,
+      "ratios": {
+        "YES": 0.0963855421686747,
+        "NO": 0.3855421686746988,
+        "NO_WITH_VETO": 0.03614457831325301,
+        "ABSTAIN": 0.4819277108433735
+      },
+      "total_votes": 83
+    },
+    "317": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Signalling Proposal Removal of incentives on pools 600 ATOMCMDX  601 CMDXOSMO",
+      "type": "/osmosis.superfluid.v1beta1.RemoveSuperfluidAssetsProposal",
+      "status": "PASSED",
+      "timeSubmit": 1660962493987,
+      "timeVotingStart": 1660965665087,
+      "timeVotingEnd": 1661397665087,
+      "ratios": {
+        "YES": 0.47560975609756095,
+        "NO": 0.04878048780487805,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.47560975609756095
+      },
+      "total_votes": 82
+    },
+    "307": {
+      "main_category": "organizational",
+      "sub_category": "emergency_response",
+      "title": "Match external ECH incentives on ECHOSMO 747",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1659779330717,
+      "timeVotingStart": 1659779708202,
+      "timeVotingEnd": 1660211708202,
+      "ratios": {
+        "YES": 0.011363636363636364,
+        "NO": 0.2727272727272727,
+        "NO_WITH_VETO": 0.5568181818181818,
+        "ABSTAIN": 0.1590909090909091
+      },
+      "total_votes": 88
+    },
+    "295": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling Proposal for OSMOLINK731 incentivised pool",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1658915059669,
+      "timeVotingStart": 1658915231818,
+      "timeVotingEnd": 1659347231818,
+      "ratios": {
+        "YES": 0.6904761904761905,
+        "NO": 0.047619047619047616,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2619047619047619
+      },
+      "total_votes": 84
+    },
+    "294": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling Proposal for OSMOINJ 725 incentivised pool",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1658914905771,
+      "timeVotingStart": 1658915077816,
+      "timeVotingEnd": 1659347077816,
+      "ratios": {
+        "YES": 0.4186046511627907,
+        "NO": 0.26744186046511625,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.313953488372093
+      },
+      "total_votes": 86
+    },
+    "281": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling Proposal for OSMOKAVA730 incentivised pools",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1658306872268,
+      "timeVotingStart": 1658307705886,
+      "timeVotingEnd": 1658739705886,
+      "ratios": {
+        "YES": 0.6285714285714286,
+        "NO": 0.07142857142857142,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3
+      },
+      "total_votes": 70
+    },
+    "277": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Gift to Osmosis stakeholders",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1657628485393,
+      "timeVotingStart": 1657628485393,
+      "timeVotingEnd": 1658060485393,
+      "ratios": {
+        "YES": 0.060240963855421686,
+        "NO": 0.1927710843373494,
+        "NO_WITH_VETO": 0.6867469879518072,
+        "ABSTAIN": 0.060240963855421686
+      },
+      "total_votes": 83
+    },
+    "276": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": " Match XPRT External Incentives for Pools XPRTUSDC719  XPRTOSMO15",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1657571610398,
+      "timeVotingStart": 1657571610398,
+      "timeVotingEnd": 1658003610398,
+      "ratios": {
+        "YES": 0.45454545454545453,
+        "NO": 0.23376623376623376,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3116883116883117
+      },
+      "total_votes": 77
+    },
+    "273": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Phase out Incentives on smaller Other Category pools",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1657029108827,
+      "timeVotingStart": 1657029256867,
+      "timeVotingEnd": 1657461256867,
+      "ratios": {
+        "YES": 0.5974025974025974,
+        "NO": 0.06493506493506493,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.33766233766233766
+      },
+      "total_votes": 77
+    },
+    "271": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Manual Incentive Adjustment  resubmission",
+      "type": "/osmosis.poolincentives.v1beta1.UpdatePoolIncentivesProposal",
+      "status": "PASSED",
+      "timeSubmit": 1656872854573,
+      "timeVotingStart": 1656872854573,
+      "timeVotingEnd": 1657304854573,
+      "ratios": {
+        "YES": 0.4634146341463415,
+        "NO": 0.21951219512195122,
+        "NO_WITH_VETO": 0.012195121951219513,
+        "ABSTAIN": 0.3048780487804878
+      },
+      "total_votes": 82
+    },
+    "270": {
+      "main_category": "organizational",
+      "sub_category": "emergency_response",
+      "title": "Match External Incentives on OSMOMNTL 690",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1656445485683,
+      "timeVotingStart": 1656446476129,
+      "timeVotingEnd": 1656878476129,
+      "ratios": {
+        "YES": 0.2682926829268293,
+        "NO": 0.3048780487804878,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.4268292682926829
+      },
+      "total_votes": 82
+    },
+    "267": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Manual Incentive Adjustment  Completely remove incentives for various pools",
+      "type": "/osmosis.poolincentives.v1beta1.UpdatePoolIncentivesProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1656429084478,
+      "timeVotingStart": 1656434437587,
+      "timeVotingEnd": 1656866437587,
+      "ratios": {
+        "YES": 0.10112359550561797,
+        "NO": 0.6404494382022472,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.25842696629213485
+      },
+      "total_votes": 89
+    },
+    "262": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Match external incentives on OSMO LIKE Pool 553",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1655892027247,
+      "timeVotingStart": 1655979106561,
+      "timeVotingEnd": 1656411106561,
+      "ratios": {
+        "YES": 0.12345679012345678,
+        "NO": 0.3950617283950617,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.48148148148148145
+      },
+      "total_votes": 81
+    },
+    "261": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling proposal for MEME incentivized pools",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1655829625223,
+      "timeVotingStart": 1655829625223,
+      "timeVotingEnd": 1656261625223,
+      "ratios": {
+        "YES": 0.08860759493670886,
+        "NO": 0.6708860759493671,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.24050632911392406
+      },
+      "total_votes": 79
+    },
+    "256": {
+      "main_category": "technical",
+      "sub_category": "infrastructure_management",
+      "title": "Fix IBC transfers between Lum Network and Osmosis",
+      "type": "/ibc.core.client.v1.ClientUpdateProposal",
+      "status": "FAILED",
+      "timeSubmit": 1655131831052,
+      "timeVotingStart": 1655133586119,
+      "timeVotingEnd": 1655565586119,
+      "ratios": {
+        "YES": 0.5930232558139535,
+        "NO": 0.36046511627906974,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.046511627906976744
+      },
+      "total_votes": 86
+    },
+    "251": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Osmosis Ministry of Marketing Funding Round June  November 2022",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "PASSED",
+      "timeSubmit": 1654066305960,
+      "timeVotingStart": 1654066305960,
+      "timeVotingEnd": 1654498305960,
+      "ratios": {
+        "YES": 0.6153846153846154,
+        "NO": 0.07692307692307693,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3076923076923077
+      },
+      "total_votes": 91
+    },
+    "243": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Enable Superfluid for XPRTOSMO pool 15",
+      "type": "/osmosis.superfluid.v1beta1.SetSuperfluidAssetsProposal",
+      "status": "PASSED",
+      "timeSubmit": 1653567640914,
+      "timeVotingStart": 1653567640914,
+      "timeVotingEnd": 1653999640914,
+      "ratios": {
+        "YES": 0.6829268292682927,
+        "NO": 0.06097560975609756,
+        "NO_WITH_VETO": 0.024390243902439025,
+        "ABSTAIN": 0.23170731707317074
+      },
+      "total_votes": 82
+    },
+    "242": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": " Match XPRT External Incentives for XPRTUSDC pool 719",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1653563920116,
+      "timeVotingStart": 1653563920116,
+      "timeVotingEnd": 1653995920116,
+      "ratios": {
+        "YES": 0.5308641975308642,
+        "NO": 0.19753086419753085,
+        "NO_WITH_VETO": 0.024691358024691357,
+        "ABSTAIN": 0.24691358024691357
+      },
+      "total_votes": 81
+    },
+    "241": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Enable Superfluid for XPRTOSMO pool 15",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1653563811022,
+      "timeVotingStart": 1653563811022,
+      "timeVotingEnd": 1653995811022,
+      "ratios": {
+        "YES": 0.6341463414634146,
+        "NO": 0.10975609756097561,
+        "NO_WITH_VETO": 0.024390243902439025,
+        "ABSTAIN": 0.23170731707317074
+      },
+      "total_votes": 82
+    },
+    "237": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling proposal for incentivized osmoglx pool",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1653275290671,
+      "timeVotingStart": 1653275290671,
+      "timeVotingEnd": 1653707290671,
+      "ratios": {
+        "YES": 0.03571428571428571,
+        "NO": 0.35714285714285715,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6071428571428571
+      },
+      "total_votes": 84
+    },
+    "220": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": " Match PSTAKE External Incentives for Pools 648",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1651921029479,
+      "timeVotingStart": 1651921029479,
+      "timeVotingEnd": 1652353029479,
+      "ratios": {
+        "YES": 0.49333333333333335,
+        "NO": 0.21333333333333335,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.29333333333333333
+      },
+      "total_votes": 75
+    },
+    "216": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling Proposal for AssetMantle Incentivised pool",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1651432968698,
+      "timeVotingStart": 1651434180603,
+      "timeVotingEnd": 1651866180603,
+      "ratios": {
+        "YES": 0.5555555555555556,
+        "NO": 0.21212121212121213,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.23232323232323232
+      },
+      "total_votes": 99
+    },
+    "211": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling Proposal for Fetchai Incentivised pool",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1650823704247,
+      "timeVotingStart": 1650823908859,
+      "timeVotingEnd": 1651255908859,
+      "ratios": {
+        "YES": 0.6770833333333334,
+        "NO": 0.10416666666666667,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.21875
+      },
+      "total_votes": 96
+    },
+    "209": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Adopt Wormhole as the Canonical Ethereum Bridge Service Provider",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1650638201175,
+      "timeVotingStart": 1650648819151,
+      "timeVotingEnd": 1651080819151,
+      "ratios": {
+        "YES": 0.12037037037037036,
+        "NO": 0.6111111111111112,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.26851851851851855
+      },
+      "total_votes": 108
+    },
+    "208": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Adopt Nomad as the Canonical Ethereum Bridge Service Provider",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1650638120218,
+      "timeVotingStart": 1650648765411,
+      "timeVotingEnd": 1651080765411,
+      "ratios": {
+        "YES": 0.20754716981132076,
+        "NO": 0.4339622641509434,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3584905660377358
+      },
+      "total_votes": 106
+    },
+    "207": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Adopt Gravity as the Canonical Ethereum Bridge Service Provider",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1650638062172,
+      "timeVotingStart": 1650648711079,
+      "timeVotingEnd": 1651080711079,
+      "ratios": {
+        "YES": 0.3333333333333333,
+        "NO": 0.37962962962962965,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.28703703703703703
+      },
+      "total_votes": 108
+    },
+    "206": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Adopt Axelar as the Canonical Ethereum Bridge Service Provider",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1650637766702,
+      "timeVotingStart": 1650649142910,
+      "timeVotingEnd": 1651081142910,
+      "ratios": {
+        "YES": 0.6822429906542056,
+        "NO": 0.12149532710280374,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.19626168224299065
+      },
+      "total_votes": 107
+    },
+    "204": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling proposal to add Cerberus CRBRUS pool 662 to the Osmosis incentives program",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1650400803288,
+      "timeVotingStart": 1650400803288,
+      "timeVotingEnd": 1650832803288,
+      "ratios": {
+        "YES": 0.48514851485148514,
+        "NO": 0.2079207920792079,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3069306930693069
+      },
+      "total_votes": 101
+    },
+    "200": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Onboard HOPEOSMO 653 for Osmosis Incentives",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1649714855203,
+      "timeVotingStart": 1649714855203,
+      "timeVotingEnd": 1650146855203,
+      "ratios": {
+        "YES": 0.056179775280898875,
+        "NO": 0.48314606741573035,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.4606741573033708
+      },
+      "total_votes": 89
+    },
+    "195": {
+      "main_category": "organizational",
+      "sub_category": "emergency_response",
+      "title": "Match External Incentives for PSTAKEOSMO 648",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1649351190201,
+      "timeVotingStart": 1649351190201,
+      "timeVotingEnd": 1649783190201,
+      "ratios": {
+        "YES": 0.6216216216216216,
+        "NO": 0.12162162162162163,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.25675675675675674
+      },
+      "total_votes": 74
+    },
+    "191": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Allocate a flat portion of staking rewards per validator",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1649162322163,
+      "timeVotingStart": 1649180379685,
+      "timeVotingEnd": 1649612379685,
+      "ratios": {
+        "YES": 0.2,
+        "NO": 0.5294117647058824,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.27058823529411763
+      },
+      "total_votes": 85
+    },
+    "190": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling Proposal for SWTHOSMO651 Incentivized Pools",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1649127894169,
+      "timeVotingStart": 1649128004063,
+      "timeVotingEnd": 1649560004063,
+      "ratios": {
+        "YES": 0.32142857142857145,
+        "NO": 0.16666666666666666,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5119047619047619
+      },
+      "total_votes": 84
+    },
+    "188": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Remove incentives from all xki pools",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1648981476542,
+      "timeVotingStart": 1648981476542,
+      "timeVotingEnd": 1649413476542,
+      "ratios": {
+        "YES": 0.1797752808988764,
+        "NO": 0.5393258426966292,
+        "NO_WITH_VETO": 0.033707865168539325,
+        "ABSTAIN": 0.24719101123595505
+      },
+      "total_votes": 89
+    },
+    "180": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling proposal for MARBLEOSMO649 incentivized pool",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1647861944758,
+      "timeVotingStart": 1647861944758,
+      "timeVotingEnd": 1648121144758,
+      "ratios": {
+        "YES": 0.18421052631578946,
+        "NO": 0.27631578947368424,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5394736842105263
+      },
+      "total_votes": 76
+    },
+    "178": {
+      "main_category": "organizational",
+      "sub_category": "emergency_response",
+      "title": "Match External Incentives for SWTHOSMO",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1647835973913,
+      "timeVotingStart": 1647836075227,
+      "timeVotingEnd": 1648095275227,
+      "ratios": {
+        "YES": 0.2714285714285714,
+        "NO": 0.18571428571428572,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5428571428571428
+      },
+      "total_votes": 70
+    },
+    "171": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling proposal for PSTAKEOSMO648 incentivized pool",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1646922637932,
+      "timeVotingStart": 1646922637932,
+      "timeVotingEnd": 1647181837932,
+      "ratios": {
+        "YES": 0.6491228070175439,
+        "NO": 0.07017543859649122,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2807017543859649
+      },
+      "total_votes": 57
+    },
+    "166": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling proposal to match DARC external incentives",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1646664115245,
+      "timeVotingStart": 1646707102323,
+      "timeVotingEnd": 1646966302323,
+      "ratios": {
+        "YES": 0.6533333333333333,
+        "NO": 0.04,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.30666666666666664
+      },
+      "total_votes": 75
+    },
+    "163": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling proposal Match External Incentives to LIKEOSMO and ATOMLIKE pools",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1646290777704,
+      "timeVotingStart": 1646293176591,
+      "timeVotingEnd": 1646552376591,
+      "ratios": {
+        "YES": 0.6086956521739131,
+        "NO": 0.10144927536231885,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2898550724637681
+      },
+      "total_votes": 69
+    },
+    "162": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Allocate 125k Osmo from the OCP to give SupportMarketing access to guidance on business matters related to Defi DAOs and structuring",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1646235126037,
+      "timeVotingStart": 1646235977506,
+      "timeVotingEnd": 1646495177506,
+      "ratios": {
+        "YES": 0.16216216216216217,
+        "NO": 0.6756756756756757,
+        "NO_WITH_VETO": 0.04054054054054054,
+        "ABSTAIN": 0.12162162162162163
+      },
+      "total_votes": 74
+    },
+    "159": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling Proposal Add DEC Incentivized Pools ATOM  OSMO",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1645975832635,
+      "timeVotingStart": 1645975832635,
+      "timeVotingEnd": 1646235032635,
+      "ratios": {
+        "YES": 0.3026315789473684,
+        "NO": 0.18421052631578946,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5131578947368421
+      },
+      "total_votes": 76
+    },
+    "152": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Reducing the Impact of Volume Manipulation",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1645121297170,
+      "timeVotingStart": 1645122153915,
+      "timeVotingEnd": 1645381353915,
+      "ratios": {
+        "YES": 0.46296296296296297,
+        "NO": 0.037037037037037035,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5
+      },
+      "total_votes": 54
+    },
+    "151": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling proposal Add OSMO incentives to ATOMCHEQ pool 617",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1645028098590,
+      "timeVotingStart": 1645028498412,
+      "timeVotingEnd": 1645287698412,
+      "ratios": {
+        "YES": 0.24561403508771928,
+        "NO": 0.14035087719298245,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.6140350877192983
+      },
+      "total_votes": 57
+    },
+    "149": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling proposal for XPRTUST612 incentivized pool",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1644822005686,
+      "timeVotingStart": 1644848153073,
+      "timeVotingEnd": 1645107353073,
+      "ratios": {
+        "YES": 0.5277777777777778,
+        "NO": 0.16666666666666666,
+        "NO_WITH_VETO": 0.013888888888888888,
+        "ABSTAIN": 0.2916666666666667
+      },
+      "total_votes": 72
+    },
+    "148": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling proposal for DARC incentivized pools",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1644773675018,
+      "timeVotingStart": 1644902564300,
+      "timeVotingEnd": 1645161764300,
+      "ratios": {
+        "YES": 0.6666666666666666,
+        "NO": 0.03333333333333333,
+        "NO_WITH_VETO": 0.016666666666666666,
+        "ABSTAIN": 0.2833333333333333
+      },
+      "total_votes": 60
+    },
+    "146": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling Proposal to match external incentives for the XKIOSMO and XKIUST pools",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1644578821066,
+      "timeVotingStart": 1644580878819,
+      "timeVotingEnd": 1644840078819,
+      "ratios": {
+        "YES": 0.6964285714285714,
+        "NO": 0.08928571428571429,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.21428571428571427
+      },
+      "total_votes": 56
+    },
+    "144": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling proposal Match external incentives on ATOMCHEQ pool",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1644416573597,
+      "timeVotingStart": 1644423312952,
+      "timeVotingEnd": 1644682512952,
+      "ratios": {
+        "YES": 0.0967741935483871,
+        "NO": 0.3225806451612903,
+        "NO_WITH_VETO": 0.016129032258064516,
+        "ABSTAIN": 0.5645161290322581
+      },
+      "total_votes": 62
+    },
+    "140": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling proposal for NETA incentivized pools",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1644015843947,
+      "timeVotingStart": 1644021123609,
+      "timeVotingEnd": 1644280323609,
+      "ratios": {
+        "YES": 0.696969696969697,
+        "NO": 0.045454545454545456,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.25757575757575757
+      },
+      "total_votes": 66
+    },
+    "134": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Development and Marketing Expansion to the Russian Community",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1643362101834,
+      "timeVotingStart": 1643365227612,
+      "timeVotingEnd": 1643624427612,
+      "ratios": {
+        "YES": 0.13636363636363635,
+        "NO": 0.6363636363636364,
+        "NO_WITH_VETO": 0.07575757575757576,
+        "ABSTAIN": 0.15151515151515152
+      },
+      "total_votes": 66
+    },
+    "133": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Incentive Matching Fee Based and 11 Caps",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1643308225956,
+      "timeVotingStart": 1643309077934,
+      "timeVotingEnd": 1643568277934,
+      "ratios": {
+        "YES": 0.6029411764705882,
+        "NO": 0.0,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.39705882352941174
+      },
+      "total_votes": 68
+    },
+    "132": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signalling Proposal ROWAN Incentivized Pools and Matched Incentives",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1643242494998,
+      "timeVotingStart": 1643302133197,
+      "timeVotingEnd": 1643561333197,
+      "ratios": {
+        "YES": 0.2972972972972973,
+        "NO": 0.527027027027027,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.17567567567567569
+      },
+      "total_votes": 74
+    },
+    "130": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling proposal for DIG incentivized pools",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1642948852013,
+      "timeVotingStart": 1643002630540,
+      "timeVotingEnd": 1643261830540,
+      "ratios": {
+        "YES": 0.5396825396825397,
+        "NO": 0.1111111111111111,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3492063492063492
+      },
+      "total_votes": 63
+    },
+    "123": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling proposal for DIG incentivized pools",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1642344084899,
+      "timeVotingStart": 1642598543203,
+      "timeVotingEnd": 1642857743203,
+      "ratios": {
+        "YES": 0.2,
+        "NO": 0.4,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.4
+      },
+      "total_votes": 45
+    },
+    "120": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling Proposal Ion DAO  Treasury",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1641596667841,
+      "timeVotingStart": 1641710929636,
+      "timeVotingEnd": 1641970129636,
+      "ratios": {
+        "YES": 0.6363636363636364,
+        "NO": 0.11688311688311688,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.24675324675324675
+      },
+      "total_votes": 77
+    },
+    "114": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Increase Max Validator Set Size to 118",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "PASSED",
+      "timeSubmit": 1640780876196,
+      "timeVotingStart": 1640781144909,
+      "timeVotingEnd": 1641040344909,
+      "ratios": {
+        "YES": 0.5961538461538461,
+        "NO": 0.3076923076923077,
+        "NO_WITH_VETO": 0.019230769230769232,
+        "ABSTAIN": 0.07692307692307693
+      },
+      "total_votes": 52
+    },
+    "111": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Enable IBC transfers between Lum Network and Osmosis",
+      "type": "/ibc.core.client.v1.ClientUpdateProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1640454570509,
+      "timeVotingStart": 1640454733920,
+      "timeVotingEnd": 1640713933920,
+      "ratios": {
+        "YES": 0.16071428571428573,
+        "NO": 0.6428571428571429,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.19642857142857142
+      },
+      "total_votes": 56
+    },
+    "109": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling proposal for HUAHUA incentivized pools",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1640181587687,
+      "timeVotingStart": 1640182024586,
+      "timeVotingEnd": 1640441224586,
+      "ratios": {
+        "YES": 0.6904761904761905,
+        "NO": 0.14285714285714285,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.16666666666666666
+      },
+      "total_votes": 42
+    },
+    "96": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Distribution of Clawback IONOSMO to OSMO stakers",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1639215453748,
+      "timeVotingStart": 1639215886625,
+      "timeVotingEnd": 1639475086625,
+      "ratios": {
+        "YES": 0.07142857142857142,
+        "NO": 0.3392857142857143,
+        "NO_WITH_VETO": 0.44642857142857145,
+        "ABSTAIN": 0.14285714285714285
+      },
+      "total_votes": 56
+    },
+    "84": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Incentives for CHEQOSMO",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1638633863545,
+      "timeVotingStart": 1638643507371,
+      "timeVotingEnd": 1638902707371,
+      "ratios": {
+        "YES": 0.39285714285714285,
+        "NO": 0.10714285714285714,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.5
+      },
+      "total_votes": 28
+    },
+    "82": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling proposal for BOOT incentivized pools",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1638315298615,
+      "timeVotingStart": 1638351664646,
+      "timeVotingEnd": 1638610864646,
+      "ratios": {
+        "YES": 0.6666666666666666,
+        "NO": 0.1,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.23333333333333334
+      },
+      "total_votes": 30
+    },
+    "76": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling Proposal for XKIJUNO incentivized pool",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1637592615391,
+      "timeVotingStart": 1637761864643,
+      "timeVotingEnd": 1638021064643,
+      "ratios": {
+        "YES": 0.4230769230769231,
+        "NO": 0.3076923076923077,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2692307692307692
+      },
+      "total_votes": 26
+    },
+    "74": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Space Pussy Demands Incentivization",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1637440962757,
+      "timeVotingStart": 1637500423644,
+      "timeVotingEnd": 1637759623644,
+      "ratios": {
+        "YES": 0.30303030303030304,
+        "NO": 0.3939393939393939,
+        "NO_WITH_VETO": 0.030303030303030304,
+        "ABSTAIN": 0.2727272727272727
+      },
+      "total_votes": 33
+    },
+    "72": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Set Max validators to 150",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1637313934452,
+      "timeVotingStart": 1637438971493,
+      "timeVotingEnd": 1637698171493,
+      "ratios": {
+        "YES": 0.2558139534883721,
+        "NO": 0.3953488372093023,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3488372093023256
+      },
+      "total_votes": 43
+    },
+    "62": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Match external incentives to BCNAOSMO and ATOMBCNA pairs",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1635796305404,
+      "timeVotingStart": 1635864236073,
+      "timeVotingEnd": 1636123436073,
+      "ratios": {
+        "YES": 0.6538461538461539,
+        "NO": 0.038461538461538464,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3076923076923077
+      },
+      "total_votes": 26
+    },
+    "58": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "Add more Luna Ust and Eeur pools to incentives",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1635462285003,
+      "timeVotingStart": 1635462420920,
+      "timeVotingEnd": 1635721620920,
+      "ratios": {
+        "YES": 0.6428571428571429,
+        "NO": 0.10714285714285714,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.25
+      },
+      "total_votes": 28
+    },
+    "55": {
+      "main_category": "organizational",
+      "sub_category": "emergency_response",
+      "title": "Incentivising UST and Luna on Osmosis exposes the ecosystem and stakeholders to significant regulatory and stability risk",
+      "type": "/osmosis.poolincentives.v1beta1.UpdatePoolIncentivesProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1635030709143,
+      "timeVotingStart": 1635031367277,
+      "timeVotingEnd": 1635290567277,
+      "ratios": {
+        "YES": 0.12,
+        "NO": 0.6,
+        "NO_WITH_VETO": 0.14,
+        "ABSTAIN": 0.14
+      },
+      "total_votes": 50
+    },
+    "51": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling proposal for LIKE incentivized pools",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1634715735407,
+      "timeVotingStart": 1634716320248,
+      "timeVotingEnd": 1634975520248,
+      "ratios": {
+        "YES": 0.6451612903225806,
+        "NO": 0.03225806451612903,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.3225806451612903
+      },
+      "total_votes": 31
+    },
+    "50": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Signaling proposal for IXO incentivized pools",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1634667716157,
+      "timeVotingStart": 1634668837756,
+      "timeVotingEnd": 1634928037756,
+      "ratios": {
+        "YES": 0.6857142857142857,
+        "NO": 0.05714285714285714,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.2571428571428571
+      },
+      "total_votes": 35
+    },
+    "39": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Community Support DAO",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1632165593357,
+      "timeVotingStart": 1632192979461,
+      "timeVotingEnd": 1632452179461,
+      "ratios": {
+        "YES": 0.4117647058823529,
+        "NO": 0.38235294117647056,
+        "NO_WITH_VETO": 0.029411764705882353,
+        "ABSTAIN": 0.17647058823529413
+      },
+      "total_votes": 34
+    },
+    "22": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "SemiAutomatic Incentive Adjustments for 08162021",
+      "type": "/osmosis.poolincentives.v1beta1.UpdatePoolIncentivesProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1629131028080,
+      "timeVotingStart": 1629132985972,
+      "timeVotingEnd": 1629392185972,
+      "ratios": {
+        "YES": 0.44680851063829785,
+        "NO": 0.40425531914893614,
+        "NO_WITH_VETO": 0.0,
+        "ABSTAIN": 0.14893617021276595
+      },
+      "total_votes": 47
+    },
+    "7": {
+      "main_category": "technical",
+      "sub_category": "protocol_development",
+      "title": "Osmosis Inflation Dynamics Adjustment",
+      "type": "/cosmos.params.v1beta1.ParameterChangeProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1625082774861,
+      "timeVotingStart": 1625111829874,
+      "timeVotingEnd": 1625371029874,
+      "ratios": {
+        "YES": 0.16666666666666666,
+        "NO": 0.6944444444444444,
+        "NO_WITH_VETO": 0.08333333333333333,
+        "ABSTAIN": 0.05555555555555555
+      },
+      "total_votes": 36
+    },
+    "5": {
+      "main_category": "economic",
+      "sub_category": "financial_management",
+      "title": "Italian Educational Content",
+      "type": "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal",
+      "status": "REJECTED",
+      "timeSubmit": 1624873615244,
+      "timeVotingStart": 1624876034269,
+      "timeVotingEnd": 1625135234269,
+      "ratios": {
+        "YES": 0.22580645161290322,
+        "NO": 0.6451612903225806,
+        "NO_WITH_VETO": 0.03225806451612903,
+        "ABSTAIN": 0.0967741935483871
+      },
+      "total_votes": 31
+    },
+    "3": {
+      "main_category": "organizational",
+      "sub_category": "governance_structure",
+      "title": "Were on the side of the little girl",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1624603052839,
+      "timeVotingStart": 1624603052839,
+      "timeVotingEnd": 1624862252839,
+      "ratios": {
+        "YES": 0.3333333333333333,
+        "NO": 0.125,
+        "NO_WITH_VETO": 0.125,
+        "ABSTAIN": 0.4166666666666667
+      },
+      "total_votes": 24
+    },
+    "1": {
+      "main_category": "economic",
+      "sub_category": "market_and_incentives",
+      "title": "We want to claim rewards completely",
+      "type": "/cosmos.gov.v1beta1.TextProposal",
+      "status": "PASSED",
+      "timeSubmit": 1624130488486,
+      "timeVotingStart": 1624141898874,
+      "timeVotingEnd": 1624401098874,
+      "ratios": {
+        "YES": 0.6086956521739131,
+        "NO": 0.10869565217391304,
+        "NO_WITH_VETO": 0.06521739130434782,
+        "ABSTAIN": 0.21739130434782608
+      },
+      "total_votes": 46
+    }
+  }
+}
