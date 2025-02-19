@@ -1,9 +1,11 @@
-import React, { useEffect, useState, memo } from 'react';
-import { ValidatorData, ValidatorVotingPattern, ProposalData, ChainProposals } from '../../types';
+// import React, { useEffect, useState, memo } from 'react';
+import { memo } from 'react';
+// import { ValidatorData, ValidatorVotingPattern, ProposalData, ChainProposals } from '../../types';
+import { ValidatorData, ValidatorVotingPattern, ChainProposals } from '../../types';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { RootState } from '../../store';
-import { ValidatorSummary } from './ValidatorSummary';
-import { ValidatorDetails } from './ValidatorDetails';
+// import { ValidatorSummary } from './ValidatorSummary';
+// import { ValidatorDetails } from './ValidatorDetails';
 
 interface ChainAnalysis {
   Operation_Time_Days: number;
@@ -56,7 +58,7 @@ export const ValidatorInfo: React.FC<ValidatorInfoProps> = ({
   validatorName
 }) => {
   const selectedChain = useAppSelector((state: RootState) => state.chain.selectedChain);
-  const effectiveChainName = chainName || selectedChain || '';
+  // const effectiveChainName = chainName || selectedChain || '';
 
   return (
     <div className="h-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">

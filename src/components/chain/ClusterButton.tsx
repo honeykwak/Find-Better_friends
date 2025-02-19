@@ -1,8 +1,8 @@
 // src/components/chain/ClusterButton.tsx
-import React from 'react';
+// React import 제거 (다른 import만 유지)
 import { ClusterType } from '../../types';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { useAppSelector } from '../../hooks/useAppSelector';
+// import { useAppSelector } from '../../hooks/useAppSelector';
 import { toggleCluster } from '../../store/slices/chainSlice';
 import { CLUSTER_LABELS } from '../../constants';
 import classNames from 'classnames';
@@ -21,9 +21,9 @@ const clusterColors: Record<ClusterType, string> = {
   5: 'bg-green-200 hover:bg-green-300',
 };
 
-export const ClusterButton: React.FC<ClusterButtonProps> = ({ cluster, isSelected, onClick }) => {
+export const ClusterButton: React.FC<ClusterButtonProps> = ({ cluster, isSelected }) => {
   const dispatch = useAppDispatch();
-  const selectedClusters = useAppSelector(state => state.chain.selectedClusters);
+  // const selectedClusters = useAppSelector(state => state.chain.selectedClusters);
 
   return (
     <button

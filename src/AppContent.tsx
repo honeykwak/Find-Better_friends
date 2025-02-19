@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { ChainSection } from './components/chain/ChainSection';
 import { ValidatorOverview } from './components/validator/ValidatorOverview';
 import { ValidatorInfo } from './components/validator/ValidatorInfo';
@@ -14,7 +14,17 @@ import { ValidatorDetails } from './components/validator/ValidatorDetails';
 import { setChainProposals } from './store/slices/proposalSlice';
 
 // 상단에 CHAIN_LIST 상수 추가
-const CHAIN_LIST = ['cosmos', 'juno', 'osmosis', 'stargaze', 'terra', 'kava', 'evmos', 'injective'];
+const CHAIN_LIST = [
+  'cosmos', 
+  'juno', 
+  'osmosis', 
+  'stargaze', 
+  'terra', 
+  'kava', 
+  'evmos', 
+  'injective',
+  'secret'  // secret 체인 추가
+];
 
 export const AppContent: React.FC = () => {
   const [validatorAnalysis, setValidatorAnalysis] = useState<ValidatorAnalysis | null>(null);
@@ -131,24 +141,24 @@ export const AppContent: React.FC = () => {
   }, []); // 컴포넌트 마운트 시 한 번만 실행
 
   // props 객체들을 useMemo로 최적화
-  const validatorInfoProps = useMemo(() => ({
-    validator: selectedValidator,
-    validatorAnalysis: validatorAnalysis || {},
-    chainProposals: chainProposals,
-    chainName: effectiveChainName,
-    validatorName: selectedValidator?.voter || ''
-  }), [selectedValidator, validatorAnalysis, chainProposals, effectiveChainName]);
+  // const validatorInfoProps = useMemo(() => ({
+  //   validator: selectedValidator,
+  //   validatorAnalysis: validatorAnalysis || {},
+  //   chainProposals: chainProposals,
+  //   chainName: effectiveChainName,
+  //   validatorName: selectedValidator?.voter || ''
+  // }), [selectedValidator, validatorAnalysis, chainProposals, effectiveChainName]);
 
   const validatorSummaryProps = useMemo(() => ({
     chainName: effectiveChainName,
     validatorName: selectedValidator?.voter || ''
   }), [effectiveChainName, selectedValidator]);
 
-  const validatorDetailsProps = useMemo(() => ({
-    votingPattern,
-    proposalData,
-    validatorName: selectedValidator?.voter || ''
-  }), [votingPattern, proposalData, selectedValidator]);
+  // const validatorDetailsProps = useMemo(() => ({
+  //   votingPattern,
+  //   proposalData,
+  //   validatorName: selectedValidator?.voter || ''
+  // }), [votingPattern, proposalData, selectedValidator]);
 
   return (
     <div className="h-screen overflow-hidden bg-gray-50 flex flex-col">

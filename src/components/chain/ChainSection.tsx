@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { ClusterButton } from './ClusterButton';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { selectChain } from '../../store/slices/chainSlice';
-import { ClusterType, CoordinateData, ValidatorData, ChainProposals } from '../../types';
+import { ClusterType, CoordinateData, ValidatorData } from '../../types';
 import { CLUSTER_COLORS, CLUSTER_LABELS } from '../../constants';
 import { setChainProposals } from '../../store/slices/proposalSlice';
 import { setSelectedClusters } from '../../store/slices/chainSlice';
@@ -94,15 +94,15 @@ export const ChainSection = () => {
   }, [coordinateData]);
 
   // 체인 데이터 메모이제이션
-  const memoizedChainData = useMemo(() => {
-    if (!coordinateData) return null;
-    return Object.entries(coordinateData.chain_info).map(([chainId, info]) => ({
-      chainId,
-      info,
-      validatorCount: info.validators_count,
-      percentage: (info.validators_count / maxValidators) * 100
-    }));
-  }, [coordinateData, maxValidators]);
+  // const memoizedChainData = useMemo(() => {
+  //   if (!coordinateData) return null;
+  //   return Object.entries(coordinateData.chain_info).map(([chainId, info]) => ({
+  //     chainId,
+  //     info,
+  //     validatorCount: info.validators_count,
+  //     percentage: (info.validators_count / maxValidators) * 100
+  //   }));
+  // }, [coordinateData, maxValidators]);
 
   useEffect(() => {
     const loadData = async () => {

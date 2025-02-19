@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { 
   ProposalData,
-  isProposalData
+  // isProposalData
 } from '../../types';
 import { setSelectedProposals, toggleProposal } from '../../store/slices/proposalSlice';
-import { MagnifyingGlassIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
-import { selectSelectedProposalsByChain, selectChainProposals } from '../../store/selectors';
+// import { MagnifyingGlassIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import { selectSelectedProposalsByChain } from '../../store/selectors';
 
 interface ProposalListProps {
   chainName: string;
@@ -55,9 +55,9 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
     state => selectSelectedProposalsByChain(state, chainName)
   );
 
-  const chainProposals = useAppSelector(
-    state => selectChainProposals(state, chainName)
-  );
+  // const chainProposals = useAppSelector(
+  //   state => selectChainProposals(state, chainName)
+  // );
 
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);

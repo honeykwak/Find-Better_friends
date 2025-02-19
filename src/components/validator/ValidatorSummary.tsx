@@ -8,6 +8,9 @@ import {
 import { RootState } from '../../store';
 import './ValidatorSummary.css';
 import { useAppSelector } from '../../hooks/useAppSelector';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { CLUSTER_LABELS } from '../../constants';
+import { toggleFilter, clearFilters } from '../../store/slices/filterSlice';
 
 interface ValidatorSummaryProps {
   chainName: string;
@@ -23,6 +26,29 @@ export const ValidatorSummary: React.FC<ValidatorSummaryProps> = ({ chainName, v
   const selectedChain = useAppSelector((state: RootState) => state.chain.selectedChain);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const coordinateData = useAppSelector((state) => state.chain.coordinateData);
+  const validatorChains = useAppSelector((state) => state.chain.validatorChains);
+
+  const validatorCluster = useMemo(() => {
+    if (!coordinateData?.chain_coords_dict?.[chainName]) return null;
+    
+    const validator = coordinateData.chain_coords_dict[chainName].find(
+      v => v.voter === validatorName
+    );
+    
+    return validator?.cluster || null;
+  }, [coordinateData, chainName, validatorName]);
+
+  const dispatch = useAppDispatch();
+
+  const activeFilters = useAppSelector(state => state.filter.activeFilters);
+
+  // validatorName이 변경될 때 필터 초기화
+  useEffect(() => {
+    // clearFilters 액션을 dispatch하여 모든 필터 초기화
+    dispatch(clearFilters());
+  }, [validatorName, dispatch]);
 
   useEffect(() => {
     const loadVotingPatterns = async () => {
@@ -81,6 +107,15 @@ export const ValidatorSummary: React.FC<ValidatorSummaryProps> = ({ chainName, v
     );
   }, []);
 
+  const handleFilterClick = (type: 'cluster' | 'chains', value: number | string) => {
+    dispatch(toggleFilter({ type, value }));
+  };
+
+  // 버튼의 선택 상태 확인
+  const isFilterActive = (type: 'cluster' | 'chains', value: number | string) => {
+    return activeFilters[type] === value;
+  };
+
   // 콘텐츠 렌더링 로직 메모이제이션
   const content = useMemo(() => {
     if (!selectedChain) {
@@ -116,17 +151,68 @@ export const ValidatorSummary: React.FC<ValidatorSummaryProps> = ({ chainName, v
       return null;
     }
 
-    const { category_votes } = validatorData;
     return (
-      <div className="space-y-4">
-        {category_votes && Object.entries(category_votes).map(([category, data]) => (
-          <div key={category} className="category-block">
-            {renderCategoryStats(category, data)}
+      <div className="space-y-6">
+        {validatorCluster && (
+          <button
+            onClick={() => handleFilterClick('cluster', validatorCluster)}
+            className={`w-full p-4 rounded-lg transition-colors ${
+              isFilterActive('cluster', validatorCluster)
+                ? 'bg-blue-50 hover:bg-blue-100'
+                : 'bg-gray-50 hover:bg-gray-100'
+            }`}
+          >
+            <h3 className="font-medium text-gray-700 mb-2">Cluster Group</h3>
+            <p className="text-lg font-medium text-blue-600">
+              {CLUSTER_LABELS[validatorCluster]}
+            </p>
+          </button>
+        )}
+
+        <button
+          onClick={() => handleFilterClick('chains', validatorName)}
+          className={`w-full p-4 rounded-lg transition-colors ${
+            isFilterActive('chains', validatorName)
+              ? 'bg-blue-50 hover:bg-blue-100'
+              : 'bg-gray-50 hover:bg-gray-100'
+          }`}
+        >
+          <h3 className="font-medium text-gray-700 mb-2">Active Chains</h3>
+          <div className="flex flex-wrap gap-2">
+            {validatorChains.map(chain => (
+              <span 
+                key={chain}
+                className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+              >
+                {coordinateData?.chain_info[chain]?.name || chain}
+              </span>
+            ))}
           </div>
-        ))}
+        </button>
+
+        <div className="space-y-4">
+          <h3 className="font-medium text-gray-700">Voting Patterns</h3>
+          {validatorData.category_votes && Object.entries(validatorData.category_votes).map(([category, data]) => (
+            <div key={category} className="category-block">
+              {renderCategoryStats(category, data)}
+            </div>
+          ))}
+        </div>
       </div>
     );
-  }, [selectedChain, loading, error, votingPatterns, validatorName, renderCategoryStats]);
+  }, [
+    selectedChain,
+    loading,
+    error,
+    votingPatterns,
+    validatorName,
+    renderCategoryStats,
+    validatorCluster,
+    validatorChains,
+    coordinateData,
+    handleFilterClick,
+    activeFilters
+  ]);
 
   return (
     <div className="h-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">

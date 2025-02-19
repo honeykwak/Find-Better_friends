@@ -1,16 +1,17 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { ValidatorVotingPattern, ProposalData, ValidatorData, ClusterType } from '../../types';
 import { setCoordinateData } from '../../store/slices/chainSlice';
 import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { selectSelectedProposalsByChain } from '../../store/selectors';
+import { useChainMap } from '../../hooks/useChainMap';
 
 type SortField = 'validator' | 'participationRate' | 'proposalMatchRate' | 'overallMatchRate' | 'clusterMatchRate' | 'cluster';
 type SortDirection = 'asc' | 'desc';
 
 // 투표 옵션 타입 정의
-type VoteOption = 'YES' | 'NO' | 'ABSTAIN' | 'NO_WITH_VETO' | 'NO_VOTE';
+// type VoteOption = 'YES' | 'NO' | 'ABSTAIN' | 'NO_WITH_VETO' | 'NO_VOTE';
 
 interface ValidatorDetailsProps {
   votingPattern?: ValidatorVotingPattern | null;
@@ -49,6 +50,8 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
   const selectedValidator = useAppSelector(state => state.validator.selectedValidator);
   const [votingPatterns, setVotingPatterns] = useState<VotingPatternsData | null>(null);
   const [loading, setLoading] = useState(true);
+  const activeFilters = useAppSelector(state => state.filter.activeFilters);
+  const validatorChainMap = useChainMap();
 
   // 메모이제이션된 셀렉터 사용
   const selectedProposals = useAppSelector(
@@ -121,36 +124,71 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
     }
   };
 
-  const sortValidators = (
-    validators: Array<{
-      voter: string;
-      participationRate: string;
-      proposalMatchRate: string;
-      overallMatchRate: string;
-      clusterMatchRate: string;
-      cluster: number;
-    }>,
-    field: SortField,
-    direction: SortDirection
-  ) => {
-    return [...validators].sort((a, b) => {
-      let comparison = 0;
+  // const sortValidators = (
+  //   validators: Array<{
+  //     voter: string;
+  //     participationRate: string;
+  //     proposalMatchRate: string;
+  //     overallMatchRate: string;
+  //     clusterMatchRate: string;
+  //     cluster: number;
+  //   }>,
+  //   field: SortField,
+  //   direction: SortDirection
+  // ) => {
+  //   return [...validators].sort((a, b) => {
+  //     let comparison = 0;
       
-      switch (field) {
-        case 'validator':
-          comparison = a.voter.localeCompare(b.voter);
-          break;
-        case 'cluster':
-          comparison = a.cluster - b.cluster;
-          break;
-        default:
-          const aValue = parseFloat(a[field].replace('%', ''));
-          const bValue = parseFloat(b[field].replace('%', ''));
-          comparison = aValue - bValue;
+  //     switch (field) {
+  //       case 'validator':
+  //         comparison = a.voter.localeCompare(b.voter);
+  //         break;
+  //       case 'cluster':
+  //         comparison = a.cluster - b.cluster;
+  //         break;
+  //       default:
+  //         const aValue = parseFloat(a[field].replace('%', ''));
+  //         const bValue = parseFloat(b[field].replace('%', ''));
+  //         comparison = aValue - bValue;
+  //     }
+      
+  //     return direction === 'asc' ? comparison : -comparison;
+  //   });
+  // };
+
+  // getRowStyle 함수 수정
+  const getRowStyle = (validator: TableValidator) => {
+    const { cluster, chains } = activeFilters;
+    
+    // 필터가 없으면 기본 스타일
+    if (!cluster && !chains) return {};
+
+    let matches = true;
+
+    // 클러스터 필터 체크
+    if (cluster !== undefined) {
+      matches = matches && validator.cluster === cluster;
+    }
+
+    // 체인 필터 체크 - 완전히 동일한 체인 집합을 가진 경우만 매칭
+    if (chains !== undefined) {
+      const selectedValidatorChains = validatorChainMap.get(chains);
+      const currentValidatorChains = validatorChainMap.get(validator.validator);
+      
+      if (!selectedValidatorChains || !currentValidatorChains) {
+        matches = false;
+      } else {
+        // 두 Set의 크기가 같고, 모든 원소가 동일한지 확인
+        matches = matches && 
+          selectedValidatorChains.size === currentValidatorChains.size &&
+          Array.from(selectedValidatorChains).every(chain => 
+            currentValidatorChains.has(chain)
+          );
       }
-      
-      return direction === 'asc' ? comparison : -comparison;
-    });
+    }
+
+    // 모든 활성화된 필터 조건을 만족하지 않으면 흐리게 표시
+    return matches ? {} : { opacity: 0.5 };
   };
 
   const validators = useMemo(() => {
@@ -236,25 +274,30 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
       };
     });
 
-    // 정렬 로직
     validatorList.sort((a, b) => {
-      // 선택된 validator는 항상 최상단
+      // 1. 선택된 validator가 있다면 최상단
       if (selectedValidator) {
         if (a.validator === selectedValidator.voter) return -1;
         if (b.validator === selectedValidator.voter) return 1;
       }
 
+      // 2. 활성화된 필터에 따른 정렬
+      const aMatches = getRowStyle(a).opacity === undefined;
+      const bMatches = getRowStyle(b).opacity === undefined;
+      if (aMatches !== bMatches) {
+        return aMatches ? -1 : 1;
+      }
+
+      // 3. 기존 정렬 로직
       const aValue = a[sortField];
       const bValue = b[sortField];
 
       let comparison = 0;
       if (sortField === 'validator') {
-        // string으로 타입 단언
         comparison = (aValue as string).localeCompare(bValue as string);
       } else if (sortField === 'cluster') {
         comparison = (aValue as number) - (bValue as number);
       } else {
-        // 퍼센트 값들에 대한 정렬
         const parsePercentage = (value: string) => {
           if (value === '-') return -1;
           return parseFloat(value.replace('%', ''));
@@ -267,10 +310,13 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
       return sortDirection === 'asc' ? comparison : -comparison;
     });
 
-    // 번호 재할당 - 선택된 validator는 항상 1번
-    return validatorList.map((v, idx) => ({
+    // 번호 재할당
+    let counter = 1;
+    return validatorList.map(v => ({
       ...v,
-      no: selectedValidator && v.validator === selectedValidator.voter ? 1 : idx + (selectedValidator ? 2 : 1)
+      no: selectedValidator && v.validator === selectedValidator.voter 
+        ? 1 
+        : counter++
     }));
   }, [
     selectedChain,
@@ -281,7 +327,10 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
     memoizedSelectedProposals,
     selectedValidator,
     sortField,
-    sortDirection
+    sortDirection,
+    activeFilters,
+    getRowStyle,
+    validatorChainMap
   ]);
 
   const SortIcon = ({ field }: { field: SortField }) => {
@@ -311,7 +360,7 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
           <p>Loading voting patterns...</p>
         </div>
       ) : (
-      <div className="flex-1 min-h-0 overflow-auto">
+        <div className="flex-1 min-h-0 overflow-auto">
           <table className="w-full table-fixed divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
@@ -330,6 +379,7 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
               {validators.map((validator) => (
                 <tr 
                   key={validator.validator}
+                  style={getRowStyle(validator)}
                   className={`
                     hover:bg-gray-50 transition-colors
                     ${selectedValidator?.voter === validator.validator ? 'bg-blue-50' : ''}
@@ -364,4 +414,4 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
       )}
     </div>
   );
-}; 
+};
