@@ -2,11 +2,10 @@ import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from './index';
 
 // 체인별 proposal 셀렉터
-export const selectChainProposals = createSelector(
-  [(state: RootState) => state.proposal.chainProposals,
-   (state: RootState, chainId: string) => chainId],
-  (chainProposals, chainId) => chainProposals[chainId]?.proposals || {}
-);
+export const selectChainProposals = (state: RootState, chainId: string) => {
+  const proposals = state.proposal.chainProposals[chainId]?.proposals || {};
+  return Object.entries(proposals);
+};
 
 // 체인별 선택된 proposals 셀렉터 (개선)
 export const selectSelectedProposalsByChain = createSelector(
