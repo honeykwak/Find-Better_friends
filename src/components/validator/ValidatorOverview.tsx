@@ -4,6 +4,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { CoordinateData, ValidatorData } from '../../types';
 import { CLUSTER_COLORS } from '../../constants';
 import { setSelectedValidator } from '../../store/slices/validatorSlice';
+import { setValidatorChains } from '../../store/slices/chainSlice';
 import * as d3 from 'd3';
 
 const ANIMATION_DURATION = 500;
@@ -230,12 +231,18 @@ export const ValidatorOverview = () => {
     if (data && data.payload) {
       const validator = data.payload;
       if (currentValidator?.voter === validator.voter) {
+        console.log('Deselecting validator');
         dispatch(setSelectedValidator(null));
+        dispatch(setValidatorChains([]));
       } else {
+        const validatorChains = Array.from(validatorChainMap.get(validator.voter) || []);
+        console.log('Selecting validator:', validator.voter);
+        console.log('Validator chains:', validatorChains);
         dispatch(setSelectedValidator(validator));
+        dispatch(setValidatorChains(validatorChains));
       }
     }
-  }, [dispatch, currentValidator]);
+  }, [dispatch, currentValidator, validatorChainMap]);
 
   // filteredValidators 로직 수정
   const filteredValidators = useMemo(() => {

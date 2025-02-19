@@ -7,18 +7,23 @@ import {
   ChainProposals
 } from './types';
 import { useAppSelector } from './hooks/useAppSelector';
+import { useAppDispatch } from './hooks/useAppDispatch';
 import { ProposalList } from './components/proposal/ProposalList';
 import { ValidatorSummary } from './components/validator/ValidatorSummary';
 import { ValidatorDetails } from './components/validator/ValidatorDetails';
+import { setChainProposals } from './store/slices/proposalSlice';
+
+// 상단에 CHAIN_LIST 상수 추가
+const CHAIN_LIST = ['cosmos', 'juno', 'osmosis', 'stargaze', 'terra', 'kava', 'evmos', 'injective'];
 
 export const AppContent: React.FC = () => {
   const [validatorAnalysis, setValidatorAnalysis] = useState<ValidatorAnalysis | null>(null);
-  const [proposalDetails, setProposalDetails] = useState<ChainProposals | null>(null);
   
   const selectedValidator = useAppSelector(state => state.validator.selectedValidator);
   const selectedChain = useAppSelector(state => state.chain.selectedChain);
   const validatorChains = useAppSelector(state => state.chain.validatorChains);
   const chainProposals = useAppSelector(state => state.proposal.chainProposals);
+  const dispatch = useAppDispatch();
 
   // 데이터 로딩 상태 추가
   const [isLoading, setIsLoading] = useState(false);
@@ -55,7 +60,7 @@ export const AppContent: React.FC = () => {
 
   // voting pattern과 proposal data를 안전하게 가져오기
   const getValidatorData = () => {
-    if (!selectedValidator?.voter || !effectiveChainName || !proposalDetails) {
+    if (!selectedValidator?.voter || !effectiveChainName) {
       return {
         votingPattern: null,
         proposalData: null
@@ -65,12 +70,9 @@ export const AppContent: React.FC = () => {
     const validatorData = validatorAnalysis?.[selectedValidator.voter];
     const chainData = validatorData?.[effectiveChainName];
     
-    // proposalDetails에서 proposals 객체를 가져옵니다
-    const proposals = proposalDetails[effectiveChainName]?.proposals;
-
     return {
       votingPattern: chainData?.votingPattern || null,
-      proposalData: proposals || null
+      proposalData: chainProposals[effectiveChainName]?.proposals || null
     };
   };
 
@@ -86,49 +88,47 @@ export const AppContent: React.FC = () => {
   });
 
   // 데이터 로딩 로직 최적화
-  const loadValidatorAnalysis = useCallback(async () => {
-    if (validatorAnalysis || isLoading) return;
+  const loadData = useCallback(async () => {
+    if (isLoading) return;
     
     setIsLoading(true);
     try {
-      const response = await fetch('/data/analysis/validator_analysis.json');
-      if (!response.ok) throw new Error('Failed to load validator analysis');
-      const data: ValidatorAnalysis = await response.json();
-      setValidatorAnalysis(data);
-    } catch (error) {
-      console.error('Error loading validator analysis:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [validatorAnalysis, isLoading]);
+      // 1. validator analysis 로드
+      const analysisResponse = await fetch('/data/analysis/validator_analysis.json');
+      if (!analysisResponse.ok) throw new Error('Failed to load validator analysis');
+      const analysisData: ValidatorAnalysis = await analysisResponse.json();
+      setValidatorAnalysis(analysisData);
 
-  const loadProposalDetails = useCallback(async (chain: string) => {
-    if (!chain || proposalDetails?.[chain] || isLoading) return;
-    
-    setIsLoading(true);
-    try {
-      const response = await fetch(`/data/analysis/proposal_analysis/${chain.toLowerCase()}.json`);
-      if (!response.ok) throw new Error(`Failed to load proposal details for ${chain}`);
-      const data = await response.json();
-      setProposalDetails(prev => ({
-        ...prev,
-        [chain]: {
-          proposals: data.proposals
+      // 2. proposal 데이터 로드
+      const proposalDataByChain: ChainProposals = {};
+      await Promise.all(CHAIN_LIST.map(async (chain) => {
+        try {
+          const response = await fetch(`/data/analysis/proposal_analysis/${chain.toLowerCase()}.json`);
+          if (!response.ok) throw new Error(`Failed to load data for ${chain}`);
+          
+          const data = await response.json();
+          proposalDataByChain[chain] = {
+            proposals: data.proposals,
+            totalCount: Object.keys(data.proposals).length
+          };
+        } catch (error) {
+          console.error(`Error loading data for ${chain}:`, error);
+          proposalDataByChain[chain] = { proposals: {}, totalCount: 0 };
         }
       }));
+
+      dispatch(setChainProposals(proposalDataByChain));
     } catch (error) {
-      console.error('Error loading proposal details:', error);
+      console.error('Error loading data:', error);
     } finally {
       setIsLoading(false);
     }
-  }, [proposalDetails, isLoading]);
+  }, [isLoading, dispatch]);
 
+  // 컴포넌트 마운트 시 데이터 로드
   useEffect(() => {
-    loadValidatorAnalysis();
-    if (selectedChain) {
-      loadProposalDetails(selectedChain);
-    }
-  }, [selectedChain, loadValidatorAnalysis, loadProposalDetails]);
+    loadData();
+  }, []); // 컴포넌트 마운트 시 한 번만 실행
 
   // props 객체들을 useMemo로 최적화
   const validatorInfoProps = useMemo(() => ({
@@ -193,7 +193,7 @@ export const AppContent: React.FC = () => {
             <div className="component-container">
               <ProposalList 
                 chainName={selectedChain || ''}
-                proposals={proposalDetails?.[selectedChain!]?.proposals || null}
+                proposals={chainProposals[selectedChain!]?.proposals || null}
               />
             </div>
             <div className="component-container">

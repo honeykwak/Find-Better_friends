@@ -1,5 +1,5 @@
 import React, { useEffect, useState, memo } from 'react';
-import { ValidatorData, ValidatorVotingPattern, ProposalData } from '../../types';
+import { ValidatorData, ValidatorVotingPattern, ProposalData, ChainProposals } from '../../types';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { RootState } from '../../store';
 import { ValidatorSummary } from './ValidatorSummary';
@@ -37,13 +37,13 @@ const formatRate = (rate: number): string => {
 const formatParticipationRate = (
   participationCount: number, 
   chainId: string,
-  chainProposals: Record<string, number>
+  chainProposals: ChainProposals
 ): string => {
   if (!chainProposals || !chainProposals[chainId]) {
     return `0% (${participationCount}/0)`;
   }
 
-  const totalProposals = chainProposals[chainId];
+  const totalProposals = Object.keys(chainProposals[chainId]?.proposals || {}).length;
   const rate = ((participationCount / totalProposals) * 100).toFixed(2);
   return `${rate}% (${participationCount}/${totalProposals})`;
 };

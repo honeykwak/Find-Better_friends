@@ -47,9 +47,20 @@ export const chainSlice = createSlice({
     },
     setSelectedClusters: (state, action: PayloadAction<ClusterType[]>) => {
       state.selectedClusters = action.payload;
+    },
+    setValidatorChains: (state, action: PayloadAction<string[]>) => {
+      state.validatorChains = action.payload;
     }
   }
 });
 
-export const { selectChain, toggleCluster, updateValidatorSelection, setCoordinateData, setSelectedClusters } = chainSlice.actions;
+export const { 
+  selectChain, 
+  toggleCluster, 
+  updateValidatorSelection, 
+  setCoordinateData, 
+  setSelectedClusters,
+  setValidatorChains 
+} = chainSlice.actions;
+
 export default chainSlice.reducer;

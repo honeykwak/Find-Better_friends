@@ -108,18 +108,16 @@ export const ChainSection = () => {
     const loadData = async () => {
       try {
         // 좌표 데이터 로드
-        const coordResponse = await fetch('/data/coordinates/coordinates.json');
-        const coordData: CoordinateData = await coordResponse.json();
-        setCoordinateData(coordData);
-        
-        // 프로포절 데이터 로드 및 전역 상태로 저장
-        const proposalsResponse = await fetch('/data/analysis/chain_proposals.json');
-        const proposalsData = await proposalsResponse.json();
-        dispatch(setChainProposals(proposalsData));
+        const response = await fetch('/data/coordinates/coordinates.json');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data: CoordinateData = await response.json();
+        setCoordinateData(data);
 
         // validatorChainMap 생성
         const mapping = new Map<string, Set<string>>();
-        Object.entries(coordData.chain_coords_dict).forEach(([chainId, validators]) => {
+        Object.entries(data.chain_coords_dict).forEach(([chainId, validators]) => {
           validators.forEach((validator: ValidatorData) => {
             const chainSet = mapping.get(validator.voter) || new Set<string>();
             chainSet.add(chainId);
@@ -127,6 +125,17 @@ export const ChainSection = () => {
           });
         });
         setValidatorChainMap(mapping);
+
+        // 프로포절 데이터 로드 및 전역 상태로 저장
+        try {
+          const proposalsResponse = await fetch('/data/analysis/chain_proposals.json');
+          if (proposalsResponse.ok) {
+            const proposalsData = await proposalsResponse.json();
+            dispatch(setChainProposals(proposalsData));
+          }
+        } catch (error) {
+          console.error('Error loading proposal data:', error);
+        }
       } catch (error) {
         console.error('Error loading chain data:', error);
       }
@@ -242,7 +251,7 @@ export const ChainSection = () => {
             ...coordinateData.chain_info[selectedChain],
             chainId: selectedChain
           }} 
-          proposalCount={chainProposals[selectedChain] || 0}
+          proposalCount={Object.keys(chainProposals[selectedChain]?.proposals || {}).length}
         />
       )}
     </div>

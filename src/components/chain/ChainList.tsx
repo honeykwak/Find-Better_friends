@@ -26,6 +26,10 @@ export const ChainList: React.FC = () => {
     loadData();
   }, []);
 
+  useEffect(() => {
+    console.log('ChainList validatorChains:', validatorChains);
+  }, [validatorChains]);
+
   if (!coordinateData) return null;
 
   const handleChainSelect = (chainId: string) => {

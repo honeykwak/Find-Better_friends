@@ -73,6 +73,7 @@ export interface ChainProposals {
     proposals: {
       [proposalId: string]: ProposalData;
     };
+    totalCount: number;
   };
 }
 
