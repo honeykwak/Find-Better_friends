@@ -26,15 +26,48 @@ export const ClusterButton: React.FC<ClusterButtonProps> = ({ cluster, isSelecte
   // const selectedClusters = useAppSelector(state => state.chain.selectedClusters);
 
   return (
-    <button
-      className={classNames(
-        'w-full px-2 py-1.5 rounded-lg transition-colors text-sm whitespace-nowrap overflow-hidden text-ellipsis',
-        clusterColors[cluster],
-        isSelected && 'ring-2 ring-offset-1 ring-gray-500'
-      )}
-      onClick={() => dispatch(toggleCluster(cluster))}
-    >
-      {CLUSTER_LABELS[cluster]}
-    </button>
+    <div className="relative w-8">  {/* 고정 너비 컨테이너 */}
+      <button
+        className={classNames(
+          'relative group',
+          'w-8 h-8 rounded-full transition-all',
+          clusterColors[cluster],
+          isSelected && 'ring-2 ring-offset-2 ring-gray-500'
+        )}
+        onClick={() => dispatch(toggleCluster(cluster))}
+      >
+        {/* 클러스터 번호 */}
+        <span className="text-sm font-medium">{cluster}</span>
+
+        {/* 호버 툴팁 - 작은 화면에서만 표시 */}
+        <div className="
+          md:hidden
+          absolute left-1/2 -translate-x-1/2 bottom-full mb-2
+          whitespace-nowrap px-2 py-1 rounded
+          bg-gray-800 text-white text-xs
+          opacity-0 group-hover:opacity-100
+          transition-opacity duration-200
+          z-10
+        ">
+          {CLUSTER_LABELS[cluster]}
+          <div className="
+            absolute top-full left-1/2 -translate-x-1/2
+            border-4 border-transparent
+            border-t-gray-800
+          "/>
+        </div>
+      </button>
+
+      {/* 레이블 - 중간 크기 이상의 화면에서만 표시 */}
+      <span className="
+        hidden md:block
+        absolute top-full left-1/2 -translate-x-1/2
+        mt-1 text-[10px] text-gray-600
+        text-center w-16
+        leading-tight
+      ">
+        {CLUSTER_LABELS[cluster]}
+      </span>
+    </div>
   );
 };
