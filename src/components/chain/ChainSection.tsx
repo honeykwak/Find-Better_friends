@@ -1,5 +1,5 @@
 // src/components/chain/ChainSection.tsx
-import { useState, useEffect, useMemo, Fragment } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { ClusterButton } from './ClusterButton';
@@ -70,7 +70,6 @@ const ChainInfo = ({
 );
 
 const ChainListItem = ({ 
-  chainId, 
   info, 
   isSelected, 
   isValidatorChain,
