@@ -49,6 +49,9 @@ const ProposalItem: React.FC<ProposalItemProps> = ({ proposal, isSelected, onTog
 
 export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals }) => {
   const dispatch = useAppDispatch();
+  const selectedValidator = useAppSelector(state => state.validator.selectedValidator);
+  const [votingPatterns, setVotingPatterns] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
   
   // 메모이제이션된 셀렉터 사용
   const selectedProposals = useAppSelector(
@@ -75,7 +78,8 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
         if (!debouncedSearchTerm) return true;
         return proposal.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
       })
-      .sort((a, b) => a[1].title.localeCompare(b[1].title));
+      // ID를 숫자로 변환하여 내림차순 정렬
+      .sort((a, b) => Number(b[0]) - Number(a[0]));
   }, [proposals, debouncedSearchTerm]);
 
   // 검색 결과 메모이제이션
@@ -108,6 +112,51 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  // 투표 옵션별 색상 정의
+  const VOTE_COLORS = {
+    YES: 'bg-green-100 text-green-700',
+    NO: 'bg-red-100 text-red-700',
+    NO_WITH_VETO: 'bg-orange-100 text-orange-700',
+    ABSTAIN: 'bg-purple-100 text-purple-700',
+    NO_VOTE: 'bg-gray-100 text-gray-700'
+  };
+
+  // Voting Patterns 데이터 로드
+  useEffect(() => {
+    const loadVotingPatterns = async () => {
+      if (!selectedValidator || !chainName) return;
+      
+      setLoading(true);
+      try {
+        const response = await fetch(`/data/analysis/voting_patterns/${chainName}.json`);
+        if (!response.ok) throw new Error('Failed to fetch voting patterns');
+        const data = await response.json();
+        setVotingPatterns(data);
+      } catch (error) {
+        console.error('Error loading voting patterns:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadVotingPatterns();
+  }, [selectedValidator, chainName]);
+
+  // 투표 결과에 따른 버튼 스타일 결정
+  const getVoteStyle = (proposalId: string) => {
+    if (!selectedValidator || !votingPatterns || loading) {
+      return selectedProposals.includes(proposalId)
+        ? 'bg-blue-100 text-blue-700 ring-2 ring-blue-500'
+        : 'bg-gray-50 text-gray-700 hover:bg-gray-100';
+    }
+
+    const validatorVotes = votingPatterns[selectedValidator.voter]?.proposal_votes;
+    if (!validatorVotes) return 'bg-gray-50 text-gray-700';
+
+    const vote = validatorVotes[proposalId]?.option || 'NO_VOTE';
+    return VOTE_COLORS[vote];
+  };
 
   return (
     <div className="h-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">
@@ -176,17 +225,30 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
       </div>
 
       <div className="flex-1 min-h-0 overflow-auto mt-4">
-        <div className="space-y-2">
+        <div className="grid grid-cols-8 gap-2 p-2">
           {filteredProposals.map(([id, proposal]) => (
-            <ProposalItem
+            <button
               key={id}
-              proposal={proposal}
-              isSelected={selectedProposals.includes(id)}
-              onToggle={() => dispatch(toggleProposal({ 
+              onClick={() => dispatch(toggleProposal({ 
                 chainId: chainName, 
                 proposalId: id 
               }))}
-            />
+              className={`
+                aspect-square
+                flex items-center justify-center
+                rounded-lg text-sm font-medium
+                transition-all duration-200
+                hover:ring-2 hover:ring-blue-400
+                ${getVoteStyle(id)}
+              `}
+              title={`${proposal.title}${
+                selectedValidator 
+                  ? `\nVote: ${votingPatterns?.[selectedValidator.voter]?.proposal_votes[id]?.option || 'NO_VOTE'}`
+                  : ''
+              }`}
+            >
+              {id}
+            </button>
           ))}
         </div>
       </div>

@@ -39,9 +39,9 @@ export const ClusterButton: React.FC<ClusterButtonProps> = ({ cluster, isSelecte
         {/* 클러스터 번호 */}
         <span className="text-sm font-medium">{cluster}</span>
 
-        {/* 호버 툴팁 - 작은 화면에서만 표시 */}
+        {/* 모바일/작은 화면에서만 보이는 호버 툴팁 */}
         <div className="
-          md:hidden
+          lg:hidden
           absolute left-1/2 -translate-x-1/2 bottom-full mb-2
           whitespace-nowrap px-2 py-1 rounded
           bg-gray-800 text-white text-xs
@@ -58,9 +58,9 @@ export const ClusterButton: React.FC<ClusterButtonProps> = ({ cluster, isSelecte
         </div>
       </button>
 
-      {/* 레이블 - 중간 크기 이상의 화면에서만 표시 */}
+      {/* 큰 화면에서만 보이는 레이블 */}
       <span className="
-        hidden md:block
+        hidden lg:block
         absolute top-full left-1/2 -translate-x-1/2
         mt-1 text-[10px] text-gray-600
         text-center w-16

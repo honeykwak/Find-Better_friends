@@ -163,13 +163,13 @@ export const AppContent: React.FC = () => {
   return (
     <div className="h-screen overflow-hidden bg-gray-50 flex flex-col">
       <header className="bg-white shadow shrink-0 h-[--header-height]">
-        <div className="w-[--content-width] h-full mx-auto px-[--content-padding-x] flex items-center">
+        <div className="h-full mx-auto px-[--content-padding-x] flex items-center">
           <h1 className="text-3xl font-bold text-gray-900">Find Better Friends</h1>
         </div>
       </header>
 
-      <main className="min-h-0 flex-1 w-[--content-width] mx-auto px-[--content-padding-x] pt-4 pb-6">
-        <div className="h-full grid grid-cols-12 gap-4 px-4">
+      <main className="min-h-0 flex-1 mx-auto px-[--content-padding-x] pt-4 pb-6 w-full">
+        <div className="h-full grid grid-cols-12 gap-4">
           {/* Chain Section */}
           <div className="col-span-2 min-h-0 h-[calc(100%+1rem)]">
             <div className="component-container h-full">

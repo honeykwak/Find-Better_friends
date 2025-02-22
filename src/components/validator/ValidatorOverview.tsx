@@ -535,7 +535,7 @@ export const ValidatorOverview = () => {
 
   if (isLoading) {
     return (
-      <div className="h-full min-h-0 bg-white rounded-lg shadow-lg p-4 flex flex-col">
+      <div className="h-full w-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">
         <div className="shrink-0 mb-2">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
@@ -613,7 +613,7 @@ export const ValidatorOverview = () => {
 
   if (error) {
     return (
-      <div className="h-full min-h-0 bg-white rounded-lg shadow-lg p-4 flex flex-col">
+      <div className="h-full w-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">
         <div className="shrink-0 mb-2">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
@@ -690,7 +690,7 @@ export const ValidatorOverview = () => {
   }
 
   return (
-    <div className="h-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">
+    <div className="h-full w-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">
       <div className="shrink-0 mb-2">
         <div className="flex justify-between items-center flex-wrap gap-2">
           <div className="flex items-center space-x-4">

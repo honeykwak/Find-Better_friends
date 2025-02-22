@@ -1,6 +1,6 @@
 :root {
-  /* 가로 관련 변수 */
-  --content-width: min(95vw, 1536px);
+  /* 가로 관련 변수 수정 - 최대 너비 제한을 더 크게 설정 */
+  --content-width: 100vw;  /* min(95vw, 1536px)에서 변경 */
   --content-padding-x: max(1.5rem, (100vw - var(--content-width)) / 2);
   
   /* 세로 관련 변수 */
@@ -23,6 +23,7 @@
   border-radius: var(--component-border-radius);
   box-shadow: var(--component-shadow);
   height: 100%;
+  width: 100%; /* 너비 100% 추가 */
   display: flex;
   flex-direction: column;
   min-height: 0;
