@@ -7,11 +7,8 @@ import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { selectSelectedProposalsByChain } from '../../store/selectors';
 import { useChainMap } from '../../hooks/useChainMap';
 
-// 타입 정의 추가
-interface SortField {
-  value: string;
-  label: string;
-}
+// SortField 타입을 keyof TableValidator로 수정
+type SortFieldValue = keyof TableValidator;
 
 interface SortDirection {
   value: 'asc' | 'desc';
@@ -71,10 +68,10 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
   // 가장 최근 proposal ID 찾기
   const latestProposalId = useMemo(() => {
     if (!proposalData) return null;
-    return Object.keys(proposalData).reduce((latest, current) => {
+    return Object.keys(proposalData).reduce<string>((latest, current) => {
       if (!latest) return current;
       return parseInt(current) > parseInt(latest) ? current : latest;
-    }, null);
+    }, '');
   }, [proposalData]);
 
   // 디버깅 로그 개선
@@ -89,7 +86,7 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
     selectedValidator: selectedValidator?.voter
   });
 
-  const [sortField, setSortField] = useState<SortField['value']>('validator');
+  const [sortField, setSortField] = useState<SortFieldValue>('validator');
   const [sortDirection, setSortDirection] = useState<SortDirection['value']>('asc');
 
   // 선택된 proposals 메모이제이션
@@ -134,7 +131,7 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
     loadVotingPatterns();
   }, [selectedChain]);
 
-  const handleSort = (field: SortField['value']) => {
+  const handleSort = (field: SortFieldValue) => {
     if (sortField === field) {
       setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
     } else {
@@ -347,6 +344,10 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
         comparison = (aValue as string).localeCompare(bValue as string);
       } else if (sortField === 'cluster') {
         comparison = (aValue as number) - (bValue as number);
+      } else if (sortField === 'no') {
+        comparison = (aValue as number) - (bValue as number);
+      } else if (sortField === 'participatedInLatest') {
+        comparison = (aValue === bValue) ? 0 : aValue ? -1 : 1;
       } else {
         const parsePercentage = (value: string) => {
           if (value === '-') return -1;
@@ -385,14 +386,14 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
     latestProposalId
   ]);
 
-  const SortIcon = ({ field }: { field: SortField['value'] }) => {
+  const SortIcon = ({ field }: { field: SortFieldValue }) => {
     if (sortField !== field) return <ChevronUpIcon className="w-4 h-4 text-gray-400" />;
     return sortDirection === 'asc' 
       ? <ChevronUpIcon className="w-4 h-4 text-blue-500" />
       : <ChevronDownIcon className="w-4 h-4 text-blue-500" />;
   };
 
-  const renderHeader = (field: SortField['value'], label: string) => (
+  const renderHeader = (field: SortFieldValue, label: string) => (
     <th 
       onClick={() => handleSort(field)}
       className="sticky top-0 bg-gray-50 px-3 py-2 text-left text-sm font-semibold text-gray-900 cursor-pointer hover:bg-gray-100 transition-colors"

@@ -7,9 +7,10 @@ import {
 } from '../../types';
 import { setSelectedProposals, toggleProposal } from '../../store/slices/proposalSlice';
 import { selectSelectedProposalsByChain } from '../../store/selectors';
-import { RangeSlider } from './RangeSlider';
+import { RangeSlider } from '../common/RangeSlider';
 import { TimelineChart } from './TimelineChart';
 import { SearchInput } from '../common/SearchInput';
+import { SearchResult } from '../../types/search';
 
 interface ProposalListProps {
   chainName: string;
@@ -22,7 +23,7 @@ interface ProposalItemProps {
   onToggle: () => void;
 }
 
-const ProposalItem: React.FC<ProposalItemProps> = ({ proposal, isSelected, onToggle }) => (
+export const ProposalItem: React.FC<ProposalItemProps> = ({ proposal, isSelected, onToggle }) => (
   <button
     onClick={onToggle}
     className={`w-full text-left p-3 rounded-lg transition-colors ${
@@ -172,52 +173,27 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
   }, [proposals, timeRange, debouncedSearchTerm, sortOption]);
 
   // searchResults 메모이제이션 수정
-  const searchResults = useMemo(() => {
-    if (!proposals) return [];
+  const searchResults: SearchResult<ProposalData>[] = useMemo(() => {
+    if (!proposals || !debouncedSearchTerm) return [];
     
-    // 검색어가 없고 focus 상태일 때는 모든 proposal 표시
-    if (!searchTerm && isSearchFocused) {
-      return Object.entries(proposals)
-        .map(([id, proposal]) => ({
-          id,
-          text: `#${id} ${proposal.title}`,
-          subText: `${proposal.type} - ${proposal.main_category}, ${proposal.sub_category}`
-        }));
-    }
-    
-    // 검색어가 있을 때는 검색 타입에 따라 필터링
-    if (searchTerm) {
-      const searchLower = searchTerm.toLowerCase();
-      return Object.entries(proposals)
-        .filter(([_, proposal]) => {
-          switch (searchType) {
-            case 'TITLE':
-              return proposal.title.toLowerCase().includes(searchLower);
-            case 'TYPE':
-              return proposal.type.toLowerCase().includes(searchLower) ||
-                     proposal.main_category.toLowerCase().includes(searchLower) ||
-                     proposal.sub_category.toLowerCase().includes(searchLower);
-            case 'DESCRIPTION':
-              return `${proposal.main_category} ${proposal.sub_category}`.toLowerCase().includes(searchLower);
-            case 'ALL':
-            default:
-              return proposal.title.toLowerCase().includes(searchLower) ||
-                     proposal.type.toLowerCase().includes(searchLower) ||
-                     proposal.main_category.toLowerCase().includes(searchLower) ||
-                     proposal.sub_category.toLowerCase().includes(searchLower);
-          }
-        })
-        .map(([id, proposal]) => ({
-          id,
-          text: `#${id} ${proposal.title}`,
-          subText: `${proposal.type} - ${proposal.main_category}, ${proposal.sub_category}`
-        }));
-    }
+    return Object.entries(proposals)
+      .filter(([_, proposal]) => {
+        const searchLower = debouncedSearchTerm.toLowerCase();
+        return (
+          proposal.title.toLowerCase().includes(searchLower) ||
+          proposal.main_category.toLowerCase().includes(searchLower) ||
+          proposal.sub_category.toLowerCase().includes(searchLower) ||
+          proposal.type.toLowerCase().includes(searchLower)
+        );
+      })
+      .map(([id, proposal]) => ({
+        id,
+        text: proposal.title,
+        data: proposal
+      }));
+  }, [proposals, debouncedSearchTerm]);
 
-    return [];
-  }, [searchTerm, proposals, isSearchFocused, searchType]);
-
-  const handleResultClick = (result: SearchResult) => {
+  const handleResultClick = (result: SearchResult<ProposalData>) => {
     dispatch(toggleProposal({ 
       chainId: chainName, 
       proposalId: result.id 
