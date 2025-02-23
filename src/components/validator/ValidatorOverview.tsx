@@ -9,6 +9,7 @@ import * as d3 from 'd3';
 import { SearchInput } from '../common/SearchInput';
 import { Button } from '../common/Button';
 import { Card } from '../common/Card';
+import { SearchResult } from '../../types/search';
 
 const ANIMATION_DURATION = 500;
 const BATCH_SIZE = 50;
@@ -203,7 +204,7 @@ export const ValidatorOverview = () => {
     }
   }, [coordinateData, selectedChain]);
 
-  const filteredData = useMemo(() => {
+  const filteredValidators = useMemo(() => {
     return displayData.filter(d => 
       selectedClusters.length === 0 || selectedClusters.includes(d.cluster)
     );
@@ -246,50 +247,6 @@ export const ValidatorOverview = () => {
       }
     }
   }, [dispatch, currentValidator, validatorChainMap]);
-
-  // filteredValidators 로직 수정
-  const filteredValidators = useMemo(() => {
-    // 먼저 클러스터 필터링
-    const clusterFiltered = displayData.filter(validator => 
-      // 선택된 클러스터가 없거나, 해당 validator가 선택된 클러스터에 속하는 경우
-      selectedClusters.length === 0 || selectedClusters.includes(validator.cluster)
-    );
-
-    // 검색어로 필터링
-    if (!searchTerm.trim()) return clusterFiltered;
-    const term = searchTerm.toLowerCase();
-    
-    return clusterFiltered
-      .filter(validator => 
-        validator.voter.toLowerCase().includes(term)
-      )
-      .sort((a, b) => {
-        const aIndex = a.voter.toLowerCase().indexOf(term);
-        const bIndex = b.voter.toLowerCase().indexOf(term);
-        
-        // 검색어 위치가 다르면 앞에 있는 것이 우선
-        if (aIndex !== bIndex) {
-          return aIndex - bIndex;
-        }
-        
-        // 검색어 위치가 같으면 알파벳 순
-        return a.voter.localeCompare(b.voter);
-      });
-  }, [displayData, searchTerm, selectedClusters]); // selectedClusters 의존성 추가
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const searchContainer = document.querySelector('.search-container');
-      if (searchContainer && !searchContainer.contains(event.target as Node)) {
-        setIsSearchFocused(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   // 줌 핸들러 수정
   const handleWheel = useCallback((e: WheelEvent) => {
@@ -447,7 +404,7 @@ export const ValidatorOverview = () => {
 
   // 차트 초기화
   useEffect(() => {
-    if (!svgRef.current || !filteredData.length) return;
+    if (!svgRef.current || !filteredValidators.length) return;
 
     const svg = d3.select(svgRef.current);
     const g = d3.select(gRef.current);
@@ -484,7 +441,7 @@ export const ValidatorOverview = () => {
 
     // 기존 노드 선택
     const nodes = g.selectAll<SVGCircleElement, EnhancedValidatorData>('circle')
-      .data(filteredData, d => d.voter);
+      .data(filteredValidators, d => d.voter);
 
     // Enter 부분 수정
     const nodesEnter = nodes.enter()
@@ -522,7 +479,7 @@ export const ValidatorOverview = () => {
         setHoveredValidator(null);
         setTooltipData(null);
       });
-  }, [filteredData, chartBounds, handleClick, currentValidator, hoveredValidator, searchTerm]);
+  }, [filteredValidators, chartBounds, handleClick, currentValidator, hoveredValidator, searchTerm]);
 
   // SVG에 mousedown 이벤트 핸들러 연결
   useEffect(() => {
@@ -537,48 +494,29 @@ export const ValidatorOverview = () => {
   }, [handleMouseDown]);
 
   // 검색 결과 계산 - 클러스터 필터 적용
-  const searchResults = useMemo(() => {
-    if (!displayData) return [];
+  const searchResults: SearchResult<ValidatorData>[] = useMemo(() => {
+    if (!searchTerm || !displayData) return [];
     
-    // 먼저 클러스터 필터링 적용
-    const clusterFiltered = displayData.filter(validator => 
-      selectedClusters.length === 0 || selectedClusters.includes(validator.cluster)
-    );
-
-    // 검색어가 없고 focus 상태일 때는 클러스터 필터링된 모든 validator 표시
-    if (!searchTerm && isSearchFocused) {
-      return clusterFiltered.map(validator => ({
+    return displayData
+      .filter(validator => 
+        validator.voter.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+      .map(validator => ({
         id: validator.voter,
         text: validator.voter,
-        subText: `Cluster ${validator.cluster}`
+        data: validator
       }));
-    }
-    
-    // 검색어가 있을 때는 클러스터 필터링된 결과에서 추가 필터링 + 정렬
-    if (searchTerm) {
-      const searchLower = searchTerm.toLowerCase();
-      return clusterFiltered
-        .filter(validator => validator.voter.toLowerCase().includes(searchLower))
-        .map(validator => ({
-          id: validator.voter,
-          text: validator.voter,
-          subText: `Cluster ${validator.cluster}`,
-          searchIndex: validator.voter.toLowerCase().indexOf(searchLower)
-        }))
-        .sort((a, b) => {
-          if (a.searchIndex !== b.searchIndex) {
-            return a.searchIndex - b.searchIndex;
-          }
-          return a.text.localeCompare(b.text);
-        });
-    }
+  }, [searchTerm, displayData]);
 
-    return [];
-  }, [searchTerm, displayData, isSearchFocused, selectedClusters]);
-
-  const handleResultClick = (result: SearchResult) => {
-    dispatch(setSelectedValidator({ voter: result.id }));
-    setSearchTerm('');
+  const handleResultClick = (result: SearchResult<ValidatorData>) => {
+    if (!result || !result.data) return;
+    dispatch(setSelectedValidator(result.data));
+    if (result.data.voter) {
+      const validatorChains = validatorChainMap.get(result.data.voter);
+      if (validatorChains) {
+        dispatch(setValidatorChains(Array.from(validatorChains)));
+      }
+    }
     setIsSearchFocused(false);
   };
 

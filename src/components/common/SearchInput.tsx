@@ -1,22 +1,17 @@
 import { useState, KeyboardEvent, useRef, useEffect } from 'react';
 import { XMarkIcon } from '@heroicons/react/20/solid';
 import { tokens } from '../../styles/tokens';
+import { SearchResult } from '../../types/search';
 
-interface SearchResult {
-  id: string;
-  text: string;
-  subText?: string;
-}
-
-interface SearchInputProps {
+interface SearchInputProps<T = any> {
   value: string;
   onChange: (value: string) => void;
   onFocus?: () => void;
   onClear?: () => void;
   placeholder?: string;
-  results?: SearchResult[];
-  onResultClick?: (result: SearchResult) => void;
-  onResultHover?: (result: SearchResult | null) => void;
+  results: SearchResult<T>[];
+  onResultClick?: (result: SearchResult<T>) => void;
+  onResultHover?: (result: SearchResult<T> | null) => void;
 }
 
 export const SearchInput: React.FC<SearchInputProps> = ({
