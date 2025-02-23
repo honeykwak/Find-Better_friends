@@ -6,8 +6,10 @@ import {
   // isProposalData
 } from '../../types';
 import { setSelectedProposals, toggleProposal } from '../../store/slices/proposalSlice';
-// import { MagnifyingGlassIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { selectSelectedProposalsByChain } from '../../store/selectors';
+import { RangeSlider } from './RangeSlider';
+import { TimelineChart } from './TimelineChart';
+import { SearchInput } from '../common/SearchInput';
 
 interface ProposalListProps {
   chainName: string;
@@ -47,6 +49,46 @@ const ProposalItem: React.FC<ProposalItemProps> = ({ proposal, isSelected, onTog
   </button>
 );
 
+// 정렬 옵션 타입 추가
+type SortOption = 'latest' | 'type' | 'competitiveness';
+
+// 검색 타입 정의 추가 (파일 상단)
+type SearchType = 'ALL' | 'TITLE' | 'DESCRIPTION' | 'TYPE';
+
+// 검색 타입 옵션 정의 추가 (SORT_OPTIONS 근처)
+const SEARCH_TYPE_OPTIONS = [
+  { value: 'ALL', label: 'All' },
+  { value: 'TITLE', label: 'Proposal Title' },
+  { value: 'DESCRIPTION', label: 'Description' },
+  { value: 'TYPE', label: 'Proposal Type' }
+] as const;
+
+// Add near the top of the file with other type definitions
+type VoteOption = 'YES' | 'NO' | 'NO_WITH_VETO' | 'ABSTAIN' | 'NO_VOTE';
+
+// 경쟁 심화도 계산 함수
+const calculateCompetitiveness = (ratios?: { [key: string]: number }) => {
+  // ratios가 없거나 비어있으면 기본 스케일 반환
+  if (!ratios || Object.keys(ratios).length === 0) {
+    return 0.6; // 중간 크기로 설정
+  }
+  
+  // 가장 높은 두 투표 비율 찾기
+  const sortedRatios = Object.values(ratios).sort((a, b) => b - a);
+  const [first, second] = sortedRatios;
+  
+  // first가 0이면 기본 스케일 반환
+  if (!first) {
+    return 0.6;
+  }
+  
+  // 경쟁 심화도 계산 (0.5:0.5가 1, 1:0이 0이 되도록)
+  const competitiveness = 1 - Math.abs((first - second) / first);
+  
+  // 버튼 크기에 반영할 스케일 값 반환 (0.3 ~ 0.9 범위로 매핑)
+  return 0.3 + (competitiveness * 0.6);
+};
+
 export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals }) => {
   const dispatch = useAppDispatch();
   const selectedValidator = useAppSelector(state => state.validator.selectedValidator);
@@ -64,29 +106,148 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
 
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [selectedAll, setSelectedAll] = useState(true);
+  const [selectedAll, setSelectedAll] = useState(false);
 
   // 검색 디바운싱 추가
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
-  // 필터링된 제안 메모이제이션 개선
+  const [timeRange, setTimeRange] = useState<[number, number]>([0, 0]);
+  
+  // proposals가 변경될 때 시간 범위 초기화
+  useEffect(() => {
+    if (!proposals) return;
+    
+    const timestamps = Object.values(proposals).map(p => p.timeVotingStart);
+    const minTime = Math.min(...timestamps);
+    const maxTime = Math.max(...timestamps);
+    setTimeRange([minTime, maxTime]);
+  }, [proposals]);
+
+  // 컴포넌트 내부에 정렬 상태 추가
+  const [sortOption, setSortOption] = useState<SortOption>('latest');
+
+  // 정렬 옵션 정의
+  const SORT_OPTIONS = [
+    { value: 'latest', label: 'Latest' },
+    { value: 'type', label: 'Type' },
+    { value: 'competitiveness', label: 'Competitiveness' }
+  ] as const;
+
+  // 컴포넌트 내부에 검색 타입 상태 추가
+  const [searchType, setSearchType] = useState<SearchType>('ALL');
+
+  // 필터링된 제안 메모이제이션 수정
   const filteredProposals = useMemo(() => {
     if (!proposals) return [];
     
-    return Object.entries(proposals)
+    const filtered = Object.entries(proposals)
+      .filter(([_, proposal]) => {
+        const startTime = proposal.timeVotingStart;
+        return startTime >= timeRange[0] && startTime <= timeRange[1];
+      })
       .filter(([_, proposal]) => {
         if (!debouncedSearchTerm) return true;
         return proposal.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
-      })
-      // ID를 숫자로 변환하여 내림차순 정렬
-      .sort((a, b) => Number(b[0]) - Number(a[0]));
-  }, [proposals, debouncedSearchTerm]);
+      });
 
-  // 검색 결과 메모이제이션
+    // 정렬 로직
+    return filtered.sort((a, b) => {
+      const [idA, proposalA] = a;
+      const [idB, proposalB] = b;
+
+      switch (sortOption) {
+        case 'latest':
+          return Number(idB) - Number(idA);
+        case 'type':
+          return proposalA.type.localeCompare(proposalB.type);
+        case 'competitiveness': {
+          const compA = calculateCompetitiveness(proposalA.ratios);
+          const compB = calculateCompetitiveness(proposalB.ratios);
+          return compB - compA; // 높은 순으로 정렬
+        }
+        default:
+          return 0;
+      }
+    });
+  }, [proposals, timeRange, debouncedSearchTerm, sortOption]);
+
+  // searchResults 메모이제이션 수정
   const searchResults = useMemo(() => {
-    if (!isSearchFocused || !debouncedSearchTerm) return [];
-    return filteredProposals.slice(0, 5);
-  }, [filteredProposals, isSearchFocused, debouncedSearchTerm]);
+    if (!proposals) return [];
+    
+    // 검색어가 없고 focus 상태일 때는 모든 proposal 표시
+    if (!searchTerm && isSearchFocused) {
+      return Object.entries(proposals)
+        .map(([id, proposal]) => ({
+          id,
+          text: `#${id} ${proposal.title}`,
+          subText: `${proposal.type} - ${proposal.main_category}, ${proposal.sub_category}`
+        }));
+    }
+    
+    // 검색어가 있을 때는 검색 타입에 따라 필터링
+    if (searchTerm) {
+      const searchLower = searchTerm.toLowerCase();
+      return Object.entries(proposals)
+        .filter(([_, proposal]) => {
+          switch (searchType) {
+            case 'TITLE':
+              return proposal.title.toLowerCase().includes(searchLower);
+            case 'TYPE':
+              return proposal.type.toLowerCase().includes(searchLower) ||
+                     proposal.main_category.toLowerCase().includes(searchLower) ||
+                     proposal.sub_category.toLowerCase().includes(searchLower);
+            case 'DESCRIPTION':
+              return `${proposal.main_category} ${proposal.sub_category}`.toLowerCase().includes(searchLower);
+            case 'ALL':
+            default:
+              return proposal.title.toLowerCase().includes(searchLower) ||
+                     proposal.type.toLowerCase().includes(searchLower) ||
+                     proposal.main_category.toLowerCase().includes(searchLower) ||
+                     proposal.sub_category.toLowerCase().includes(searchLower);
+          }
+        })
+        .map(([id, proposal]) => ({
+          id,
+          text: `#${id} ${proposal.title}`,
+          subText: `${proposal.type} - ${proposal.main_category}, ${proposal.sub_category}`
+        }));
+    }
+
+    return [];
+  }, [searchTerm, proposals, isSearchFocused, searchType]);
+
+  const handleResultClick = (result: SearchResult) => {
+    dispatch(toggleProposal({ 
+      chainId: chainName, 
+      proposalId: result.id 
+    }));
+    setSearchTerm('');
+    setIsSearchFocused(false);
+  };
+
+  // 검색 결과와 일치하는 proposal ID들을 추적하기 위한 상태 추가
+  const [highlightedProposals, setHighlightedProposals] = useState<string[]>([]);
+
+  // searchResults가 변경될 때마다 하이라이트할 proposal ID들 업데이트
+  useEffect(() => {
+    if (!isSearchFocused || !debouncedSearchTerm) {
+      setHighlightedProposals([]);
+      return;
+    }
+
+    const searchLower = debouncedSearchTerm.toLowerCase();
+    const matchingIds = Object.entries(proposals || {})
+      .filter(([_, proposal]) => (
+        proposal.title.toLowerCase().includes(searchLower) ||
+        proposal.main_category.toLowerCase().includes(searchLower) ||
+        proposal.sub_category.toLowerCase().includes(searchLower) ||
+        proposal.type.toLowerCase().includes(searchLower)
+      ))
+      .map(([id]) => id);
+
+    setHighlightedProposals(matchingIds);
+  }, [proposals, isSearchFocused, debouncedSearchTerm]);
 
   // Reset 버튼 핸들러
   const handleReset = () => {
@@ -119,7 +280,7 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
     NO: 'bg-red-100 text-red-700',
     NO_WITH_VETO: 'bg-orange-100 text-orange-700',
     ABSTAIN: 'bg-purple-100 text-purple-700',
-    NO_VOTE: 'bg-gray-100 text-gray-700'
+    NO_VOTE: 'bg-gray-200 text-gray-800'
   };
 
   // Voting Patterns 데이터 로드
@@ -146,16 +307,58 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
   // 투표 결과에 따른 버튼 스타일 결정
   const getVoteStyle = (proposalId: string) => {
     if (!selectedValidator || !votingPatterns || loading) {
-      return selectedProposals.includes(proposalId)
-        ? 'bg-blue-100 text-blue-700 ring-2 ring-blue-500'
-        : 'bg-gray-50 text-gray-700 hover:bg-gray-100';
+      return 'bg-gray-50 text-gray-700 hover:bg-gray-100';
     }
 
     const validatorVotes = votingPatterns[selectedValidator.voter]?.proposal_votes;
     if (!validatorVotes) return 'bg-gray-50 text-gray-700';
 
-    const vote = validatorVotes[proposalId]?.option || 'NO_VOTE';
-    return VOTE_COLORS[vote];
+    const vote = validatorVotes[proposalId]?.option as VoteOption;
+    return VOTE_COLORS[vote] || 'bg-gray-50 text-gray-700';
+  };
+
+  // 슬라이더 값이 변경될 때마다 선택된 proposals 업데이트
+  useEffect(() => {
+    if (!proposals) return;
+
+    // 현재 선택된 proposals 가져오기
+    const currentSelectedProposals = selectedProposals;
+    
+    // 슬라이더 범위 내의 proposals만 필터링
+    const visibleProposals = Object.entries(proposals).filter(([_, proposal]) => {
+      const proposalTime = proposal.timeVotingStart;
+      return proposalTime >= timeRange[0] && proposalTime <= timeRange[1];
+    }).map(([id]) => id);
+
+    // 보이지 않는 proposals를 선택 해제
+    const newSelectedProposals = currentSelectedProposals.filter(id => 
+      visibleProposals.includes(id)
+    );
+
+    // 선택된 proposals가 변경되었다면 업데이트
+    if (newSelectedProposals.length !== currentSelectedProposals.length) {
+      dispatch(setSelectedProposals({
+        chainId: chainName,
+        proposalIds: newSelectedProposals
+      }));
+    }
+  }, [timeRange, proposals, chainName, selectedProposals, dispatch]);
+
+  // toggleProposal 동작 시 selectedAll 상태도 업데이트하는 함수 추가
+  const handleToggleProposal = (id: string) => {
+    dispatch(toggleProposal({ 
+      chainId: chainName, 
+      proposalId: id 
+    }));
+    
+    // 토글 후의 상태를 예측하여 selectedAll 업데이트
+    const isCurrentlySelected = selectedProposals.includes(id);
+    if (isCurrentlySelected) {
+      setSelectedAll(false);
+    } else {
+      const willBeSelected = [...selectedProposals, id];
+      setSelectedAll(willBeSelected.length === filteredProposals.length);
+    }
   };
 
   return (
@@ -171,87 +374,123 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
               {selectedAll ? 'Unselect All' : 'Select All'}
             </button>
           </div>
-          <div className="relative search-container">
-            <div className="relative">
-              <input
-                type="text"
-                className="w-64 px-4 py-2 pr-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Search proposals..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onFocus={() => setIsSearchFocused(true)}
-              />
-              {searchTerm && (
-                <button
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                  onClick={() => {
-                    setSearchTerm('');
-                    setIsSearchFocused(false);
-                  }}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                  </svg>
-                </button>
-              )}
-            </div>
-            {isSearchFocused && (
-              <div className="absolute z-10 w-64 mt-1 border rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                <div className="absolute inset-0 bg-white opacity-80 backdrop-blur-sm rounded-lg" />
-                {searchResults.map(([id, proposal]) => (
-                  <div
-                    key={id}
-                    className={`
-                      relative px-4 py-2 cursor-pointer
-                      hover:bg-gray-100/70
-                      ${selectedProposals.includes(id) ? 'bg-blue-50/70 text-blue-600' : ''}
-                    `}
-                    onClick={() => {
-                      dispatch(toggleProposal({ 
-                        chainId: chainName, 
-                        proposalId: id 
-                      }));
-                      setIsSearchFocused(false);
-                      setSearchTerm('');
-                    }}
-                  >
-                    {proposal.title}
-                  </div>
-                ))}
+          <div className="search-container relative flex items-center gap-2">
+            <select
+              className="px-3 py-1 text-sm bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={searchType}
+              onChange={(e) => setSearchType(e.target.value as SearchType)}
+            >
+              {SEARCH_TYPE_OPTIONS.map(option => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            <SearchInput
+              value={searchTerm}
+              onChange={setSearchTerm}
+              onFocus={() => setIsSearchFocused(true)}
+              onClear={() => setIsSearchFocused(false)}
+              placeholder={`Search by ${searchType.toLowerCase()}...`}
+              results={searchResults}
+              onResultClick={handleResultClick}
+            />
+          </div>
+        </div>
+
+        {/* 정렬 드롭다운 추가 */}
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-gray-600">Sort by:</span>
+          <select
+            className="px-3 py-1 text-sm bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value as SortOption)}
+          >
+            {SORT_OPTIONS.map(option => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* 범례 섹션 수정 */}
+        <div className="mt-4">
+          <div className="flex gap-3">
+            {Object.entries(VOTE_COLORS).map(([option, colorClass]) => (
+              <div key={option} className="flex items-center gap-2">
+                <div className={`w-4 h-4 rounded ${colorClass.split(' ')[0]}`} />
+                <span className="text-sm">
+                  {option.replace(/_/g, ' ')}
+                </span>
               </div>
-            )}
+            ))}
           </div>
         </div>
       </div>
 
-      <div className="flex-1 min-h-0 overflow-auto mt-4">
-        <div className="grid grid-cols-8 gap-2 p-2">
-          {filteredProposals.map(([id, proposal]) => (
-            <button
-              key={id}
-              onClick={() => dispatch(toggleProposal({ 
-                chainId: chainName, 
-                proposalId: id 
-              }))}
-              className={`
-                aspect-square
-                flex items-center justify-center
-                rounded-lg text-sm font-medium
-                transition-all duration-200
-                hover:ring-2 hover:ring-blue-400
-                ${getVoteStyle(id)}
-              `}
-              title={`${proposal.title}${
-                selectedValidator 
-                  ? `\nVote: ${votingPatterns?.[selectedValidator.voter]?.proposal_votes[id]?.option || 'NO_VOTE'}`
-                  : ''
-              }`}
-            >
-              {id}
-            </button>
-          ))}
+      {/* 버튼 컨테이너 */}
+      <div className="flex-1 min-h-0 overflow-auto mt-2" style={{ maxHeight: "calc(100% - 240px)" }}>
+        <div className="grid auto-rows-fr gap-2 p-2"
+          style={{
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(60px, 100%), 1fr))'
+          }}
+        >
+          {filteredProposals.map(([id, proposal]) => {
+            const scale = proposal?.ratios ? calculateCompetitiveness(proposal.ratios) : 1.0;
+            const isHighlighted = isSearchFocused && debouncedSearchTerm && highlightedProposals.includes(id);
+            
+            return (
+              <button
+                key={id}
+                onClick={() => handleToggleProposal(id)}
+                className={`
+                  aspect-square
+                  flex items-center justify-center
+                  rounded-lg text-xs font-medium
+                  transition-all duration-200
+                  ${getVoteStyle(id)}
+                  ${selectedProposals.includes(id) 
+                    ? 'ring-2 ring-blue-500' 
+                    : isHighlighted
+                      ? 'ring-2 ring-yellow-400 shadow-lg'
+                      : 'hover:ring-1 hover:ring-blue-300'
+                  }
+                  ${isHighlighted ? 'z-10' : ''}
+                `}
+                style={{
+                  transform: `scale(${scale})`,
+                  opacity: isSearchFocused && debouncedSearchTerm && !isHighlighted ? '0.4' : '1',
+                }}
+              >
+                <span style={{ transform: `scale(${1/scale})` }}>
+                  {id}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
+
+      {/* 타임라인 차트와 슬라이더를 하단에 배치 */}
+      {proposals && (
+        <div className="mt-4 space-y-2">
+          <TimelineChart 
+            proposals={proposals}
+            timeRange={[
+              Math.min(...Object.values(proposals).map(p => p.timeVotingStart)),
+              Math.max(...Object.values(proposals).map(p => p.timeVotingStart))
+            ]}
+            selectedRange={timeRange}
+          />
+          <RangeSlider
+            min={Math.min(...Object.values(proposals).map(p => p.timeVotingStart))}
+            max={Math.max(...Object.values(proposals).map(p => p.timeVotingStart))}
+            value={timeRange}
+            onChange={setTimeRange}
+          />
+        </div>
+      )}
     </div>
   );
 };

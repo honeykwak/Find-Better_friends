@@ -6,6 +6,9 @@ import { CLUSTER_COLORS } from '../../constants';
 import { setSelectedValidator } from '../../store/slices/validatorSlice';
 import { setValidatorChains } from '../../store/slices/chainSlice';
 import * as d3 from 'd3';
+import { SearchInput } from '../common/SearchInput';
+import { Button } from '../common/Button';
+import { Card } from '../common/Card';
 
 const ANIMATION_DURATION = 500;
 const BATCH_SIZE = 50;
@@ -158,10 +161,10 @@ export const ValidatorOverview = () => {
         // 중앙 정렬을 위한 스케일 조정
         const xScale = d3.scaleLinear()
           .domain([xMin, xMax])
-          .range([-0.5, 0.5]);  // -0.5 ~ 0.5 범위로 조정하여 중앙 정렬
+          .range([-0.5, 0.5]);
         const yScale = d3.scaleLinear()
           .domain([yMin, yMax])
-          .range([-0.5, 0.5]);  // -0.5 ~ 0.5 범위로 조정하여 중앙 정렬
+          .range([-0.5, 0.5]);
         
         currentData = onehotData.map(d => ({
           voter: d.voter,
@@ -174,7 +177,7 @@ export const ValidatorOverview = () => {
           tsne_y: d.tsne_y
         }));
       } else {
-        // 개별 체인의 경우 기존 방식 유지
+        // 개별 체인의 경우
         currentData = (coordinateData.chain_coords_dict?.[selectedChain] || []).map(d => ({
           voter: d.voter,
           x: d.mds_x ?? 0,
@@ -533,71 +536,78 @@ export const ValidatorOverview = () => {
     };
   }, [handleMouseDown]);
 
+  // 검색 결과 계산 - 클러스터 필터 적용
+  const searchResults = useMemo(() => {
+    if (!displayData) return [];
+    
+    // 먼저 클러스터 필터링 적용
+    const clusterFiltered = displayData.filter(validator => 
+      selectedClusters.length === 0 || selectedClusters.includes(validator.cluster)
+    );
+
+    // 검색어가 없고 focus 상태일 때는 클러스터 필터링된 모든 validator 표시
+    if (!searchTerm && isSearchFocused) {
+      return clusterFiltered.map(validator => ({
+        id: validator.voter,
+        text: validator.voter,
+        subText: `Cluster ${validator.cluster}`
+      }));
+    }
+    
+    // 검색어가 있을 때는 클러스터 필터링된 결과에서 추가 필터링 + 정렬
+    if (searchTerm) {
+      const searchLower = searchTerm.toLowerCase();
+      return clusterFiltered
+        .filter(validator => validator.voter.toLowerCase().includes(searchLower))
+        .map(validator => ({
+          id: validator.voter,
+          text: validator.voter,
+          subText: `Cluster ${validator.cluster}`,
+          searchIndex: validator.voter.toLowerCase().indexOf(searchLower)
+        }))
+        .sort((a, b) => {
+          if (a.searchIndex !== b.searchIndex) {
+            return a.searchIndex - b.searchIndex;
+          }
+          return a.text.localeCompare(b.text);
+        });
+    }
+
+    return [];
+  }, [searchTerm, displayData, isSearchFocused, selectedClusters]);
+
+  const handleResultClick = (result: SearchResult) => {
+    dispatch(setSelectedValidator({ voter: result.id }));
+    setSearchTerm('');
+    setIsSearchFocused(false);
+  };
+
   if (isLoading) {
     return (
-      <div className="h-full w-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">
+      <Card className="h-full w-full">
         <div className="shrink-0 mb-2">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
               <h2 className="text-xl font-semibold">Validator Overview</h2>
-              <button
-                className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+              <Button
+                variant="secondary"
+                size="sm"
                 onClick={resetZoomPan}
               >
                 Reset View
-              </button>
+              </Button>
             </div>
-            <div className="relative search-container">
-              <div className="relative">
-                <input
-                  type="text"
-                  className="w-64 px-4 py-2 pr-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Search validators..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onFocus={() => setIsSearchFocused(true)}
-                />
-                {searchTerm && (
-                  <button
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                    onClick={() => {
-                      setSearchTerm('');
-                      setIsSearchFocused(false);
-                    }}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                    </svg>
-                  </button>
-                )}
-              </div>
-              {isSearchFocused && (
-                <div className="absolute z-10 w-64 mt-1 border rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                  <div className="absolute inset-0 bg-white opacity-80 backdrop-blur-sm rounded-lg" />
-                  {filteredValidators.map((validator) => (
-                    <div
-                      key={validator.voter}
-                      className={`
-                        relative px-4 py-2 cursor-pointer
-                        hover:bg-gray-100/70
-                        ${currentValidator?.voter === validator.voter 
-                          ? 'bg-blue-50/70 text-blue-600' 
-                          : ''
-                        }
-                      `}
-                      onClick={() => {
-                        dispatch(setSelectedValidator(validator));
-                        setIsSearchFocused(false);
-                        setSearchTerm('');
-                      }}
-                      onMouseEnter={() => setHoveredValidator(validator.voter)}
-                      onMouseLeave={() => setHoveredValidator(null)}
-                    >
-                      {validator.voter}
-                    </div>
-                  ))}
-                </div>
-              )}
+            <div className="search-container relative">
+              <SearchInput
+                value={searchTerm}
+                onChange={setSearchTerm}
+                onFocus={() => setIsSearchFocused(true)}
+                onClear={() => setIsSearchFocused(false)}
+                placeholder="Search validators..."
+                results={searchResults}
+                onResultClick={handleResultClick}
+                onResultHover={(result) => setHoveredValidator(result ? result.id : null)}
+              />
             </div>
           </div>
         </div>
@@ -607,75 +617,36 @@ export const ValidatorOverview = () => {
             <div className="text-lg text-gray-600">Loading validator data...</div>
           </div>
         </div>
-      </div>
+      </Card>
     );
   }
 
   if (error) {
     return (
-      <div className="h-full w-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">
+      <Card className="h-full w-full">
         <div className="shrink-0 mb-2">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
               <h2 className="text-xl font-semibold">Validator Overview</h2>
-              <button
-                className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+              <Button
+                variant="secondary"
+                size="sm"
                 onClick={resetZoomPan}
               >
                 Reset View
-              </button>
+              </Button>
             </div>
-            <div className="relative search-container">
-              <div className="relative">
-                <input
-                  type="text"
-                  className="w-64 px-4 py-2 pr-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Search validators..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onFocus={() => setIsSearchFocused(true)}
-                />
-                {searchTerm && (
-                  <button
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                    onClick={() => {
-                      setSearchTerm('');
-                      setIsSearchFocused(false);
-                    }}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                    </svg>
-                  </button>
-                )}
-              </div>
-              {isSearchFocused && (
-                <div className="absolute z-10 w-64 mt-1 border rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                  <div className="absolute inset-0 bg-white opacity-80 backdrop-blur-sm rounded-lg" />
-                  {filteredValidators.map((validator) => (
-                    <div
-                      key={validator.voter}
-                      className={`
-                        relative px-4 py-2 cursor-pointer
-                        hover:bg-gray-100/70
-                        ${currentValidator?.voter === validator.voter 
-                          ? 'bg-blue-50/70 text-blue-600' 
-                          : ''
-                        }
-                      `}
-                      onClick={() => {
-                        dispatch(setSelectedValidator(validator));
-                        setIsSearchFocused(false);
-                        setSearchTerm('');
-                      }}
-                      onMouseEnter={() => setHoveredValidator(validator.voter)}
-                      onMouseLeave={() => setHoveredValidator(null)}
-                    >
-                      {validator.voter}
-                    </div>
-                  ))}
-                </div>
-              )}
+            <div className="search-container relative">
+              <SearchInput
+                value={searchTerm}
+                onChange={setSearchTerm}
+                onFocus={() => setIsSearchFocused(true)}
+                onClear={() => setIsSearchFocused(false)}
+                placeholder="Search validators..."
+                results={searchResults}
+                onResultClick={handleResultClick}
+                onResultHover={(result) => setHoveredValidator(result ? result.id : null)}
+              />
             </div>
           </div>
         </div>
@@ -685,69 +656,35 @@ export const ValidatorOverview = () => {
             <div className="text-lg text-red-600">{error}</div>
           </div>
         </div>
-      </div>
+      </Card>
     );
   }
 
   return (
-    <div className="h-full w-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">
+    <Card className="h-full w-full">
       <div className="shrink-0 mb-2">
-        <div className="flex justify-between items-center flex-wrap gap-2">
+        <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4">
             <h2 className="text-xl font-semibold">Validator Overview</h2>
-            <button
-              className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+            <Button
+              variant="secondary"
+              size="sm"
               onClick={resetZoomPan}
             >
               Reset View
-            </button>
+            </Button>
           </div>
-          <div className="relative search-container">
-            <div className="relative">
-              <input
-                type="text"
-                className="w-64 px-4 py-2 pr-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Search validators..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onFocus={() => setIsSearchFocused(true)}
-              />
-              {searchTerm && (
-                <button
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                  onClick={() => {
-                    setSearchTerm('');
-                    setIsSearchFocused(false);
-                  }}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                  </svg>
-                </button>
-              )}
-            </div>
-            {isSearchFocused && (
-              <div className="absolute z-10 w-64 mt-1 border rounded-lg shadow-lg max-h-60 overflow-y-auto bg-white">
-                {filteredValidators.map((validator) => (
-                  <div
-                    key={validator.voter}
-                    className={`
-                      px-4 py-2 cursor-pointer hover:bg-gray-100
-                      ${currentValidator?.voter === validator.voter ? 'bg-blue-50 text-blue-600' : ''}
-                    `}
-                    onClick={() => {
-                      dispatch(setSelectedValidator(validator));
-                      setIsSearchFocused(false);
-                      setSearchTerm('');
-                    }}
-                    onMouseEnter={() => setHoveredValidator(validator.voter)}
-                    onMouseLeave={() => setHoveredValidator(null)}
-                  >
-                    {validator.voter}
-                  </div>
-                ))}
-              </div>
-            )}
+          <div className="search-container relative">
+            <SearchInput
+              value={searchTerm}
+              onChange={setSearchTerm}
+              onFocus={() => setIsSearchFocused(true)}
+              onClear={() => setIsSearchFocused(false)}
+              placeholder="Search validators..."
+              results={searchResults}
+              onResultClick={handleResultClick}
+              onResultHover={(result) => setHoveredValidator(result ? result.id : null)}
+            />
           </div>
         </div>
       </div>
@@ -780,6 +717,6 @@ export const ValidatorOverview = () => {
           </div>
         )}
       </div>
-    </div>
+    </Card>
   );
 };

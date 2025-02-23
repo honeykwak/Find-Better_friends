@@ -7,8 +7,16 @@ import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { selectSelectedProposalsByChain } from '../../store/selectors';
 import { useChainMap } from '../../hooks/useChainMap';
 
-type SortField = 'validator' | 'participationRate' | 'proposalMatchRate' | 'overallMatchRate' | 'clusterMatchRate' | 'cluster';
-type SortDirection = 'asc' | 'desc';
+// 타입 정의 추가
+interface SortField {
+  value: string;
+  label: string;
+}
+
+interface SortDirection {
+  value: 'asc' | 'desc';
+  label: string;
+}
 
 // 투표 옵션 타입 정의
 // type VoteOption = 'YES' | 'NO' | 'ABSTAIN' | 'NO_WITH_VETO' | 'NO_VOTE';
@@ -38,6 +46,7 @@ interface TableValidator {
   proposalMatchRate: string;
   overallMatchRate: string;
   clusterMatchRate: string;
+  participatedInLatest: boolean;
 }
 
 export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
@@ -52,11 +61,21 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
   const [loading, setLoading] = useState(true);
   const activeFilters = useAppSelector(state => state.filter.activeFilters);
   const validatorChainMap = useChainMap();
+  const [showRecentParticipants, setShowRecentParticipants] = useState(false);
 
   // 메모이제이션된 셀렉터 사용
   const selectedProposals = useAppSelector(
     state => selectSelectedProposalsByChain(state, selectedChain || '')
   );
+
+  // 가장 최근 proposal ID 찾기
+  const latestProposalId = useMemo(() => {
+    if (!proposalData) return null;
+    return Object.keys(proposalData).reduce((latest, current) => {
+      if (!latest) return current;
+      return parseInt(current) > parseInt(latest) ? current : latest;
+    }, null);
+  }, [proposalData]);
 
   // 디버깅 로그 개선
   console.log('ValidatorDetails Debug:', {
@@ -70,8 +89,8 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
     selectedValidator: selectedValidator?.voter
   });
 
-  const [sortField, setSortField] = useState<SortField>('validator');
-  const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [sortField, setSortField] = useState<SortField['value']>('validator');
+  const [sortDirection, setSortDirection] = useState<SortDirection['value']>('asc');
 
   // 선택된 proposals 메모이제이션
   const memoizedSelectedProposals = useMemo(() => selectedProposals, [selectedProposals]);
@@ -115,7 +134,7 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
     loadVotingPatterns();
   }, [selectedChain]);
 
-  const handleSort = (field: SortField) => {
+  const handleSort = (field: SortField['value']) => {
     if (sortField === field) {
       setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
     } else {
@@ -178,7 +197,6 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
       if (!selectedValidatorChains || !currentValidatorChains) {
         matches = false;
       } else {
-        // 두 Set의 크기가 같고, 모든 원소가 동일한지 확인
         matches = matches && 
           selectedValidatorChains.size === currentValidatorChains.size &&
           Array.from(selectedValidatorChains).every(chain => 
@@ -213,27 +231,48 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
         ? (participatedProposals.length / proposalIds.length * 100).toFixed(1) + '%'
         : '-';
 
-      // Proposal Match Rate 계산 - 참여한 프로포절에 대해서만
+      // Proposal Match Rate와 Overall Match Rate 계산 부분 수정
+      const selectedValidatorVotes = votingPatterns[selectedValidator?.voter || '']?.proposal_votes || {};
+
+      // Proposal Match Rate 계산 (두 validator가 모두 투표한 proposal에 대해서만)
       let matchCount = 0;
-      participatedProposals.forEach(id => {
-        const proposal = proposalData?.[id];
-        if (proposal) {
-          const vote = currentValidatorVotes[id]?.option;
-          const isMatch = (
-            (proposal.status === 'PASSED' && vote === 'YES') ||
-            (proposal.status === 'REJECTED' && ['NO', 'NO_WITH_VETO'].includes(vote))
-          );
-          if (isMatch) matchCount++;
+      let totalVotes = 0;
+
+      proposalIds.forEach(id => {
+        const selectedVote = selectedValidatorVotes[id]?.option;
+        const currentVote = currentValidatorVotes[id]?.option;
+        
+        // 두 validator 모두 해당 proposal에 대한 투표 기록이 있는 경우
+        if (selectedVote !== undefined && currentVote !== undefined) {
+          if (selectedVote === currentVote) {
+            matchCount++;
+          }
+          totalVotes++;
         }
       });
 
-      const proposalMatchRate = participatedProposals.length > 0
-        ? (matchCount / participatedProposals.length * 100).toFixed(1) + '%'
+      const proposalMatchRate = totalVotes > 0
+        ? (matchCount / totalVotes * 100).toFixed(1) + '%'
         : '-';
 
-      // Overall Match Rate 계산 - 전체 프로포절에 대해
+      // Overall Match Rate 계산 (전체 proposal에 대해)
+      let overallMatchCount = 0;
+
+      proposalIds.forEach(id => {
+        const selectedVote = selectedValidatorVotes[id]?.option;
+        const currentVote = currentValidatorVotes[id]?.option;
+        
+        // NO_VOTE도 하나의 투표 옵션으로 간주
+        const effectiveSelectedVote = selectedVote || 'NO_VOTE';
+        const effectiveCurrentVote = currentVote || 'NO_VOTE';
+        
+        if (effectiveSelectedVote === effectiveCurrentVote) {
+          overallMatchCount++;
+        }
+      });
+
       const overallMatchRate = proposalIds.length > 0
-        ? (matchCount / proposalIds.length * 100).toFixed(1) + '%'
+        ? (overallMatchCount / proposalIds.length * 100).toFixed(1) + '%'
         : '-';
 
       // Cluster Match Rate 계산
@@ -241,27 +280,32 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
         .filter(v => v.cluster === validator.cluster && v.voter !== validator.voter);
       
       let clusterMatchCount = 0;
-      let totalClusterVotes = 0;
+      let clusterTotalVotes = 0;
 
-      proposalIds.forEach(id => {
-        const validatorVote = currentValidatorVotes[id]?.option;
-        if (validatorVote && validatorVote !== 'NO_VOTE') {
-          sameClusterValidators.forEach(clusterValidator => {
-            const clusterValidatorVotes = votingPatterns[clusterValidator.voter]?.proposal_votes || {};
-            const clusterVote = clusterValidatorVotes[id]?.option;
-            if (clusterVote && clusterVote !== 'NO_VOTE') {
-              if (clusterVote === validatorVote) {
-                clusterMatchCount++;
-              }
-              totalClusterVotes++;
+      sameClusterValidators.forEach(clusterValidator => {
+        const clusterValidatorVotes = votingPatterns[clusterValidator.voter]?.proposal_votes || {};
+        
+        proposalIds.forEach(id => {
+          const currentVote = currentValidatorVotes[id]?.option;
+          const clusterValidatorVote = clusterValidatorVotes[id]?.option;
+          
+          if (currentVote !== undefined && clusterValidatorVote !== undefined) {
+            if (currentVote === clusterValidatorVote) {
+              clusterMatchCount++;
             }
-          });
-        }
+            clusterTotalVotes++;
+          }
+        });
       });
 
-      const clusterMatchRate = totalClusterVotes > 0
-        ? (clusterMatchCount / totalClusterVotes * 100).toFixed(1) + '%'
+      const clusterMatchRate = clusterTotalVotes > 0
+        ? (clusterMatchCount / clusterTotalVotes * 100).toFixed(1) + '%'
         : '-';
+
+      // 가장 최근 proposal 참여 여부 확인
+      const participatedInLatest = latestProposalId 
+        ? currentValidatorVotes[latestProposalId]?.option !== undefined
+        : true;
 
       return {
         no: 0,
@@ -270,9 +314,15 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
         participationRate,
         proposalMatchRate,
         overallMatchRate,
-        clusterMatchRate
+        clusterMatchRate,
+        participatedInLatest
       };
     });
+
+    // 필터링 적용
+    if (showRecentParticipants && latestProposalId) {
+      validatorList = validatorList.filter(v => v.participatedInLatest);
+    }
 
     validatorList.sort((a, b) => {
       // 1. 선택된 validator가 있다면 최상단
@@ -315,7 +365,7 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
     return validatorList.map(v => ({
       ...v,
       no: selectedValidator && v.validator === selectedValidator.voter 
-        ? 1 
+        ? 0  // 1에서 0으로 변경
         : counter++
     }));
   }, [
@@ -330,17 +380,19 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
     sortDirection,
     activeFilters,
     getRowStyle,
-    validatorChainMap
+    validatorChainMap,
+    showRecentParticipants,
+    latestProposalId
   ]);
 
-  const SortIcon = ({ field }: { field: SortField }) => {
+  const SortIcon = ({ field }: { field: SortField['value'] }) => {
     if (sortField !== field) return <ChevronUpIcon className="w-4 h-4 text-gray-400" />;
     return sortDirection === 'asc' 
       ? <ChevronUpIcon className="w-4 h-4 text-blue-500" />
       : <ChevronDownIcon className="w-4 h-4 text-blue-500" />;
   };
 
-  const renderHeader = (field: SortField, label: string) => (
+  const renderHeader = (field: SortField['value'], label: string) => (
     <th 
       onClick={() => handleSort(field)}
       className="sticky top-0 bg-gray-50 px-3 py-2 text-left text-sm font-semibold text-gray-900 cursor-pointer hover:bg-gray-100 transition-colors"
@@ -354,7 +406,21 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
 
   return (
     <div className="h-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">
-      <h2 className="flex-none text-xl font-semibold mb-4">Validator Details</h2>
+      <div className="flex-none flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold">Validator Details</h2>
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            id="recentParticipants"
+            checked={showRecentParticipants}
+            onChange={(e) => setShowRecentParticipants(e.target.checked)}
+            className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+          />
+          <label htmlFor="recentParticipants" className="text-sm text-gray-600">
+            Show only latest proposal participants
+          </label>
+        </div>
+      </div>
       {loading ? (
         <div className="flex-1 flex items-center justify-center">
           <p>Loading voting patterns...</p>

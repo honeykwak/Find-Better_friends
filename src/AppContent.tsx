@@ -138,7 +138,7 @@ export const AppContent: React.FC = () => {
   // 컴포넌트 마운트 시 데이터 로드
   useEffect(() => {
     loadData();
-  }, []); // 컴포넌트 마운트 시 한 번만 실행
+  }, [loadData]); // loadData를 의존성 배열에 추가
 
   // props 객체들을 useMemo로 최적화
   // const validatorInfoProps = useMemo(() => ({

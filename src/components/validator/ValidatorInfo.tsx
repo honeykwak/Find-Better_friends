@@ -71,19 +71,16 @@ export const ValidatorInfo: React.FC<ValidatorInfoProps> = ({
         ) : (
           <div className="space-y-4">
             <div className="overflow-auto">
-              <h3 className="font-medium text-gray-700">Validator:</h3>
               <p className="text-lg">{validator.voter}</p>
             </div>
 
             <div>
-              <h3 className="font-medium text-gray-700">Validator Analysis</h3>
               {validatorAnalysis[validator.voter] ? (
                 <div className="bg-gray-50 p-4 rounded-lg space-y-4">
                   {Object.entries(validatorAnalysis[validator.voter])
                     .filter(([chain]) => !selectedChain || chain === selectedChain)
                     .map(([chain, data]) => (
                       <div key={chain} className="space-y-2">
-                        <h4 className="text-blue-600 font-medium text-lg">{chain}</h4>
                         <div className="grid grid-cols-2 gap-x-4 text-sm">
                           <div>Operation Time:</div>
                           <div>+ {data.Operation_Time_Days.toFixed(2)}</div>
