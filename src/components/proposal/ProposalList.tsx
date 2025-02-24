@@ -7,7 +7,6 @@ import {
 } from '../../types';
 import { setSelectedProposals, toggleProposal } from '../../store/slices/proposalSlice';
 import { selectSelectedProposalsByChain } from '../../store/selectors';
-import { RangeSlider } from './RangeSlider';
 import { TimelineChart } from './TimelineChart';
 import { SearchInput } from '../common/SearchInput';
 import { SearchResult } from '../../types/search';
@@ -450,16 +449,8 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
               Math.max(...Object.values(proposals).map(p => p.timeVotingStart))
             ]}
             selectedRange={timeRange}
-            height={40}
+            onRangeChange={setTimeRange}
           />
-          <div className="mt-2">
-            <RangeSlider
-              min={timeRange[0]}
-              max={timeRange[1]}
-              value={timeRange}
-              onChange={(newRange) => setTimeRange(newRange)}
-            />
-          </div>
         </div>
       )}
     </div>
