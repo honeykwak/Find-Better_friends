@@ -495,7 +495,7 @@ export const ValidatorOverview = () => {
 
   // 검색 결과 계산 - 클러스터 필터 적용
   const searchResults: SearchResult<ValidatorData>[] = useMemo(() => {
-    if (!searchTerm || !displayData) return [];
+    if (!searchTerm || !displayData || !isSearchFocused) return [];
     
     return displayData
       .filter(validator => 
@@ -506,7 +506,7 @@ export const ValidatorOverview = () => {
         text: validator.voter,
         data: validator
       }));
-  }, [searchTerm, displayData]);
+  }, [searchTerm, displayData, isSearchFocused]);
 
   const handleResultClick = (result: SearchResult<ValidatorData>) => {
     if (!result || !result.data) return;
@@ -519,6 +519,21 @@ export const ValidatorOverview = () => {
     }
     setIsSearchFocused(false);
   };
+
+  // 외부 클릭 시 검색 드롭다운 닫기 effect 추가
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const searchContainer = document.querySelector('.search-container');
+      if (searchContainer && !searchContainer.contains(event.target as Node)) {
+        setIsSearchFocused(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   if (isLoading) {
     return (
@@ -540,7 +555,10 @@ export const ValidatorOverview = () => {
                 value={searchTerm}
                 onChange={setSearchTerm}
                 onFocus={() => setIsSearchFocused(true)}
-                onClear={() => setIsSearchFocused(false)}
+                onClear={() => {
+                  setSearchTerm('');
+                  setIsSearchFocused(false);
+                }}
                 placeholder="Search validators..."
                 results={searchResults}
                 onResultClick={handleResultClick}
@@ -579,7 +597,10 @@ export const ValidatorOverview = () => {
                 value={searchTerm}
                 onChange={setSearchTerm}
                 onFocus={() => setIsSearchFocused(true)}
-                onClear={() => setIsSearchFocused(false)}
+                onClear={() => {
+                  setSearchTerm('');
+                  setIsSearchFocused(false);
+                }}
                 placeholder="Search validators..."
                 results={searchResults}
                 onResultClick={handleResultClick}
@@ -617,7 +638,10 @@ export const ValidatorOverview = () => {
               value={searchTerm}
               onChange={setSearchTerm}
               onFocus={() => setIsSearchFocused(true)}
-              onClear={() => setIsSearchFocused(false)}
+              onClear={() => {
+                setSearchTerm('');
+                setIsSearchFocused(false);
+              }}
               placeholder="Search validators..."
               results={searchResults}
               onResultClick={handleResultClick}
