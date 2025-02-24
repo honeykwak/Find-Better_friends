@@ -11,6 +11,7 @@ import { RangeSlider } from '../common/RangeSlider';
 import { TimelineChart } from './TimelineChart';
 import { SearchInput } from '../common/SearchInput';
 import { SearchResult } from '../../types/search';
+import { VOTE_COLOR_CLASSES } from '../../constants';
 
 interface ProposalListProps {
   chainName: string;
@@ -250,15 +251,6 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
     };
   }, []);
 
-  // 투표 옵션별 색상 정의
-  const VOTE_COLORS = {
-    YES: 'bg-green-100 text-green-700',
-    NO: 'bg-red-100 text-red-700',
-    NO_WITH_VETO: 'bg-orange-100 text-orange-700',
-    ABSTAIN: 'bg-purple-100 text-purple-700',
-    NO_VOTE: 'bg-gray-200 text-gray-800'
-  };
-
   // Voting Patterns 데이터 로드
   useEffect(() => {
     const loadVotingPatterns = async () => {
@@ -290,7 +282,7 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
     if (!validatorVotes) return 'bg-gray-50 text-gray-700';
 
     const vote = validatorVotes[proposalId]?.option as VoteOption;
-    return VOTE_COLORS[vote] || 'bg-gray-50 text-gray-700';
+    return VOTE_COLOR_CLASSES[vote] || 'bg-gray-50 text-gray-700';
   };
 
   // 슬라이더 값이 변경될 때마다 선택된 proposals 업데이트
@@ -393,7 +385,7 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
         {/* 범례 섹션 수정 */}
         <div className="mt-4">
           <div className="flex gap-3">
-            {Object.entries(VOTE_COLORS).map(([option, colorClass]) => (
+            {Object.entries(VOTE_COLOR_CLASSES).map(([option, colorClass]) => (
               <div key={option} className="flex items-center gap-2">
                 <div className={`w-4 h-4 rounded ${colorClass.split(' ')[0]}`} />
                 <span className="text-sm">

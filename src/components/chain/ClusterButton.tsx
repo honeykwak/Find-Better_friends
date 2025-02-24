@@ -4,7 +4,7 @@ import { ClusterType } from '../../types';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 // import { useAppSelector } from '../../hooks/useAppSelector';
 import { toggleCluster } from '../../store/slices/chainSlice';
-import { CLUSTER_LABELS } from '../../constants';
+import { CLUSTER_LABELS, CLUSTER_COLORS } from '../../constants';
 import classNames from 'classnames';
 
 interface ClusterButtonProps {
@@ -12,14 +12,6 @@ interface ClusterButtonProps {
   isSelected: boolean;
   onClick: () => void;
 }
-
-const clusterColors: Record<ClusterType, string> = {
-  1: 'bg-red-200 hover:bg-red-300',
-  2: 'bg-blue-200 hover:bg-blue-300',
-  3: 'bg-orange-200 hover:bg-orange-300',
-  4: 'bg-pink-200 hover:bg-pink-300',
-  5: 'bg-green-200 hover:bg-green-300',
-};
 
 export const ClusterButton: React.FC<ClusterButtonProps> = ({ cluster, isSelected }) => {
   const dispatch = useAppDispatch();
@@ -31,9 +23,12 @@ export const ClusterButton: React.FC<ClusterButtonProps> = ({ cluster, isSelecte
         className={classNames(
           'relative group',
           'w-8 h-8 rounded-full transition-all',
-          clusterColors[cluster],
+          'hover:opacity-80', // hover 시 opacity로 어둡게
           isSelected && 'ring-2 ring-offset-2 ring-gray-500'
         )}
+        style={{
+          backgroundColor: CLUSTER_COLORS[cluster]
+        }}
         onClick={() => dispatch(toggleCluster(cluster))}
       >
         {/* 클러스터 번호 */}

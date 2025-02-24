@@ -1,5 +1,7 @@
 // src/types/index.ts
 
+export type VoteOption = 'YES' | 'NO' | 'NO_WITH_VETO' | 'ABSTAIN' | 'NO_VOTE';
+
 export type ClusterType = 1 | 2 | 3 | 4 | 5;
 
 // src/types/index.ts에서 ValidatorData 부분만 수정
