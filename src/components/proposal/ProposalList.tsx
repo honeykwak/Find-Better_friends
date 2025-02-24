@@ -7,7 +7,7 @@ import {
 } from '../../types';
 import { setSelectedProposals, toggleProposal } from '../../store/slices/proposalSlice';
 import { selectSelectedProposalsByChain } from '../../store/selectors';
-import { RangeSlider } from '../common/RangeSlider';
+import { RangeSlider } from './RangeSlider';
 import { TimelineChart } from './TimelineChart';
 import { SearchInput } from '../common/SearchInput';
 import { SearchResult } from '../../types/search';
@@ -442,21 +442,24 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
 
       {/* 타임라인 차트와 슬라이더를 하단에 배치 */}
       {proposals && (
-        <div className="mt-4 space-y-2">
-          <TimelineChart 
+        <div className="mt-4">
+          <TimelineChart
             proposals={proposals}
             timeRange={[
               Math.min(...Object.values(proposals).map(p => p.timeVotingStart)),
               Math.max(...Object.values(proposals).map(p => p.timeVotingStart))
             ]}
             selectedRange={timeRange}
+            height={40}
           />
-          <RangeSlider
-            min={Math.min(...Object.values(proposals).map(p => p.timeVotingStart))}
-            max={Math.max(...Object.values(proposals).map(p => p.timeVotingStart))}
-            value={timeRange}
-            onChange={setTimeRange}
-          />
+          <div className="mt-2">
+            <RangeSlider
+              min={timeRange[0]}
+              max={timeRange[1]}
+              value={timeRange}
+              onChange={(newRange) => setTimeRange(newRange)}
+            />
+          </div>
         </div>
       )}
     </div>
