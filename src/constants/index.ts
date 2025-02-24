@@ -18,3 +18,15 @@ export const CLUSTER_LABELS: Record<ClusterType, string> = {
 };
 
 export const SELECTED_BACKGROUND = '#DCDFFF';
+
+export const CHAIN_LIST = [
+  'cosmos', 
+  'juno', 
+  'osmosis', 
+  'stargaze', 
+  'terra', 
+  'kava', 
+  'evmos', 
+  'injective',
+  'secret'
+];

@@ -38,8 +38,8 @@ export const AppContent: React.FC = () => {
   // 데이터 로딩 상태 추가
   const [isLoading, setIsLoading] = useState(false);
 
-  // validatorAnalysis에서 validator의 체인 정보 가져오기
-  const getValidatorChain = () => {
+  // getValidatorChain 함수를 useMemo로 최적화
+  const effectiveChainName = useMemo(() => {
     // validator가 없거나 분석 데이터가 없으면 빈 문자열 반환
     if (!selectedValidator?.voter || !validatorAnalysis) return '';
     
@@ -47,7 +47,6 @@ export const AppContent: React.FC = () => {
     const validatorData = validatorAnalysis[selectedValidator.voter];
     if (!validatorData) return '';
 
-    // validator가 속한 체인들 중에서 선택
     const chains = Object.keys(validatorData);
     
     // 1. selectedChain이 있고 validator가 그 체인에 속해있으면 그것을 사용
@@ -63,13 +62,22 @@ export const AppContent: React.FC = () => {
     
     // 3. validator의 첫 번째 체인 사용
     return chains[0] || '';
-  };
+  }, [selectedValidator, validatorAnalysis, selectedChain, validatorChains]);
 
-  // 체인 이름 결정
-  const effectiveChainName = getValidatorChain();
+  // 디버그 로그를 useEffect로 이동하고 의존성 배열 최적화
+  useEffect(() => {
+    console.log('AppContent Debug:', {
+      selectedChain,
+      validatorChains,
+      selectedValidatorName: selectedValidator?.voter,
+      effectiveChainName,
+      hasValidatorAnalysis: !!validatorAnalysis,
+      availableChains: selectedValidator ? Object.keys(validatorAnalysis?.[selectedValidator.voter] || {}) : []
+    });
+  }, [selectedChain, validatorChains, selectedValidator, effectiveChainName, validatorAnalysis]);
 
-  // voting pattern과 proposal data를 안전하게 가져오기
-  const getValidatorData = () => {
+  // getValidatorData 함수를 useMemo로 최적화
+  const validatorData = useMemo(() => {
     if (!selectedValidator?.voter || !effectiveChainName) {
       return {
         votingPattern: null,
@@ -84,18 +92,9 @@ export const AppContent: React.FC = () => {
       votingPattern: chainData?.votingPattern || null,
       proposalData: chainProposals[effectiveChainName]?.proposals || null
     };
-  };
+  }, [selectedValidator, effectiveChainName, validatorAnalysis, chainProposals]);
 
-  const { votingPattern, proposalData } = getValidatorData();
-
-  console.log('AppContent Debug:', {
-    selectedChain,
-    validatorChains,
-    selectedValidatorName: selectedValidator?.voter,
-    effectiveChainName,
-    hasValidatorAnalysis: !!validatorAnalysis,
-    availableChains: selectedValidator ? Object.keys(validatorAnalysis?.[selectedValidator.voter] || {}) : []
-  });
+  const { votingPattern, proposalData } = validatorData;
 
   // 데이터 로딩 로직 최적화
   const loadData = useCallback(async () => {
@@ -133,7 +132,7 @@ export const AppContent: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [isLoading, dispatch]);
+  }, [dispatch]);
 
   // 컴포넌트 마운트 시 데이터 로드
   useEffect(() => {

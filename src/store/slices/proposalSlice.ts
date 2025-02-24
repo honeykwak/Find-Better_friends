@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ChainProposals } from '../../types';
 
 interface ProposalState {
-  chainProposals: ChainProposals;
-  selectedProposalsByChain: {
-    [chainId: string]: string[];
-  };
+  chainProposals: Record<string, {
+    proposals: Record<string, any>;
+    totalCount: number;
+  }>;
+  selectedProposalsByChain: Record<string, string[]>;
   isLoading: boolean;
   error: string | null;
 }
@@ -21,8 +21,11 @@ const proposalSlice = createSlice({
   name: 'proposal',
   initialState,
   reducers: {
-    setChainProposals: (state, action: PayloadAction<ChainProposals>) => {
-      state.chainProposals = action.payload;
+    setChainProposals: (state, action: PayloadAction<Record<string, any>>) => {
+      state.chainProposals = {
+        ...state.chainProposals,
+        ...action.payload
+      };
     },
     toggleProposal: (state, action: PayloadAction<{ chainId: string; proposalId: string }>) => {
       const { chainId, proposalId } = action.payload;

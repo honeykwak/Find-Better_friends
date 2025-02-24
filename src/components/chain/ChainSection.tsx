@@ -6,7 +6,7 @@ import { ClusterButton } from './ClusterButton';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { selectChain } from '../../store/slices/chainSlice';
 import { ClusterType, CoordinateData, ValidatorData } from '../../types';
-import { CLUSTER_COLORS, CLUSTER_LABELS } from '../../constants';
+import { CLUSTER_COLORS, CLUSTER_LABELS, CHAIN_LIST } from '../../constants';
 import { setChainProposals } from '../../store/slices/proposalSlice';
 import { setSelectedClusters } from '../../store/slices/chainSlice';
 
@@ -230,18 +230,28 @@ export const ChainSection = () => {
         });
         setValidatorChainMap(mapping);
 
-        // 프로포절 데이터 로드 경로 수정
-        try {
-          const proposalsResponse = await fetch('/data/analysis/proposal_analysis/chain_proposals.json');
-          if (proposalsResponse.ok) {
-            const proposalsData = await proposalsResponse.json();
-            dispatch(setChainProposals(proposalsData));
-          } else {
-            console.error('Failed to load proposal data:', proposalsResponse.status);
+        // 각 체인별로 proposal 데이터 로드
+        const proposalDataByChain: Record<string, any> = {};
+        
+        for (const chain of CHAIN_LIST) {
+          try {
+            const proposalsResponse = await fetch(`/data/analysis/proposal_analysis/${chain.toLowerCase()}.json`);
+            if (proposalsResponse.ok) {
+              const proposalsData = await proposalsResponse.json();
+              proposalDataByChain[chain] = {
+                proposals: proposalsData.proposals || {},
+                totalCount: Object.keys(proposalsData.proposals || {}).length
+              };
+            }
+          } catch (error) {
+            console.warn(`Error loading proposal data for ${chain}:`, error);
+            proposalDataByChain[chain] = { proposals: {}, totalCount: 0 };
           }
-        } catch (error) {
-          console.error('Error loading proposal data:', error);
         }
+
+        // 모든 체인의 데이터를 한 번에 디스패치
+        dispatch(setChainProposals(proposalDataByChain));
+
       } catch (error) {
         console.error('Error loading chain data:', error);
       }

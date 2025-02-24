@@ -74,17 +74,19 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
     }, '');
   }, [proposalData]);
 
-  // 디버깅 로그 개선
-  console.log('ValidatorDetails Debug:', {
-    selectedChain,
-    validatorName,
-    hasProposalData: !!proposalData,
-    proposalCount: proposalData ? Object.keys(proposalData).length : 0,
-    selectedProposalCount: selectedProposals.length,
-    hasVotingPatterns: !!votingPatterns,
-    hasCoordinateData: !!coordinateData,
-    selectedValidator: selectedValidator?.voter
-  });
+  // 디버깅 로그를 useEffect로 이동
+  useEffect(() => {
+    console.log('ValidatorDetails Debug:', {
+      selectedChain,
+      validatorName,
+      hasProposalData: !!proposalData,
+      proposalCount: proposalData ? Object.keys(proposalData).length : 0,
+      selectedProposalCount: selectedProposals.length,
+      hasVotingPatterns: !!votingPatterns,
+      hasCoordinateData: !!coordinateData,
+      selectedValidator: selectedValidator?.voter
+    });
+  }, [selectedChain, validatorName, proposalData, selectedProposals.length, votingPatterns, coordinateData, selectedValidator]);
 
   const [sortField, setSortField] = useState<SortFieldValue>('validator');
   const [sortDirection, setSortDirection] = useState<SortDirection['value']>('asc');

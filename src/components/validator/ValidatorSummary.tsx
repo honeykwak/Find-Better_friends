@@ -79,14 +79,16 @@ export const ValidatorSummary: React.FC<ValidatorSummaryProps> = ({ chainName, v
     loadVotingPatterns();
   }, [chainName, validatorName]);
 
-  // 상태값들 확인
-  console.log('Component state:', {
-    loading,
-    error,
-    hasVotingPatterns: !!votingPatterns,
-    validatorName,
-    validatorExists: votingPatterns?.[validatorName] !== undefined
-  });
+  // 컴포넌트 상태 로깅을 useEffect로 이동
+  useEffect(() => {
+    console.log('Component state:', {
+      loading,
+      error,
+      hasVotingPatterns: !!votingPatterns,
+      validatorName,
+      validatorExists: !!votingPatterns?.[validatorName]
+    });
+  }, [loading, error, votingPatterns, validatorName]);
 
   // 카테고리 통계 렌더링 함수 메모이제이션
   const renderCategoryStats = useMemo(() => (category: string, data: CategoryVotes) => {
