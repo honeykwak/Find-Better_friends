@@ -25,7 +25,7 @@ export const loadCoordinates = async (): Promise<{
     const data = await response.json();
     
     // 전체 좌표 변환
-    const globalCoordinates = data.coords_dict.onehot[0].map((row: any) => ({
+    const globalCoordinates = data.coords_dict.coordinates.map((row: any) => ({
       voter: row.voter,
       x: row.x,
       y: row.y,

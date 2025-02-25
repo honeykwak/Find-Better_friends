@@ -30,7 +30,8 @@ export interface CoordinateData {
     [key: string]: ValidatorData[];
   };
   coords_dict: {
-    onehot: ValidatorData[];
+    coordinates: ValidatorData[];
+    onehot?: ValidatorData[];
   };
   chain_info: {
     [key: string]: ChainData;

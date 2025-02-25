@@ -110,12 +110,12 @@ export const ValidatorOverview = () => {
 
       // 글로벌 좌표 범위 계산
       const allValidators = [
-        ...(data.coords_dict.onehot || []),
+        ...(data.coords_dict as any)?.coordinates || [],
         ...Object.values(data.chain_coords_dict).flat()
       ];
 
-      const xValues = allValidators.map(v => v.mds_x ?? 0);
-      const yValues = allValidators.map(v => v.mds_y ?? 0);
+      const xValues = allValidators.map((v: ValidatorData) => v.mds_x ?? 0);
+      const yValues = allValidators.map((v: ValidatorData) => v.mds_y ?? 0);
 
       setGlobalXMin(Math.min(...xValues));
       setGlobalXMax(Math.max(...xValues));
@@ -148,12 +148,12 @@ export const ValidatorOverview = () => {
     try {
       let currentData;
       if (!selectedChain) {
-        // 전체 체인(onehot) 데이터의 경우
-        const onehotData = coordinateData.coords_dict?.onehot || [];
+        // 전체 체인(coordinates) 데이터의 경우
+        const coordinatesData = (coordinateData.coords_dict as any)?.coordinates || [];
         
         // x, y 좌표의 범위 계산
-        const xValues = onehotData.map(d => d.x ?? 0);
-        const yValues = onehotData.map(d => d.y ?? 0);
+        const xValues = coordinatesData.map((d: ValidatorData) => d.x ?? 0);
+        const yValues = coordinatesData.map((d: ValidatorData) => d.y ?? 0);
         const xMin = Math.min(...xValues);
         const xMax = Math.max(...xValues);
         const yMin = Math.min(...yValues);
@@ -167,7 +167,7 @@ export const ValidatorOverview = () => {
           .domain([yMin, yMax])
           .range([-0.5, 0.5]);
         
-        currentData = onehotData.map(d => ({
+        currentData = coordinatesData.map((d: ValidatorData) => ({
           voter: d.voter,
           x: xScale(d.x ?? 0),
           y: yScale(d.y ?? 0),
@@ -179,7 +179,7 @@ export const ValidatorOverview = () => {
         }));
       } else {
         // 개별 체인의 경우
-        currentData = (coordinateData.chain_coords_dict?.[selectedChain] || []).map(d => ({
+        currentData = (coordinateData.chain_coords_dict?.[selectedChain] || []).map((d: ValidatorData) => ({
           voter: d.voter,
           x: d.mds_x ?? 0,
           y: d.mds_y ?? 0,
@@ -191,7 +191,7 @@ export const ValidatorOverview = () => {
         }));
       }
 
-      const processedData = currentData.map((d, index) => ({
+      const processedData = currentData.map((d: ValidatorData, index: number) => ({
         ...d,
         isAnimated: true,
         animationBegin: Math.floor(index / BATCH_SIZE) * STAGGER_DELAY
@@ -440,13 +440,13 @@ export const ValidatorOverview = () => {
 
     // 기존 노드 선택
     const nodes = g.selectAll<SVGCircleElement, EnhancedValidatorData>('circle')
-      .data(displayData, d => d.voter);
+      .data(displayData, (d: any) => d.voter);
 
     // Enter 부분 수정
     const nodesEnter = nodes.enter()
       .append('circle')
       .style('opacity', 0)
-      .call(applyStaticStyles);
+      .call(selection => applyStaticStyles(selection as d3.Selection<SVGCircleElement, EnhancedValidatorData, any, any>));
 
     // Update 부분 수정
     nodes
@@ -454,7 +454,7 @@ export const ValidatorOverview = () => {
       .transition()
       .duration(ANIMATION_DURATION)
       .style('opacity', 1)
-      .call(applyTransitionStyles);
+      .call(transition => applyTransitionStyles(transition as d3.Transition<SVGCircleElement, EnhancedValidatorData, any, any>));
 
     // Exit: 제거될 노드
     nodes.exit()
@@ -497,10 +497,10 @@ export const ValidatorOverview = () => {
     if (!searchTerm || !displayData || !isSearchFocused) return [];
     
     return displayData
-      .filter(validator => 
+      .filter((validator: ValidatorData) => 
         validator.voter.toLowerCase().includes(searchTerm.toLowerCase())
       )
-      .map(validator => ({
+      .map((validator: ValidatorData) => ({
         id: validator.voter,
         text: validator.voter,
         data: validator
