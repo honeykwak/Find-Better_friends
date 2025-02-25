@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { 
@@ -698,9 +698,7 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
           const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
           
           // 세로 범위 제한 - 스크롤 위치 고려
-          const totalHeight = gridRef.current.scrollHeight;
           const visibleHeight = rect.height;
-          const scrollTop = gridContainer.scrollTop;
           const relativeY = e.clientY - rect.top;
           
           // 스크롤 위치를 고려한 세로 좌표 계산
@@ -736,8 +734,10 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
                 }
               } else {
                 // 최대 스크롤에 도달하면 인터벌 정리
-                clearInterval(scrollInterval);
-                scrollInterval = null;
+                if (scrollInterval !== null) {
+                  clearInterval(scrollInterval);
+                  scrollInterval = null;
+                }
               }
             }, 16) as unknown as number;
           }
@@ -759,8 +759,10 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
                 }
               } else {
                 // 최소 스크롤에 도달하면 인터벌 정리
-                clearInterval(scrollInterval);
-                scrollInterval = null;
+                if (scrollInterval !== null) {
+                  clearInterval(scrollInterval);
+                  scrollInterval = null;
+                }
               }
             }, 16) as unknown as number;
           }
