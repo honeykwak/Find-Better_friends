@@ -272,7 +272,7 @@ export const ChainSection = () => {
     dispatch(setSelectedClusters(newSelectedClusters));
   };
 
-  const onehotData = coordinateData.coords_dict?.coordinates || [];
+  const onehotData = coordinateData?.coords_dict?.onehot || [];
 
   return (
     <div className="h-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">
