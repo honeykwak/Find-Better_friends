@@ -98,12 +98,12 @@ const ChainListItem = ({
       onClick={onClick}
     >
       {/* 체인명 - 기본적으로는 숨겨져 있다가 hover 시 표시 */}
-      <div className="
+      <div className={`
         overflow-hidden
         transition-[height] duration-200 ease-in-out
-        h-0 group-hover:h-6
-        opacity-0 group-hover:opacity-100
-      ">
+        ${isSelected ? 'h-6' : 'h-0 group-hover:h-6'}
+        ${isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}
+      `}>
         <span className="font-medium">{info.name}</span>
       </div>
 
@@ -148,12 +148,11 @@ const ChainListItem = ({
       </div>
 
       {/* 군집 숫자 - 스택 바 차트와 정렬 맞추기 */}
-      <div className="
+      <div className={`
         overflow-hidden
         transition-[height,margin] duration-200 ease-in-out
-        h-0 group-hover:h-6
-        mt-0 group-hover:mt-2
-      ">
+        ${isSelected ? 'h-6 mt-2' : 'h-0 group-hover:h-6 mt-0 group-hover:mt-2'}
+      `}>
         <div className="flex items-center gap-2 ml-8">
           {CLUSTERS.map((cluster) => (
             (selectedClusters.length === 0 || selectedClusters.includes(cluster)) && (

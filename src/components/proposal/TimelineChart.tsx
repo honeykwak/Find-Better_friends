@@ -141,6 +141,24 @@ export const TimelineChart: React.FC<TimelineChartProps> = ({
           }}
         />
       ))}
+      
+      {/* 날짜 표시 추가 - 영어 날짜 형식으로 변경 */}
+      <div className="flex justify-between mt-2 text-xs text-gray-600">
+        <div>
+          {new Date(selectedRange[0]).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          })}
+        </div>
+        <div>
+          {new Date(selectedRange[1]).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          })}
+        </div>
+      </div>
     </div>
   );
 }; 

@@ -204,12 +204,6 @@ export const ValidatorOverview = () => {
     }
   }, [coordinateData, selectedChain]);
 
-  const filteredValidators = useMemo(() => {
-    return displayData.filter(d => 
-      selectedClusters.length === 0 || selectedClusters.includes(d.cluster)
-    );
-  }, [displayData, selectedClusters]);
-
   const chartBounds = useMemo(() => {
     if (globalXMin === null || globalXMax === null || globalYMin === null || globalYMax === null) {
       return {
@@ -384,6 +378,11 @@ export const ValidatorOverview = () => {
       .attr('cy', d => scaleRef.current.yScale(d.y))
       .attr('r', d => currentValidator?.voter === d.voter ? 8 : 5)
       .style('fill', d => CLUSTER_COLORS[d.cluster])
+      .style('opacity', d => 
+        selectedClusters.length === 0 || selectedClusters.includes(d.cluster)
+          ? 1
+          : 0.2
+      )
       .style('stroke', d => 
         currentValidator?.voter === d.voter 
           ? "#3B82F6"
@@ -404,7 +403,7 @@ export const ValidatorOverview = () => {
 
   // 차트 초기화
   useEffect(() => {
-    if (!svgRef.current || !filteredValidators.length) return;
+    if (!svgRef.current || !displayData.length) return;
 
     const svg = d3.select(svgRef.current);
     const g = d3.select(gRef.current);
@@ -441,7 +440,7 @@ export const ValidatorOverview = () => {
 
     // 기존 노드 선택
     const nodes = g.selectAll<SVGCircleElement, EnhancedValidatorData>('circle')
-      .data(filteredValidators, d => d.voter);
+      .data(displayData, d => d.voter);
 
     // Enter 부분 수정
     const nodesEnter = nodes.enter()
@@ -479,7 +478,7 @@ export const ValidatorOverview = () => {
         setHoveredValidator(null);
         setTooltipData(null);
       });
-  }, [filteredValidators, chartBounds, handleClick, currentValidator, hoveredValidator, searchTerm]);
+  }, [displayData, chartBounds, handleClick, currentValidator, hoveredValidator, searchTerm]);
 
   // SVG에 mousedown 이벤트 핸들러 연결
   useEffect(() => {
@@ -534,6 +533,21 @@ export const ValidatorOverview = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  // useEffect를 추가하여 selectedClusters가 변경될 때마다 노드 스타일을 업데이트
+  useEffect(() => {
+    if (!gRef.current) return;
+
+    d3.select(gRef.current)
+      .selectAll<SVGCircleElement, EnhancedValidatorData>('circle')
+      .transition()
+      .duration(200)
+      .style('opacity', d => 
+        selectedClusters.length === 0 || selectedClusters.includes(d.cluster)
+          ? 1
+          : 0.2
+      );
+  }, [selectedClusters]);
 
   if (isLoading) {
     return (
