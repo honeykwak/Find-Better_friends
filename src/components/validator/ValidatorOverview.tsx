@@ -3,7 +3,7 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { CoordinateData, ValidatorData } from '../../types';
 import { CLUSTER_COLORS } from '../../constants';
-import { setSelectedValidator } from '../../store/slices/validatorSlice';
+import { setSelectedValidator, setAdditionalValidator } from '../../store/slices/validatorSlice';
 import { setValidatorChains } from '../../store/slices/chainSlice';
 import * as d3 from 'd3';
 import { SearchInput } from '../common/SearchInput';
@@ -39,6 +39,7 @@ export const ValidatorOverview = () => {
   const selectedChain = useAppSelector(state => state.chain.selectedChain);
   const selectedClusters = useAppSelector(state => state.chain.selectedClusters);
   const currentValidator = useAppSelector(state => state.validator.selectedValidator);
+  const additionalValidator = useAppSelector(state => state.validator.additionalValidator);
 
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -228,19 +229,37 @@ export const ValidatorOverview = () => {
   const handleClick = useCallback((data: any) => {
     if (data && data.payload) {
       const validator = data.payload;
+      
+      // 현재 선택된 validator와 동일한 경우 선택 해제
       if (currentValidator?.voter === validator.voter) {
         console.log('Deselecting validator');
         dispatch(setSelectedValidator(null));
+        dispatch(setAdditionalValidator(null)); // 추가 validator도 함께 해제
         dispatch(setValidatorChains([]));
+        return;
+      }
+      
+      // 추가 validator와 동일한 경우 추가 validator 선택 해제
+      if (additionalValidator?.voter === validator.voter) {
+        console.log('Deselecting additional validator');
+        dispatch(setAdditionalValidator(null));
+        return;
+      }
+      
+      const validatorChains = Array.from(validatorChainMap.get(validator.voter) || []);
+      
+      // 이미 기준 validator가 선택된 상태라면 추가 validator로 설정
+      if (currentValidator) {
+        console.log('Selecting additional validator:', validator.voter);
+        dispatch(setAdditionalValidator(validator));
       } else {
-        const validatorChains = Array.from(validatorChainMap.get(validator.voter) || []);
+        // 기준 validator가 없는 경우 기준 validator로 설정
         console.log('Selecting validator:', validator.voter);
-        console.log('Validator chains:', validatorChains);
         dispatch(setSelectedValidator(validator));
         dispatch(setValidatorChains(validatorChains));
       }
     }
-  }, [dispatch, currentValidator, validatorChainMap]);
+  }, [dispatch, currentValidator, additionalValidator, validatorChainMap]);
 
   // 줌 핸들러 수정
   const handleWheel = useCallback((e: WheelEvent) => {
@@ -351,20 +370,27 @@ export const ValidatorOverview = () => {
     selection
       .attr('cx', d => scaleRef.current.xScale(d.x))
       .attr('cy', d => scaleRef.current.yScale(d.y))
-      .attr('r', d => currentValidator?.voter === d.voter ? 8 : 5)
+      .attr('r', d => 
+        currentValidator?.voter === d.voter ? 8 : 
+        additionalValidator?.voter === d.voter ? 7 : 5
+      )
       .style('fill', d => CLUSTER_COLORS[d.cluster])
       .style('cursor', 'pointer')
       .style('stroke', d => 
         currentValidator?.voter === d.voter 
-          ? "#3B82F6"
-          : hoveredValidator === d.voter
-            ? "#8B5CF6"
-            : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
-              ? "#93C5FD"
-              : "none"
+          ? "#3B82F6" // 기준 validator - 파란색
+          : additionalValidator?.voter === d.voter
+            ? "#10B981" // 추가 validator - 녹색
+            : hoveredValidator === d.voter
+              ? "#8B5CF6" // 호버 - 보라색
+              : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
+                ? "#93C5FD" // 검색 결과 - 연한 파란색
+                : "none"
       )
       .style('stroke-width', d =>
-        currentValidator?.voter === d.voter || hoveredValidator === d.voter
+        currentValidator?.voter === d.voter || 
+        additionalValidator?.voter === d.voter || 
+        hoveredValidator === d.voter
           ? 3
           : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
             ? 1.5
@@ -376,7 +402,10 @@ export const ValidatorOverview = () => {
     transition
       .attr('cx', d => scaleRef.current.xScale(d.x))
       .attr('cy', d => scaleRef.current.yScale(d.y))
-      .attr('r', d => currentValidator?.voter === d.voter ? 8 : 5)
+      .attr('r', d => 
+        currentValidator?.voter === d.voter ? 8 : 
+        additionalValidator?.voter === d.voter ? 7 : 5
+      )
       .style('fill', d => CLUSTER_COLORS[d.cluster])
       .style('opacity', d => 
         selectedClusters.length === 0 || selectedClusters.includes(d.cluster)
@@ -385,15 +414,19 @@ export const ValidatorOverview = () => {
       )
       .style('stroke', d => 
         currentValidator?.voter === d.voter 
-          ? "#3B82F6"
-          : hoveredValidator === d.voter
-            ? "#8B5CF6"
-            : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
-              ? "#93C5FD"
-              : "none"
+          ? "#3B82F6" // 기준 validator - 파란색
+          : additionalValidator?.voter === d.voter
+            ? "#10B981" // 추가 validator - 녹색
+            : hoveredValidator === d.voter
+              ? "#8B5CF6" // 호버 - 보라색
+              : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
+                ? "#93C5FD" // 검색 결과 - 연한 파란색
+                : "none"
       )
       .style('stroke-width', d =>
-        currentValidator?.voter === d.voter || hoveredValidator === d.voter
+        currentValidator?.voter === d.voter || 
+        additionalValidator?.voter === d.voter || 
+        hoveredValidator === d.voter
           ? 3
           : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
             ? 1.5
@@ -478,7 +511,7 @@ export const ValidatorOverview = () => {
         setHoveredValidator(null);
         setTooltipData(null);
       });
-  }, [displayData, chartBounds, handleClick, currentValidator, hoveredValidator, searchTerm]);
+  }, [displayData, chartBounds, handleClick, currentValidator, additionalValidator, hoveredValidator, searchTerm]);
 
   // SVG에 mousedown 이벤트 핸들러 연결
   useEffect(() => {
@@ -677,18 +710,24 @@ export const ValidatorOverview = () => {
             className={`
               absolute bg-white p-3 border rounded shadow
               ${currentValidator?.voter === tooltipData.voter ? 'ring-2 ring-blue-500 bg-blue-50' : ''}
+              ${additionalValidator?.voter === tooltipData.voter ? 'ring-2 ring-green-500 bg-green-50' : ''}
             `}
             style={{ 
-              left: (tooltipData.x * scale + position.x) + 15,  // 줌과 패닝을 고려한 위치 계산
-              top: (tooltipData.y * scale + position.y) - 10,   // 줌과 패닝을 고려한 위치 계산
+              left: (tooltipData.x * scale + position.x) + 15,
+              top: (tooltipData.y * scale + position.y) - 10,
               transformOrigin: 'top left',
               pointerEvents: 'none'
-              // transform 속성 제거 - 툴팁 크기는 고정
             }}
           >
-            <p className={`font-medium ${currentValidator?.voter === tooltipData.voter ? 'text-blue-600' : ''}`}>
+            <p className={`font-medium 
+              ${currentValidator?.voter === tooltipData.voter ? 'text-blue-600' : ''}
+              ${additionalValidator?.voter === tooltipData.voter ? 'text-green-600' : ''}
+            `}>
               {tooltipData.voter}
-              {currentValidator?.voter === tooltipData.voter && <span className="ml-2 text-xs">(Selected)</span>}
+              {currentValidator?.voter === tooltipData.voter && 
+                <span className="ml-2 text-xs">(Primary)</span>}
+              {additionalValidator?.voter === tooltipData.voter && 
+                <span className="ml-2 text-xs">(Additional)</span>}
             </p>
           </div>
         )}

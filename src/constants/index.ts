@@ -28,11 +28,11 @@ export const VOTE_COLOR_CLASSES: Record<VoteOption, string> = {
 };
 
 export const CLUSTER_LABELS: Record<ClusterType, string> = {
-  1: 'Cautious',
-  2: 'Positive',
-  3: 'Cautiously Positive',
-  4: 'Proactive',
-  5: 'Balanced Neutral'
+  1: 'Passive Neutrals',
+  2: 'Balanced Participants',
+  3: 'Extreme Non-participants',
+  4: 'Moderate Non-participants',
+  5: 'Strong Opposition Group'
 };
 
 export const SELECTED_BACKGROUND = '#DCDFFF';

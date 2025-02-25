@@ -93,6 +93,7 @@ const calculateCompetitiveness = (ratios?: { [key: string]: number }) => {
 export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals }) => {
   const dispatch = useAppDispatch();
   const selectedValidator = useAppSelector(state => state.validator.selectedValidator);
+  const additionalValidator = useAppSelector(state => state.validator.additionalValidator);
   const [votingPatterns, setVotingPatterns] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   
@@ -328,6 +329,84 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
     }
   };
 
+  // 제안서 렌더링 로직 수정 - 기준 validator와 추가 validator의 투표 일치 여부에 따라 스타일 적용
+  const renderProposals = () => {
+    return filteredProposals.map(([id, proposal]) => {
+      // 기준 validator의 투표 정보 가져오기 - 구조 확인
+      const primaryVoteData = selectedValidator && votingPatterns?.[selectedValidator.voter]?.proposal_votes?.[id];
+      const primaryVote = primaryVoteData?.option;
+      
+      // 추가 validator의 투표 정보 가져오기 - 구조 확인
+      const additionalVoteData = additionalValidator && votingPatterns?.[additionalValidator.voter]?.proposal_votes?.[id];
+      const additionalVote = additionalVoteData?.option;
+      
+      // 디버깅 로그 - 실제 데이터 구조 확인
+      console.log(`Proposal ${id}:`, {
+        primaryVoteData,
+        primaryVote,
+        additionalVoteData,
+        additionalVote,
+        votingPatterns: votingPatterns
+      });
+      
+      // 두 validator가 모두 투표했는지 확인
+      const bothVoted = primaryVote && additionalVote;
+      
+      // 투표 일치 여부 확인 (둘 다 투표했고 같은 옵션을 선택한 경우)
+      const votesMatch = bothVoted && primaryVote === additionalVote;
+      
+      // 투명도 로직:
+      // 1. 추가 validator가 없으면 모두 불투명(1)
+      // 2. 추가 validator가 있고:
+      //    - 둘 다 투표했고 일치하면 불투명(1)
+      //    - 둘 다 투표했고 불일치하면 투명(0.4)
+      //    - 둘 중 하나만 투표했으면 중간 투명도(0.7)
+      let opacity = 1;
+      
+      if (additionalValidator) {
+        if (bothVoted) {
+          opacity = votesMatch ? 1 : 0.4;
+        } else if (primaryVote || additionalVote) {
+          opacity = 0.7;
+        } else {
+          opacity = 0.5; // 둘 다 투표하지 않은 경우
+        }
+      }
+      
+      const isHighlighted = isSearchFocused && debouncedSearchTerm && highlightedProposals.includes(id);
+      
+      return (
+        <button
+          key={id}
+          onClick={() => handleToggleProposal(id)}
+          className={`
+            aspect-square
+            flex items-center justify-center
+            rounded-lg text-xs font-medium
+            transition-all duration-200
+            ${getVoteStyle(id)}
+            ${selectedProposals.includes(id) 
+              ? 'ring-2 ring-blue-500' 
+              : isHighlighted
+                ? 'ring-2 ring-yellow-400 shadow-lg'
+                : 'hover:ring-1 hover:ring-blue-300'
+            }
+            ${isHighlighted ? 'z-10' : ''}
+            ${additionalValidator && bothVoted && votesMatch ? 'ring-2 ring-green-500' : ''}
+          `}
+          style={{
+            transform: `scale(${calculateCompetitiveness(proposal.ratios)})`,
+            opacity: opacity,
+          }}
+        >
+          <span style={{ transform: `scale(${1/calculateCompetitiveness(proposal.ratios)})` }}>
+            {id}
+          </span>
+        </button>
+      );
+    });
+  };
+
   return (
     <div className="h-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">
       <div className="shrink-0 mb-2">
@@ -403,39 +482,7 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
             gridTemplateColumns: 'repeat(auto-fit, minmax(min(60px, 100%), 1fr))'
           }}
         >
-          {filteredProposals.map(([id, proposal]) => {
-            const scale = proposal?.ratios ? calculateCompetitiveness(proposal.ratios) : 1.0;
-            const isHighlighted = isSearchFocused && debouncedSearchTerm && highlightedProposals.includes(id);
-            
-            return (
-              <button
-                key={id}
-                onClick={() => handleToggleProposal(id)}
-                className={`
-                  aspect-square
-                  flex items-center justify-center
-                  rounded-lg text-xs font-medium
-                  transition-all duration-200
-                  ${getVoteStyle(id)}
-                  ${selectedProposals.includes(id) 
-                    ? 'ring-2 ring-blue-500' 
-                    : isHighlighted
-                      ? 'ring-2 ring-yellow-400 shadow-lg'
-                      : 'hover:ring-1 hover:ring-blue-300'
-                  }
-                  ${isHighlighted ? 'z-10' : ''}
-                `}
-                style={{
-                  transform: `scale(${scale})`,
-                  opacity: isSearchFocused && debouncedSearchTerm && !isHighlighted ? '0.4' : '1',
-                }}
-              >
-                <span style={{ transform: `scale(${1/scale})` }}>
-                  {id}
-                </span>
-              </button>
-            );
-          })}
+          {renderProposals()}
         </div>
       </div>
 
