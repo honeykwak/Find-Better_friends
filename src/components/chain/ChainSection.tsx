@@ -272,8 +272,6 @@ export const ChainSection = () => {
     dispatch(setSelectedClusters(newSelectedClusters));
   };
 
-  const onehotData = coordinateData?.coords_dict?.onehot || [];
-
   return (
     <div className="h-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">
       {/* 상단 Chains 제목과 클러스터 버튼 */}
