@@ -6,7 +6,7 @@ import { ClusterButton } from './ClusterButton';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { selectChain } from '../../store/slices/chainSlice';
 import { ClusterType, CoordinateData, ValidatorData } from '../../types';
-import { CLUSTER_COLORS, CLUSTER_LABELS, CHAIN_LIST } from '../../constants';
+import { CLUSTER_COLORS, CHAIN_LIST } from '../../constants';
 import { setChainProposals } from '../../store/slices/proposalSlice';
 import { setSelectedClusters } from '../../store/slices/chainSlice';
 
@@ -25,51 +25,8 @@ const loadChainLogo = (chainName: string): string | undefined => {
   }
 };
 
-const ChainInfo = ({ 
-  chainData, 
-  proposalCount 
-}: { 
-  chainData: any, 
-  proposalCount: number 
-}) => (
-  <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-    <div className="flex items-center gap-3">
-      <img 
-        src={loadChainLogo(chainData.name)}
-        alt={`${chainData.name} logo`}
-        className="w-8 h-8 object-contain"
-        onError={(e) => {
-          (e.target as HTMLImageElement).style.display = 'none';
-        }}
-      />
-      <h3 className="font-semibold mb-2">
-        {chainData.name}
-      </h3>
-    </div>
-    <div className="space-y-2">
-      <p>Total Validators: {chainData.validators_count}</p>
-      <p>Total Proposals: {proposalCount}</p>
-      <div className="space-y-1 mt-2">
-        {Object.entries(chainData.cluster_distribution as Record<string, number>)
-          .map(([clusterStr, count]) => {
-            const cluster = Number(clusterStr) as ClusterType;
-            return (
-              <div 
-                key={cluster}
-                className="text-sm flex justify-between"
-                style={{ color: CLUSTER_COLORS[cluster] }}
-              >
-                <span>{CLUSTER_LABELS[cluster]}:</span>
-                <span>{count}</span>
-              </div>
-            );
-          })}
-      </div>
-    </div>
-  </div>
-);
-
 const ChainListItem = ({ 
+  chainId,
   info, 
   isSelected, 
   isValidatorChain,
@@ -85,6 +42,10 @@ const ChainListItem = ({
   selectedClusters: number[];
   onClick: () => void;
 }) => {
+  // 체인 제안서 정보 가져오기
+  const chainProposals = useAppSelector(state => state.proposal.chainProposals[chainId]?.proposals || {});
+  const proposalCount = Object.keys(chainProposals).length;
+
   return (
     <div
       className={`
@@ -161,10 +122,22 @@ const ChainListItem = ({
                 style={{ color: CLUSTER_COLORS[cluster] }}
                 className="font-medium"
               >
-                {info.cluster_distribution[cluster]}
+                {info.cluster_distribution[cluster] || 0}
               </span>
             )
           ))}
+        </div>
+      </div>
+      
+      {/* 추가 정보 - 총 검증인 수와 총 제안 수 */}
+      <div className={`
+        overflow-hidden text-xs text-gray-600 ml-8
+        transition-[height,margin] duration-200 ease-in-out
+        ${isSelected ? 'h-12 mt-2' : 'h-0 group-hover:h-12 mt-0 group-hover:mt-2'}
+      `}>
+        <div className="space-y-1">
+          <p>Total Validators: {info.validators_count}</p>
+          <p>Total Proposals: {proposalCount}</p>
         </div>
       </div>
     </div>
@@ -177,7 +150,6 @@ export const ChainSection = () => {
   const selectedClusters = useAppSelector(state => state.chain.selectedClusters);
   const selectedChain = useAppSelector(state => state.chain.selectedChain);
   const selectedValidator = useAppSelector(state => state.validator.selectedValidator);
-  const chainProposals = useAppSelector(state => state.proposal.chainProposals);
   
   // validatorChainMap을 props로 받거나 context로 관리하도록 수정
   const [validatorChainMap, setValidatorChainMap] = useState<Map<string, Set<string>>>(new Map());
@@ -309,17 +281,6 @@ export const ChainSection = () => {
           ))}
         </div>
       </div>
-
-      {/* 선택된 체인 정보 섹션 */}
-      {selectedChain && coordinateData.chain_info[selectedChain] && (
-        <ChainInfo 
-          chainData={{
-            ...coordinateData.chain_info[selectedChain],
-            chainId: selectedChain
-          }} 
-          proposalCount={Object.keys(chainProposals[selectedChain]?.proposals || {}).length}
-        />
-      )}
     </div>
   );
 };
