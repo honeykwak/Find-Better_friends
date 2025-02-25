@@ -259,19 +259,19 @@ export const VerticalTimelineSlider: React.FC<VerticalTimelineSliderProps> = ({
         );
       })}
       
-      {/* 날짜 표시 - 그리드 내부에 배치 */}
+      {/* 날짜 표시 - 그리드 내부에 배치 (날짜 위치 교체) */}
       <div className="absolute inset-0 flex flex-col justify-between text-xs text-gray-600 pointer-events-none">
         <div className="text-center p-1 bg-white bg-opacity-70">
-          {/* 상단에 과거 날짜 (selectedRange[0]) */}
-          {new Date(selectedRange[0]).toLocaleDateString('en-US', {
+          {/* 상단에 최신 날짜 (selectedRange[1]) */}
+          {new Date(selectedRange[1]).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'short',
             day: 'numeric'
           })}
         </div>
         <div className="text-center p-1 bg-white bg-opacity-70">
-          {/* 하단에 최신 날짜 (selectedRange[1]) */}
-          {new Date(selectedRange[1]).toLocaleDateString('en-US', {
+          {/* 하단에 과거 날짜 (selectedRange[0]) */}
+          {new Date(selectedRange[0]).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'short',
             day: 'numeric'
