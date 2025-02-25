@@ -7,10 +7,11 @@ import {
 } from '../../types';
 import { setSelectedProposals, toggleProposal } from '../../store/slices/proposalSlice';
 import { selectSelectedProposalsByChain } from '../../store/selectors';
-import { TimelineChart } from './TimelineChart';
+import { VerticalTimelineSlider } from './VerticalTimelineSlider';
 import { SearchInput } from '../common/SearchInput';
 import { SearchResult } from '../../types/search';
 import { VOTE_COLOR_CLASSES } from '../../constants';
+import { useDebounce } from '../../hooks/useDebounce';
 
 interface ProposalListProps {
   chainName: string;
@@ -409,6 +410,7 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
 
   return (
     <div className="h-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">
+      {/* 상단 컨트롤 영역 */}
       <div className="shrink-0 mb-2">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4">
@@ -444,7 +446,7 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
           </div>
         </div>
 
-        {/* 정렬 드롭다운 추가 */}
+        {/* 정렬 드롭다운 */}
         <div className="flex items-center gap-2">
           <span className="text-sm text-gray-600">Sort by:</span>
           <select
@@ -460,7 +462,7 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
           </select>
         </div>
 
-        {/* 범례 섹션 수정 */}
+        {/* 범례 섹션 */}
         <div className="mt-4">
           <div className="flex gap-3">
             {Object.entries(VOTE_COLOR_CLASSES).map(([option, colorClass]) => (
@@ -475,48 +477,34 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
         </div>
       </div>
 
-      {/* 버튼 컨테이너 */}
-      <div className="flex-1 min-h-0 overflow-auto mt-2" style={{ maxHeight: "calc(100% - 240px)" }}>
-        <div className="grid auto-rows-fr gap-2 p-2"
-          style={{
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(60px, 100%), 1fr))'
-          }}
-        >
-          {renderProposals()}
+      {/* 메인 컨텐츠 영역 - 타임라인과 그리드를 나란히 배치 */}
+      <div className="flex-1 min-h-0 flex flex-row">
+        {/* 세로 타임라인 슬라이더를 좌측에 배치 */}
+        {proposals && (
+          <div className="mr-4 h-full" style={{ width: '60px' }}>
+            <VerticalTimelineSlider
+              proposals={proposals}
+              timeRange={[
+                Math.min(...Object.values(proposals).map(p => p.timeVotingStart)),
+                Math.max(...Object.values(proposals).map(p => p.timeVotingStart))
+              ]}
+              selectedRange={timeRange}
+              onRangeChange={setTimeRange}
+            />
+          </div>
+        )}
+
+        {/* 버튼 그리드 컨테이너 */}
+        <div className="flex-1 overflow-auto">
+          <div className="grid auto-rows-fr gap-2 p-2"
+            style={{
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(60px, 100%), 1fr))'
+            }}
+          >
+            {renderProposals()}
+          </div>
         </div>
       </div>
-
-      {/* 타임라인 차트와 슬라이더를 하단에 배치 */}
-      {proposals && (
-        <div className="mt-4">
-          <TimelineChart
-            proposals={proposals}
-            timeRange={[
-              Math.min(...Object.values(proposals).map(p => p.timeVotingStart)),
-              Math.max(...Object.values(proposals).map(p => p.timeVotingStart))
-            ]}
-            selectedRange={timeRange}
-            onRangeChange={setTimeRange}
-          />
-        </div>
-      )}
     </div>
   );
-};
-
-// 디바운스 훅 추가
-function useDebounce<T>(value: T, delay: number): T {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value);
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]);
-
-  return debouncedValue;
-} 
+}; 
