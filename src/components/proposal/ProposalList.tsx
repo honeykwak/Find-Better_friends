@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { 
@@ -51,8 +51,28 @@ export const ProposalItem: React.FC<ProposalItemProps> = ({ proposal, isSelected
   </button>
 );
 
+// 분할 옵션 타입 (기존 SortOption을 SplitOption으로 변경)
+type SplitOption = 'none' | 'monthly' | 'quarterly' | 'biannually' | 'yearly' | 'type' | 'competitiveness';
+
 // 정렬 옵션 타입 추가
-type SortOption = 'latest' | 'type' | 'competitiveness';
+type SortOption = 'latest' | 'competitiveness';
+
+// 분할 옵션 정의 (기존 SORT_OPTIONS를 SPLIT_OPTIONS로 변경)
+const SPLIT_OPTIONS = [
+  { value: 'none', label: 'None (No Grouping)' },
+  { value: 'monthly', label: 'Monthly' },
+  { value: 'quarterly', label: 'Quarterly' },
+  { value: 'biannually', label: 'Biannually' },
+  { value: 'yearly', label: 'Yearly' },
+  { value: 'type', label: 'Type' },
+  { value: 'competitiveness', label: 'Competitiveness' }
+] as const;
+
+// 정렬 옵션 정의 추가
+const SORT_OPTIONS = [
+  { value: 'latest', label: 'Latest' },
+  { value: 'competitiveness', label: 'Competitiveness' }
+] as const;
 
 // 검색 타입 정의 추가 (파일 상단)
 type SearchType = 'ALL' | 'TITLE' | 'DESCRIPTION' | 'TYPE';
@@ -126,21 +146,15 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
     setTimeRange([minTime, maxTime]);
   }, [proposals]);
 
-  // 컴포넌트 내부에 정렬 상태 추가
+  // 컴포넌트 내부에 상태 변수 추가/변경
+  const [splitOption, setSplitOption] = useState<SplitOption>('none');
   const [sortOption, setSortOption] = useState<SortOption>('latest');
-
-  // 정렬 옵션 정의
-  const SORT_OPTIONS = [
-    { value: 'latest', label: 'Latest' },
-    { value: 'type', label: 'Type' },
-    { value: 'competitiveness', label: 'Competitiveness' }
-  ] as const;
 
   // 컴포넌트 내부에 검색 타입 상태 추가
   const [searchType, setSearchType] = useState<SearchType>('ALL');
 
-  // 필터링된 제안 메모이제이션 수정
-  const filteredProposals = useMemo(() => {
+  // 필터링된 제안 메모이제이션 수정 - 분할과 정렬 로직 분리
+  const filteredProposalsByMonth = useMemo(() => {
     if (!proposals) return [];
     
     const filtered = Object.entries(proposals)
@@ -153,26 +167,162 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
         return proposal.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
       });
 
-    // 정렬 로직
-    return filtered.sort((a, b) => {
+    // 정렬 로직 - sortOption에 따라 정렬
+    const sortedProposals = filtered.sort((a, b) => {
       const [idA, proposalA] = a;
       const [idB, proposalB] = b;
 
       switch (sortOption) {
         case 'latest':
-          return Number(idB) - Number(idA);
-        case 'type':
-          return proposalA.type.localeCompare(proposalB.type);
+          return Number(idB) - Number(idA); // 최신순 정렬
         case 'competitiveness': {
           const compA = calculateCompetitiveness(proposalA.ratios);
           const compB = calculateCompetitiveness(proposalB.ratios);
-          return compB - compA; // 높은 순으로 정렬
+          return compB - compA; // 경쟁 심화도 높은 순으로 정렬
         }
         default:
-          return 0;
+          return Number(idB) - Number(idA); // 기본은 최신순
       }
     });
-  }, [proposals, timeRange, debouncedSearchTerm, sortOption]);
+
+    // 분할 로직 - splitOption에 따라 그룹화
+    // 시간 기반 분할 옵션들 (monthly, quarterly, biannually, yearly)
+    if (['monthly', 'quarterly', 'biannually', 'yearly'].includes(splitOption)) {
+      // 시간 단위별 그룹화 함수
+      const getTimeKey = (timestamp: number) => {
+        const date = new Date(timestamp);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        
+        switch (splitOption) {
+          case 'monthly':
+            return { key: `${year}-${month.toString().padStart(2, '0')}`, name: `${getMonthName(month)} ${year}` };
+          case 'quarterly':
+            const quarter = Math.ceil(month / 3);
+            return { key: `${year}-Q${quarter}`, name: `Q${quarter} ${year}` };
+          case 'biannually':
+            const half = month <= 6 ? 1 : 2;
+            return { key: `${year}-H${half}`, name: `H${half} ${year}` };
+          case 'yearly':
+            return { key: `${year}`, name: `${year}` };
+          default: // latest (월별)
+            return { key: `${year}-${month.toString().padStart(2, '0')}`, name: `${getMonthName(month)} ${year}` };
+        }
+      };
+      
+      // 월 이름 가져오기 함수
+      const getMonthName = (month: number) => {
+        const monthNames = [
+          'January', 'February', 'March', 'April', 'May', 'June',
+          'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+        return monthNames[month - 1];
+      };
+      
+      // 시간 단위별로 그룹화
+      const groupedByTime: { [timeKey: string]: { key: string, name: string, proposals: [string, ProposalData][] } } = {};
+      
+      sortedProposals.forEach(proposal => {
+        const { key, name } = getTimeKey(proposal[1].timeVotingStart);
+        
+        if (!groupedByTime[key]) {
+          groupedByTime[key] = { key, name, proposals: [] };
+        }
+        
+        groupedByTime[key].proposals.push(proposal);
+      });
+      
+      // 시간 단위별 그룹을 시간 역순으로 정렬
+      return Object.values(groupedByTime)
+        .sort((a, b) => b.key.localeCompare(a.key))
+        .map(({ key, name, proposals }) => {
+          return {
+            monthKey: key,
+            monthName: name,
+            proposals
+          };
+        });
+    }
+    
+    // type 분할일 때 타입별 그룹화
+    if (splitOption === 'type') {
+      // 타입별로 그룹화
+      const groupedByType: { [typeKey: string]: [string, ProposalData][] } = {};
+      
+      sortedProposals.forEach(proposal => {
+        const type = proposal[1].type;
+        
+        if (!groupedByType[type]) {
+          groupedByType[type] = [];
+        }
+        
+        groupedByType[type].push(proposal);
+      });
+      
+      // 타입별 그룹을 알파벳순으로 정렬
+      return Object.entries(groupedByType)
+        .sort((a, b) => {
+          const [typeA] = a;
+          const [typeB] = b;
+          return typeA.localeCompare(typeB);
+        })
+        .map(([type, proposals]) => {
+          return {
+            monthKey: type, // 그룹 키로 타입 사용
+            monthName: type, // 표시 이름으로 타입 사용
+            proposals
+          };
+        });
+    }
+    
+    // competitiveness 분할일 때 경쟁 심화도별 그룹화
+    if (splitOption === 'competitiveness') {
+      // 경쟁 심화도 단계 정의 (5단계)
+      const competitivenessLevels = [
+        { key: 'very-high', name: 'Very High Competition (90-100%)', min: 0.9, max: 1.0 },
+        { key: 'high', name: 'High Competition (70-90%)', min: 0.7, max: 0.9 },
+        { key: 'medium', name: 'Medium Competition (50-70%)', min: 0.5, max: 0.7 },
+        { key: 'low', name: 'Low Competition (30-50%)', min: 0.3, max: 0.5 },
+        { key: 'very-low', name: 'Very Low Competition (0-30%)', min: 0.0, max: 0.3 }
+      ];
+      
+      // 경쟁 심화도별로 그룹화
+      const groupedByCompetitiveness: { [levelKey: string]: [string, ProposalData][] } = {};
+      
+      // 각 단계별 빈 그룹 초기화
+      competitivenessLevels.forEach(level => {
+        groupedByCompetitiveness[level.key] = [];
+      });
+      
+      // 제안서를 경쟁 심화도에 따라 그룹화
+      sortedProposals.forEach(proposal => {
+        const comp = calculateCompetitiveness(proposal[1].ratios);
+        
+        // 해당하는 단계 찾기
+        const level = competitivenessLevels.find(
+          level => comp >= level.min && comp < level.max
+        ) || competitivenessLevels[competitivenessLevels.length - 1]; // 기본값은 가장 낮은 단계
+        
+        groupedByCompetitiveness[level.key].push(proposal);
+      });
+      
+      // 경쟁 심화도 단계별로 그룹 반환 (높은 순)
+      return competitivenessLevels
+        .filter(level => groupedByCompetitiveness[level.key].length > 0) // 비어있는 그룹 제외
+        .map(level => ({
+          monthKey: level.key,
+          monthName: level.name,
+          proposals: groupedByCompetitiveness[level.key]
+        }));
+    }
+    
+    // none 옵션이거나 다른 분할 옵션의 경우 그룹화 없이 반환
+    return [{
+      monthKey: 'all',
+      monthName: '',
+      proposals: sortedProposals
+    }];
+  }, [proposals, timeRange, debouncedSearchTerm, splitOption, sortOption]); // 의존성 배열에 splitOption과 sortOption 모두 추가
 
   // searchResults 메모이제이션 수정
   const searchResults: SearchResult<ProposalData>[] = useMemo(() => {
@@ -229,10 +379,10 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
 
   // Reset 버튼 핸들러
   const handleReset = () => {
-    const newSelected = selectedAll ? [] : filteredProposals.map(([id]) => id);
+    const newSelected = selectedAll ? [] : filteredProposalsByMonth.map(({ proposals }) => proposals.map(([id]) => id));
     dispatch(setSelectedProposals({ 
       chainId: chainName, 
-      proposalIds: newSelected 
+      proposalIds: newSelected.flat() 
     }));
     setSelectedAll(!selectedAll);
   };
@@ -313,7 +463,7 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
     }
   }, [timeRange, proposals, chainName, selectedProposals, dispatch]);
 
-  // toggleProposal 동작 시 selectedAll 상태도 업데이트하는 함수 추가
+  // toggleProposal 동작 시 selectedAll 상태도 업데이트하는 함수 수정
   const handleToggleProposal = (id: string) => {
     dispatch(toggleProposal({ 
       chainId: chainName, 
@@ -326,13 +476,88 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
       setSelectedAll(false);
     } else {
       const willBeSelected = [...selectedProposals, id];
-      setSelectedAll(willBeSelected.length === filteredProposals.length);
+      // 모든 제안서의 총 개수 계산
+      const totalProposalCount = filteredProposalsByMonth.reduce((sum, { proposals }) => sum + proposals.length, 0);
+      setSelectedAll(willBeSelected.length === totalProposalCount);
     }
+  };
+
+  // 그룹 선택 핸들러 함수 추가
+  const handleGroupToggle = (proposals: [string, ProposalData][]) => {
+    // 그룹 내 모든 제안서 ID 추출
+    const groupProposalIds = proposals.map(([id]) => id);
+    
+    // 그룹 내 모든 제안서가 이미 선택되어 있는지 확인
+    const allSelected = groupProposalIds.every(id => selectedProposals.includes(id));
+    
+    // 모두 선택되어 있으면 해제, 아니면 선택
+    if (allSelected) {
+      // 선택된 제안서에서 그룹 제안서 제거
+      const newSelectedProposals = selectedProposals.filter(id => !groupProposalIds.includes(id));
+      dispatch(setSelectedProposals({ 
+        chainId: chainName, 
+        proposalIds: newSelectedProposals 
+      }));
+    } else {
+      // 그룹 제안서 추가 (중복 제거)
+      const newSelectedProposals = [...new Set([...selectedProposals, ...groupProposalIds])];
+      dispatch(setSelectedProposals({ 
+        chainId: chainName, 
+        proposalIds: newSelectedProposals 
+      }));
+    }
+    
+    // selectedAll 상태 업데이트
+    const totalProposalCount = filteredProposalsByMonth.reduce((sum, { proposals }) => sum + proposals.length, 0);
+    const newSelectedCount = allSelected 
+      ? selectedProposals.length - groupProposalIds.length 
+      : new Set([...selectedProposals, ...groupProposalIds]).size;
+    
+    setSelectedAll(newSelectedCount === totalProposalCount);
   };
 
   // 제안서 렌더링 로직 수정 - 기준 validator와 추가 validator의 투표 일치 여부에 따라 스타일 적용
   const renderProposals = () => {
-    return filteredProposals.map(([id, proposal]) => {
+    if (!proposals) return null;
+    
+    // 월별/타입별/경쟁심화도별 그룹화된 제안서 렌더링
+    return (
+      <>
+        {filteredProposalsByMonth.map(({ monthKey, monthName, proposals }) => {
+          // 그룹 내 모든 제안서가 선택되었는지 확인
+          const groupProposalIds = proposals.map(([id]) => id);
+          const allSelected = groupProposalIds.length > 0 && 
+            groupProposalIds.every(id => selectedProposals.includes(id));
+          const someSelected = groupProposalIds.some(id => selectedProposals.includes(id));
+          
+          return (
+            <React.Fragment key={monthKey}>
+              {/* 구분선 (모든 정렬 옵션에 대해 표시) - 체크박스와 제안서 개수 추가 */}
+              {monthName && (
+                <div className="col-span-full flex items-center gap-2 mb-2">
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      id={`group-${monthKey}`}
+                      checked={allSelected}
+                      className={`h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 ${
+                        someSelected && !allSelected ? 'bg-blue-200' : ''
+                      }`}
+                      onChange={() => handleGroupToggle(proposals)}
+                    />
+                    <label 
+                      htmlFor={`group-${monthKey}`}
+                      className="text-sm font-medium text-gray-700 whitespace-nowrap cursor-pointer"
+                    >
+                      {monthName} <span className="text-gray-500 text-xs">({proposals.length})</span>
+                    </label>
+                  </div>
+                  <div className="flex-grow border-b border-gray-300"></div>
+                </div>
+              )}
+              
+              {/* 해당 그룹의 제안서들 */}
+              {proposals.map(([id, proposal]) => {
       // 기준 validator의 투표 정보 가져오기 - 구조 확인
       const primaryVoteData = selectedValidator && votingPatterns?.[selectedValidator.voter]?.proposal_votes?.[id];
       const primaryVote = primaryVoteData?.option;
@@ -379,6 +604,7 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
       return (
         <button
           key={id}
+                    data-id={id}
           onClick={() => handleToggleProposal(id)}
           className={`
             aspect-square
@@ -405,8 +631,235 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
           </span>
         </button>
       );
-    });
+              })}
+            </React.Fragment>
+          );
+        })}
+      </>
+    );
   };
+
+  // 드래그 관련 상태 및 참조 추가
+  const gridRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState<{x: number, y: number} | null>(null);
+  const [dragEnd, setDragEnd] = useState<{x: number, y: number} | null>(null);
+  const dragHandlersRef = useRef<{
+    handleMouseMove: ((e: MouseEvent) => void) | null,
+    handleMouseUp: ((e: MouseEvent) => void) | null
+  }>({
+    handleMouseMove: null,
+    handleMouseUp: null
+  });
+
+  // 마우스 다운 이벤트 핸들러 수정
+  const handleMouseDown = (e: React.MouseEvent) => {
+    // 좌클릭만 처리
+    if (e.button !== 0) return;
+    
+    // 텍스트 선택 방지
+    e.preventDefault();
+    
+    // 그리드 내부에서만 드래그 시작
+    if (gridRef.current && gridRef.current.contains(e.target as Node)) {
+      // 버튼 클릭은 무시 (버튼 자체의 클릭 이벤트가 처리)
+      if ((e.target as HTMLElement).tagName === 'BUTTON') return;
+      
+      const rect = gridRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      // 드래그 시작 위치 저장
+      const startPos = { x, y };
+      
+      setIsDragging(true);
+      setDragStart(startPos);
+      setDragEnd(startPos);
+      
+      // 스크롤 관련 변수
+      let scrollInterval: number | null = null;
+      const scrollSpeed = 10; // 스크롤 속도
+      const scrollThreshold = 40; // 경계에서 스크롤 시작할 거리 (픽셀)
+      
+      // 마우스 이벤트 핸들러 정의
+      const handleMouseMove = (e: MouseEvent) => {
+        e.preventDefault();
+        
+        if (gridRef.current) {
+          const gridContainer = gridRef.current.parentElement as HTMLElement;
+          const rect = gridRef.current.getBoundingClientRect();
+          const containerRect = gridContainer.getBoundingClientRect();
+          
+          // 마우스 위치 계산
+          const mouseX = e.clientX;
+          const mouseY = e.clientY;
+          
+          // 그리드 내 상대 좌표 계산 - 가로 및 세로 범위 제한 추가
+          const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+          
+          // 세로 범위 제한 - 스크롤 위치 고려
+          const totalHeight = gridRef.current.scrollHeight;
+          const visibleHeight = rect.height;
+          const scrollTop = gridContainer.scrollTop;
+          const relativeY = e.clientY - rect.top;
+          
+          // 스크롤 위치를 고려한 세로 좌표 계산
+          const y = Math.max(0, Math.min(relativeY, visibleHeight));
+          
+          // 드래그 종료 위치 업데이트
+          setDragEnd({ x, y });
+          
+          // 자동 스크롤 처리
+          if (scrollInterval) {
+            clearInterval(scrollInterval);
+            scrollInterval = null;
+          }
+          
+          // 마우스가 컨테이너 하단 근처에 있으면 아래로 스크롤
+          if (mouseY > containerRect.bottom - scrollThreshold) {
+            scrollInterval = window.setInterval(() => {
+              // 스크롤 가능한 최대 위치 계산
+              const maxScrollTop = gridRef.current!.scrollHeight - containerRect.height;
+              
+              // 최대 스크롤 위치를 초과하지 않도록 제한
+              if (gridContainer.scrollTop < maxScrollTop) {
+                gridContainer.scrollTop += scrollSpeed;
+                
+                // 스크롤 후 드래그 영역 업데이트
+                if (gridRef.current) {
+                  const updatedRect = gridRef.current.getBoundingClientRect();
+                  // 가로 범위 제한 유지
+                  const updatedX = Math.max(0, Math.min(mouseX - updatedRect.left, updatedRect.width));
+                  // 세로 범위 제한 유지
+                  const updatedY = Math.max(0, Math.min(mouseY - updatedRect.top, updatedRect.height));
+                  setDragEnd({ x: updatedX, y: updatedY });
+                }
+              } else {
+                // 최대 스크롤에 도달하면 인터벌 정리
+                clearInterval(scrollInterval);
+                scrollInterval = null;
+              }
+            }, 16) as unknown as number;
+          }
+          // 마우스가 컨테이너 상단 근처에 있으면 위로 스크롤
+          else if (mouseY < containerRect.top + scrollThreshold) {
+            scrollInterval = window.setInterval(() => {
+              // 최소 스크롤 위치를 초과하지 않도록 제한
+              if (gridContainer.scrollTop > 0) {
+                gridContainer.scrollTop -= scrollSpeed;
+                
+                // 스크롤 후 드래그 영역 업데이트
+                if (gridRef.current) {
+                  const updatedRect = gridRef.current.getBoundingClientRect();
+                  // 가로 범위 제한 유지
+                  const updatedX = Math.max(0, Math.min(mouseX - updatedRect.left, updatedRect.width));
+                  // 세로 범위 제한 유지
+                  const updatedY = Math.max(0, Math.min(mouseY - updatedRect.top, updatedRect.height));
+                  setDragEnd({ x: updatedX, y: updatedY });
+                }
+              } else {
+                // 최소 스크롤에 도달하면 인터벌 정리
+                clearInterval(scrollInterval);
+                scrollInterval = null;
+              }
+            }, 16) as unknown as number;
+          }
+        }
+      };
+      
+      const handleMouseUp = (e: MouseEvent) => {
+        // 스크롤 인터벌 정리
+        if (scrollInterval) {
+          clearInterval(scrollInterval);
+          scrollInterval = null;
+        }
+        
+        if (gridRef.current) {
+          const rect = gridRef.current.getBoundingClientRect();
+          // 가로 범위 제한 추가
+          const finalX = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+          // 세로 범위 제한 추가
+          const finalY = Math.max(0, Math.min(e.clientY - rect.top, rect.height));
+          
+          // 마지막 위치 업데이트
+          setDragEnd({ x: finalX, y: finalY });
+          
+          // 드래그 영역 계산 - 시작 위치를 클로저에서 직접 사용
+          const minX = Math.min(startPos.x, finalX);
+          const maxX = Math.max(startPos.x, finalX);
+          const minY = Math.min(startPos.y, finalY);
+          const maxY = Math.max(startPos.y, finalY);
+          
+          // 드래그 영역 내의 버튼 요소들 찾기
+          const buttons = gridRef.current.querySelectorAll('button[data-id]');
+          const selectedButtons: HTMLButtonElement[] = [];
+          
+          buttons.forEach(button => {
+            const rect = button.getBoundingClientRect();
+            const gridRect = gridRef.current!.getBoundingClientRect();
+            
+            // 버튼의 중심점 계산
+            const buttonX = rect.left - gridRect.left + rect.width / 2;
+            const buttonY = rect.top - gridRect.top + rect.height / 2;
+            
+            // 드래그 영역과 버튼 중심점 교차 확인
+            if (buttonX >= minX && buttonX <= maxX && buttonY >= minY && buttonY <= maxY) {
+              selectedButtons.push(button as HTMLButtonElement);
+            }
+          });
+          
+          // 선택된 버튼들의 ID 추출
+          const proposalIds = selectedButtons.map(button => button.getAttribute('data-id')).filter(Boolean) as string[];
+          
+          // 콘솔에 선택된 버튼 정보 출력 (디버깅용)
+          console.log('Selected buttons:', selectedButtons.length);
+          console.log('Selected proposal IDs:', proposalIds);
+          
+          if (proposalIds.length > 0) {
+            // 항상 기존 선택에 추가
+            const newSelectedProposals = [...new Set([...selectedProposals, ...proposalIds])];
+            dispatch(setSelectedProposals({ 
+              chainId: chainName, 
+              proposalIds: newSelectedProposals 
+            }));
+          }
+        }
+        
+        // 드래그 상태 초기화 (중요!)
+        setIsDragging(false);
+        setDragStart(null);
+        setDragEnd(null);
+        
+        // 문서 레벨 이벤트 리스너 제거
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+        
+        // 핸들러 참조 초기화
+        dragHandlersRef.current.handleMouseMove = null;
+        dragHandlersRef.current.handleMouseUp = null;
+      };
+      
+      // 핸들러 참조 저장
+      dragHandlersRef.current.handleMouseMove = handleMouseMove;
+      dragHandlersRef.current.handleMouseUp = handleMouseUp;
+      
+      // 문서 레벨 이벤트 리스너 추가
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+    }
+  };
+
+  // 컴포넌트 정리 시 이벤트 리스너 제거
+  useEffect(() => {
+    return () => {
+      if (dragHandlersRef.current.handleMouseMove) {
+        document.removeEventListener('mousemove', dragHandlersRef.current.handleMouseMove);
+      }
+      if (dragHandlersRef.current.handleMouseUp) {
+        document.removeEventListener('mouseup', dragHandlersRef.current.handleMouseUp);
+      }
+    };
+  }, []);
 
   return (
     <div className="h-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">
@@ -446,7 +899,23 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
           </div>
         </div>
 
-        {/* 정렬 드롭다운 */}
+        {/* 분할 및 정렬 드롭다운 */}
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600">Split by:</span>
+            <select
+              className="px-3 py-1 text-sm bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={splitOption}
+              onChange={(e) => setSplitOption(e.target.value as SplitOption)}
+            >
+              {SPLIT_OPTIONS.map(option => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          
         <div className="flex items-center gap-2">
           <span className="text-sm text-gray-600">Sort by:</span>
           <select
@@ -460,6 +929,7 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
               </option>
             ))}
           </select>
+          </div>
         </div>
 
         {/* 범례 섹션 */}
@@ -496,11 +966,26 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
 
         {/* 버튼 그리드 컨테이너 */}
         <div className="flex-1 overflow-auto">
-          <div className="grid auto-rows-fr gap-2 p-2"
+          <div 
+            ref={gridRef}
+            className="grid auto-rows-fr gap-2 p-2 relative select-none"
             style={{
               gridTemplateColumns: 'repeat(auto-fit, minmax(min(60px, 100%), 1fr))'
             }}
+            onMouseDown={handleMouseDown}
           >
+            {/* 드래그 선택 영역 */}
+            {isDragging && dragStart && dragEnd && (
+              <div 
+                className="absolute bg-blue-200 bg-opacity-40 border border-blue-400 z-10 pointer-events-none"
+                style={{
+                  left: Math.min(dragStart.x, dragEnd.x) + 'px',
+                  top: Math.min(dragStart.y, dragEnd.y) + 'px',
+                  width: Math.abs(dragEnd.x - dragStart.x) + 'px',
+                  height: Math.abs(dragEnd.y - dragStart.y) + 'px'
+                }}
+              />
+            )}
             {renderProposals()}
           </div>
         </div>
