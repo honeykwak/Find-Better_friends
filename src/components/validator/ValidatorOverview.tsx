@@ -15,6 +15,9 @@ const ANIMATION_DURATION = 500;
 const BATCH_SIZE = 50;
 const STAGGER_DELAY = 20;
 
+// 좌표 타입 정의
+type CoordinateType = 'mds' | 'tsne';
+
 interface EnhancedValidatorData extends ValidatorData {
   isAnimated: boolean;
   animationBegin: number;
@@ -29,6 +32,9 @@ export const ValidatorOverview = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [hoveredValidator, setHoveredValidator] = useState<string | null>(null);
+  
+  // 좌표 타입 상태 추가
+  const [coordinateType, setCoordinateType] = useState<CoordinateType>('mds');
 
   // 글로벌 좌표 범위 상태 추가
   const [globalXMin, setGlobalXMin] = useState<number | null>(null);
@@ -82,6 +88,25 @@ export const ValidatorOverview = () => {
     setScale(1);
     setPosition({ x: 0, y: 0 });
   }, [selectedChain, zoom]);
+
+  // 좌표 타입이 변경될 때도 뷰 리셋
+  useEffect(() => {
+    if (!svgRef.current || !gRef.current) return;
+    
+    const svg = d3.select(svgRef.current);
+    
+    // 트랜지션과 함께 초기 상태로 리셋
+    svg.transition()
+      .duration(750)
+      .call(
+        zoom.transform,
+        d3.zoomIdentity
+      );
+    
+    // 상태 업데이트
+    setScale(1);
+    setPosition({ x: 0, y: 0 });
+  }, [coordinateType, zoom]);
 
   const createValidatorChainMap = useCallback((data: CoordinateData) => {
     const mapping = new Map<string, Set<string>>();
@@ -179,17 +204,62 @@ export const ValidatorOverview = () => {
           tsne_y: d.tsne_y
         }));
       } else {
-        // 개별 체인의 경우
-        currentData = (coordinateData.chain_coords_dict?.[selectedChain] || []).map((d: ValidatorData) => ({
-          voter: d.voter,
-          x: d.mds_x ?? 0,
-          y: d.mds_y ?? 0,
-          cluster: d.cluster,
-          mds_x: d.mds_x,
-          mds_y: d.mds_y,
-          tsne_x: d.tsne_x,
-          tsne_y: d.tsne_y
-        }));
+        // 개별 체인의 경우 - 선택된 좌표 타입에 따라 다른 좌표 사용
+        const chainValidators = coordinateData.chain_coords_dict?.[selectedChain] || [];
+        
+        if (coordinateType === 'mds') {
+          // MDS 좌표 사용
+          const mdsXValues = chainValidators.map((d: ValidatorData) => d.mds_x ?? 0);
+          const mdsYValues = chainValidators.map((d: ValidatorData) => d.mds_y ?? 0);
+          const mdsXMin = Math.min(...mdsXValues);
+          const mdsXMax = Math.max(...mdsXValues);
+          const mdsYMin = Math.min(...mdsYValues);
+          const mdsYMax = Math.max(...mdsYValues);
+          
+          const mdsXScale = d3.scaleLinear()
+            .domain([mdsXMin, mdsXMax])
+            .range([-0.5, 0.5]);
+          const mdsYScale = d3.scaleLinear()
+            .domain([mdsYMin, mdsYMax])
+            .range([-0.5, 0.5]);
+          
+          currentData = chainValidators.map((d: ValidatorData) => ({
+            voter: d.voter,
+            x: mdsXScale(d.mds_x ?? 0),
+            y: mdsYScale(d.mds_y ?? 0),
+            cluster: d.cluster,
+            mds_x: d.mds_x,
+            mds_y: d.mds_y,
+            tsne_x: d.tsne_x,
+            tsne_y: d.tsne_y
+          }));
+        } else {
+          // TSNE 좌표 사용
+          const tsneXValues = chainValidators.map((d: ValidatorData) => d.tsne_x ?? 0);
+          const tsneYValues = chainValidators.map((d: ValidatorData) => d.tsne_y ?? 0);
+          const tsneXMin = Math.min(...tsneXValues);
+          const tsneXMax = Math.max(...tsneXValues);
+          const tsneYMin = Math.min(...tsneYValues);
+          const tsneYMax = Math.max(...tsneYValues);
+          
+          const tsneXScale = d3.scaleLinear()
+            .domain([tsneXMin, tsneXMax])
+            .range([-0.5, 0.5]);
+          const tsneYScale = d3.scaleLinear()
+            .domain([tsneYMin, tsneYMax])
+            .range([-0.5, 0.5]);
+          
+          currentData = chainValidators.map((d: ValidatorData) => ({
+            voter: d.voter,
+            x: tsneXScale(d.tsne_x ?? 0),
+            y: tsneYScale(d.tsne_y ?? 0),
+            cluster: d.cluster,
+            mds_x: d.mds_x,
+            mds_y: d.mds_y,
+            tsne_x: d.tsne_x,
+            tsne_y: d.tsne_y
+          }));
+        }
       }
 
       const processedData = currentData.map((d: ValidatorData, index: number) => ({
@@ -203,7 +273,7 @@ export const ValidatorOverview = () => {
       console.error('Error processing display data:', error);
       return [];
     }
-  }, [coordinateData, selectedChain]);
+  }, [coordinateData, selectedChain, coordinateType]);
 
   const chartBounds = useMemo(() => {
     if (globalXMin === null || globalXMax === null || globalYMin === null || globalYMax === null) {
@@ -582,6 +652,11 @@ export const ValidatorOverview = () => {
       );
   }, [selectedClusters]);
 
+  // 좌표 타입 전환 함수
+  const toggleCoordinateType = () => {
+    setCoordinateType(prev => prev === 'mds' ? 'tsne' : 'mds');
+  };
+
   if (isLoading) {
     return (
       <Card className="h-full w-full">
@@ -672,6 +747,18 @@ export const ValidatorOverview = () => {
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4">
             <h2 className="text-xl font-semibold">Validator Overview</h2>
+            
+            {/* 좌표 타입 전환 버튼 - 개별 체인 선택 시에만 표시 */}
+            {selectedChain && (
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={toggleCoordinateType}
+              >
+                {coordinateType === 'mds' ? 'Switch to t-SNE' : 'Switch to MDS'}
+              </Button>
+            )}
+            
             <Button
               variant="secondary"
               size="sm"
