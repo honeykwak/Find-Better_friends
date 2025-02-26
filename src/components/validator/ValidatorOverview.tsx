@@ -709,7 +709,7 @@ export const ValidatorOverview = () => {
     if (searchTerm) {
       const lowerSearchTerm = searchTerm.toLowerCase();
       
-      return filteredResults.sort((a, b) => {
+      return filteredResults.sort((a: SearchResult<ValidatorData>, b: SearchResult<ValidatorData>) => {
         const aLower = a.text.toLowerCase();
         const bLower = b.text.toLowerCase();
         
@@ -727,7 +727,7 @@ export const ValidatorOverview = () => {
     }
     
     // 검색어가 없는 경우 알파벳 순으로 정렬
-    return filteredResults.sort((a, b) => 
+    return filteredResults.sort((a: SearchResult<ValidatorData>, b: SearchResult<ValidatorData>) => 
       a.text.toLowerCase().localeCompare(b.text.toLowerCase())
     );
   }, [searchTerm, displayData, isSearchFocused, selectedClusters]);
