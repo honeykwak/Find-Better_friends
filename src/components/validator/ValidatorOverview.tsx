@@ -435,7 +435,7 @@ export const ValidatorOverview = () => {
     y: number;
   } | null>(null);
 
-  // 노드 스타일링 함수들 분리
+  // 노드 스타일링 함수들 수정
   const applyStaticStyles = (selection: d3.Selection<SVGCircleElement, EnhancedValidatorData, any, any>) => {
     selection
       .attr('cx', d => scaleRef.current.xScale(d.x))
@@ -444,7 +444,11 @@ export const ValidatorOverview = () => {
         currentValidator?.voter === d.voter ? 8 : 
         additionalValidator?.voter === d.voter ? 7 : 5
       )
-      .style('fill', d => CLUSTER_COLORS[d.cluster])
+      .style('fill', d => 
+        selectedClusters.length === 0 || selectedClusters.includes(d.cluster)
+          ? CLUSTER_COLORS[d.cluster]
+          : "#E5E7EB" // 연한 회색으로 변경 (필터링에서 제외된 클러스터)
+      )
       .style('cursor', 'pointer')
       .style('stroke', d => 
         currentValidator?.voter === d.voter 
@@ -476,12 +480,12 @@ export const ValidatorOverview = () => {
         currentValidator?.voter === d.voter ? 8 : 
         additionalValidator?.voter === d.voter ? 7 : 5
       )
-      .style('fill', d => CLUSTER_COLORS[d.cluster])
-      .style('opacity', d => 
+      .style('fill', d => 
         selectedClusters.length === 0 || selectedClusters.includes(d.cluster)
-          ? 1
-          : 0.2
+          ? CLUSTER_COLORS[d.cluster]
+          : "#E5E7EB" // 연한 회색으로 변경 (필터링에서 제외된 클러스터)
       )
+      .style('opacity', 1) // 항상 완전 불투명하게 설정
       .style('stroke', d => 
         currentValidator?.voter === d.voter 
           ? "#3B82F6" // 기준 validator - 파란색
@@ -637,7 +641,42 @@ export const ValidatorOverview = () => {
     };
   }, []);
 
-  // useEffect를 추가하여 selectedClusters가 변경될 때마다 노드 스타일을 업데이트
+  // 노드 렌더링 순서를 조정하는 함수
+  const updateNodeOrder = useCallback(() => {
+    if (!gRef.current) return;
+    
+    d3.select(gRef.current)
+      .selectAll<SVGCircleElement, EnhancedValidatorData>('circle')
+      .sort((a, b) => {
+        // 1. 현재 선택된 validator, 추가 validator, 호버된 validator를 최상위로
+        const aIsSpecial = 
+          a.voter === currentValidator?.voter || 
+          a.voter === additionalValidator?.voter || 
+          a.voter === hoveredValidator;
+        
+        const bIsSpecial = 
+          b.voter === currentValidator?.voter || 
+          b.voter === additionalValidator?.voter || 
+          b.voter === hoveredValidator;
+        
+        if (aIsSpecial && !bIsSpecial) return 1;
+        if (!aIsSpecial && bIsSpecial) return -1;
+        
+        // 2. 선택된 클러스터의 노드를 그 다음으로
+        if (selectedClusters.length > 0) {
+          const aSelected = selectedClusters.includes(a.cluster);
+          const bSelected = selectedClusters.includes(b.cluster);
+          
+          if (aSelected && !bSelected) return 1;
+          if (!aSelected && bSelected) return -1;
+        }
+        
+        // 3. 기본적으로는 클러스터 번호로 정렬
+        return a.cluster - b.cluster;
+      });
+  }, [currentValidator, additionalValidator, hoveredValidator, selectedClusters]);
+
+  // selectedClusters가 변경될 때 색상 업데이트 및 노드 순서 조정
   useEffect(() => {
     if (!gRef.current) return;
 
@@ -645,12 +684,21 @@ export const ValidatorOverview = () => {
       .selectAll<SVGCircleElement, EnhancedValidatorData>('circle')
       .transition()
       .duration(200)
-      .style('opacity', d => 
+      .style('fill', d => 
         selectedClusters.length === 0 || selectedClusters.includes(d.cluster)
-          ? 1
-          : 0.2
-      );
-  }, [selectedClusters]);
+          ? CLUSTER_COLORS[d.cluster]
+          : "#E5E7EB" // 연한 회색으로 변경 (필터링에서 제외된 클러스터)
+      )
+      .style('opacity', 1); // 항상 완전 불투명하게 설정
+    
+    // 노드 순서 업데이트
+    updateNodeOrder();
+  }, [selectedClusters, updateNodeOrder]);
+
+  // 선택된 validator, 추가 validator, 호버된 validator가 변경될 때도 노드 순서 업데이트
+  useEffect(() => {
+    updateNodeOrder();
+  }, [currentValidator, additionalValidator, hoveredValidator, updateNodeOrder]);
 
   // 좌표 타입 전환 함수
   const toggleCoordinateType = () => {
