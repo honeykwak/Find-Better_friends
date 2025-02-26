@@ -36,12 +36,6 @@ export const ValidatorOverview = () => {
   // 좌표 타입 상태 추가
   const [coordinateType, setCoordinateType] = useState<CoordinateType>('mds');
 
-  // 글로벌 좌표 범위 상태 추가
-  const [globalXMin, setGlobalXMin] = useState<number | null>(null);
-  const [globalXMax, setGlobalXMax] = useState<number | null>(null);
-  const [globalYMin, setGlobalYMin] = useState<number | null>(null);
-  const [globalYMax, setGlobalYMax] = useState<number | null>(null);
-
   const selectedChain = useAppSelector(state => state.chain.selectedChain);
   const selectedClusters = useAppSelector(state => state.chain.selectedClusters);
   const currentValidator = useAppSelector(state => state.validator.selectedValidator);
@@ -133,20 +127,6 @@ export const ValidatorOverview = () => {
       
       const mapping = createValidatorChainMap(data);
       setValidatorChainMap(mapping);
-
-      // 글로벌 좌표 범위 계산
-      const allValidators = [
-        ...(data.coords_dict as any)?.coordinates || [],
-        ...Object.values(data.chain_coords_dict).flat()
-      ];
-
-      const xValues = allValidators.map((v: ValidatorData) => v.mds_x ?? 0);
-      const yValues = allValidators.map((v: ValidatorData) => v.mds_y ?? 0);
-
-      setGlobalXMin(Math.min(...xValues));
-      setGlobalXMax(Math.max(...xValues));
-      setGlobalYMin(Math.min(...yValues));
-      setGlobalYMax(Math.max(...yValues));
     } catch (error) {
       console.error('Error loading coordinates:', error);
       setError('Failed to load validator data.');
@@ -185,13 +165,17 @@ export const ValidatorOverview = () => {
         const yMin = Math.min(...yValues);
         const yMax = Math.max(...yValues);
         
-        // 중앙 정렬을 위한 스케일 조정
+        // 여백 비율 설정 (5%)
+        const xPadding = (xMax - xMin) * 0.05;
+        const yPadding = (yMax - yMin) * 0.05;
+        
+        // 화면을 최대한 활용하는 스케일 조정
         const xScale = d3.scaleLinear()
-          .domain([xMin, xMax])
-          .range([-0.5, 0.5]);
+          .domain([xMin - xPadding, xMax + xPadding])
+          .range([0, 1]);  // 0-1 범위로 변경
         const yScale = d3.scaleLinear()
-          .domain([yMin, yMax])
-          .range([-0.5, 0.5]);
+          .domain([yMin - yPadding, yMax + yPadding])
+          .range([0, 1]);  // 0-1 범위로 변경
         
         currentData = coordinatesData.map((d: ValidatorData) => ({
           voter: d.voter,
@@ -216,12 +200,16 @@ export const ValidatorOverview = () => {
           const mdsYMin = Math.min(...mdsYValues);
           const mdsYMax = Math.max(...mdsYValues);
           
+          // 여백 비율 설정 (5%)
+          const xPadding = (mdsXMax - mdsXMin) * 0.05;
+          const yPadding = (mdsYMax - mdsYMin) * 0.05;
+          
           const mdsXScale = d3.scaleLinear()
-            .domain([mdsXMin, mdsXMax])
-            .range([-0.5, 0.5]);
+            .domain([mdsXMin - xPadding, mdsXMax + xPadding])
+            .range([0, 1]);
           const mdsYScale = d3.scaleLinear()
-            .domain([mdsYMin, mdsYMax])
-            .range([-0.5, 0.5]);
+            .domain([mdsYMin - yPadding, mdsYMax + yPadding])
+            .range([0, 1]);
           
           currentData = chainValidators.map((d: ValidatorData) => ({
             voter: d.voter,
@@ -242,12 +230,16 @@ export const ValidatorOverview = () => {
           const tsneYMin = Math.min(...tsneYValues);
           const tsneYMax = Math.max(...tsneYValues);
           
+          // 여백 비율 설정 (5%)
+          const xPadding = (tsneXMax - tsneXMin) * 0.05;
+          const yPadding = (tsneYMax - tsneYMin) * 0.05;
+          
           const tsneXScale = d3.scaleLinear()
-            .domain([tsneXMin, tsneXMax])
-            .range([-0.5, 0.5]);
+            .domain([tsneXMin - xPadding, tsneXMax + xPadding])
+            .range([0, 1]);
           const tsneYScale = d3.scaleLinear()
-            .domain([tsneYMin, tsneYMax])
-            .range([-0.5, 0.5]);
+            .domain([tsneYMin - yPadding, tsneYMax + yPadding])
+            .range([0, 1]);
           
           currentData = chainValidators.map((d: ValidatorData) => ({
             voter: d.voter,
@@ -274,27 +266,6 @@ export const ValidatorOverview = () => {
       return [];
     }
   }, [coordinateData, selectedChain, coordinateType]);
-
-  const chartBounds = useMemo(() => {
-    if (globalXMin === null || globalXMax === null || globalYMin === null || globalYMax === null) {
-      return {
-        xExtent: [-10, 10],
-        yExtent: [-10, 10],
-        xPadding: 1,
-        yPadding: 1
-      };
-    }
-
-    const xPadding = (globalXMax - globalXMin) * 0.05;
-    const yPadding = (globalYMax - globalYMin) * 0.05;
-
-    return { 
-      xExtent: [globalXMin - xPadding, globalXMax + xPadding], 
-      yExtent: [globalYMin - yPadding, globalYMax + yPadding],
-      xPadding,
-      yPadding 
-    };
-  }, [globalXMin, globalXMax, globalYMin, globalYMax]);
 
   const handleClick = useCallback((data: any) => {
     if (data && data.payload) {
@@ -522,20 +493,20 @@ export const ValidatorOverview = () => {
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
-    // 스케일 설정 및 ref 업데이트
+    // 스케일 설정 및 ref 업데이트 - 0-1 범위의 데이터를 SVG 좌표로 변환
     scaleRef.current.xScale = d3.scaleLinear()
-      .domain([chartBounds.xExtent[0], chartBounds.xExtent[1]])
+      .domain([0, 1])
       .range([margin.left, innerWidth]);
 
     scaleRef.current.yScale = d3.scaleLinear()
-      .domain([chartBounds.yExtent[0], chartBounds.yExtent[1]])
-      .range([innerHeight, margin.top]);
+      .domain([0, 1])
+      .range([margin.top, innerHeight]);
 
     // 줌 설정 수정
     const zoom = d3.zoom<SVGSVGElement, unknown>()
       .scaleExtent([1, 3.5])
-      .translateExtent([[0, 0], [width, height]])  // 패닝 범위를 SVG 크기로 제한
-      .extent([[0, 0], [width, height]])           // 줌 범위도 SVG 크기로 제한
+      .translateExtent([[0, 0], [width, height]])
+      .extent([[0, 0], [width, height]])
       .on('zoom', (event) => {
         const { transform } = event;
         g.attr('transform', transform.toString());
@@ -585,7 +556,7 @@ export const ValidatorOverview = () => {
         setHoveredValidator(null);
         setTooltipData(null);
       });
-  }, [displayData, chartBounds, handleClick, currentValidator, additionalValidator, hoveredValidator, searchTerm]);
+  }, [displayData, handleClick, currentValidator, additionalValidator, hoveredValidator, searchTerm]);
 
   // SVG에 mousedown 이벤트 핸들러 연결
   useEffect(() => {
@@ -704,6 +675,54 @@ export const ValidatorOverview = () => {
   const toggleCoordinateType = () => {
     setCoordinateType(prev => prev === 'mds' ? 'tsne' : 'mds');
   };
+
+  // 브라우저 창 크기 변화 감지를 위한 useEffect 추가
+  useEffect(() => {
+    if (!svgRef.current) return;
+    
+    // ResizeObserver 생성
+    const resizeObserver = new ResizeObserver(() => {
+      // 차트 컨테이너 크기가 변경되면 차트 다시 그리기
+      if (displayData.length > 0 && svgRef.current && gRef.current) {
+        const svg = d3.select(svgRef.current);
+        const g = d3.select(gRef.current);
+        const width = svgRef.current.clientWidth;
+        const height = svgRef.current.clientHeight;
+
+        // margin 설정
+        const margin = { top: 20, right: 20, bottom: 20, left: 20 };
+        const innerWidth = width - margin.left - margin.right;
+        const innerHeight = height - margin.top - margin.bottom;
+
+        // 스케일 업데이트
+        scaleRef.current.xScale = d3.scaleLinear()
+          .domain([0, 1])
+          .range([margin.left, innerWidth]);
+
+        scaleRef.current.yScale = d3.scaleLinear()
+          .domain([0, 1])
+          .range([margin.top, innerHeight]);
+
+        // 노드 위치 업데이트
+        g.selectAll<SVGCircleElement, EnhancedValidatorData>('circle')
+          .attr('cx', d => scaleRef.current.xScale(d.x))
+          .attr('cy', d => scaleRef.current.yScale(d.y));
+        
+        // 줌 리셋
+        svg.call(zoom.transform, d3.zoomIdentity);
+        setScale(1);
+        setPosition({ x: 0, y: 0 });
+      }
+    });
+
+    // SVG 요소 관찰 시작
+    resizeObserver.observe(svgRef.current);
+
+    // 컴포넌트 언마운트 시 관찰 중지
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [displayData, zoom]);
 
   if (isLoading) {
     return (
