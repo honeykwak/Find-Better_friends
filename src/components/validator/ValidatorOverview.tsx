@@ -267,6 +267,42 @@ export const ValidatorOverview = () => {
     }
   }, [coordinateData, selectedChain, coordinateType]);
 
+  // 노드 렌더링 순서를 조정하는 함수를 먼저 선언
+  const updateNodeOrder = useCallback(() => {
+    if (!gRef.current) return;
+    
+    d3.select(gRef.current)
+      .selectAll<SVGCircleElement, EnhancedValidatorData>('circle')
+      .sort((a, b) => {
+        // 1. 현재 선택된 validator, 추가 validator, 호버된 validator를 최상위로
+        const aIsSpecial = 
+          a.voter === currentValidator?.voter || 
+          a.voter === additionalValidator?.voter || 
+          a.voter === hoveredValidator;
+        
+        const bIsSpecial = 
+          b.voter === currentValidator?.voter || 
+          b.voter === additionalValidator?.voter || 
+          b.voter === hoveredValidator;
+        
+        if (aIsSpecial && !bIsSpecial) return 1;
+        if (!aIsSpecial && bIsSpecial) return -1;
+        
+        // 2. 선택된 클러스터의 노드를 그 다음으로
+        if (selectedClusters.length > 0) {
+          const aSelected = selectedClusters.includes(a.cluster);
+          const bSelected = selectedClusters.includes(b.cluster);
+          
+          if (aSelected && !bSelected) return 1;
+          if (!aSelected && bSelected) return -1;
+        }
+        
+        // 3. 기본적으로는 클러스터 번호로 정렬
+        return a.cluster - b.cluster;
+      });
+  }, [currentValidator, additionalValidator, hoveredValidator, selectedClusters]);
+
+  // 그 다음 handleClick 함수 선언
   const handleClick = useCallback((data: any) => {
     if (data && data.payload) {
       const validator = data.payload;
@@ -277,30 +313,52 @@ export const ValidatorOverview = () => {
         dispatch(setSelectedValidator(null));
         dispatch(setAdditionalValidator(null)); // 추가 validator도 함께 해제
         dispatch(setValidatorChains([]));
-        return;
-      }
-      
+      } 
       // 추가 validator와 동일한 경우 추가 validator 선택 해제
-      if (additionalValidator?.voter === validator.voter) {
+      else if (additionalValidator?.voter === validator.voter) {
         console.log('Deselecting additional validator');
         dispatch(setAdditionalValidator(null));
-        return;
       }
-      
-      const validatorChains = Array.from(validatorChainMap.get(validator.voter) || []);
-      
       // 이미 기준 validator가 선택된 상태라면 추가 validator로 설정
-      if (currentValidator) {
+      else if (currentValidator) {
         console.log('Selecting additional validator:', validator.voter);
         dispatch(setAdditionalValidator(validator));
-      } else {
-        // 기준 validator가 없는 경우 기준 validator로 설정
+      } 
+      // 기준 validator가 없는 경우 기준 validator로 설정
+      else {
         console.log('Selecting validator:', validator.voter);
         dispatch(setSelectedValidator(validator));
+        const validatorChains = Array.from(validatorChainMap.get(validator.voter) || []);
         dispatch(setValidatorChains(validatorChains));
       }
+      
+      // 선택 후 즉시 모든 노드의 스타일 업데이트
+      if (gRef.current) {
+        d3.select(gRef.current)
+          .selectAll<SVGCircleElement, EnhancedValidatorData>('circle')
+          .each(function(d) {
+            const nodeRadius = 
+              (validator.voter === d.voter || currentValidator?.voter === d.voter) ? 8 : 
+              additionalValidator?.voter === d.voter ? 7 : 5;
+            
+            const isHighlighted = 
+              validator.voter === d.voter || 
+              currentValidator?.voter === d.voter || 
+              additionalValidator?.voter === d.voter || 
+              hoveredValidator === d.voter || 
+              (searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase()));
+            
+            d3.select(this)
+              .style('stroke-width', isHighlighted ? nodeRadius / 2 : 0);
+          });
+        
+        // 노드 순서도 즉시 업데이트
+        updateNodeOrder();
+      }
+      
+      return;
     }
-  }, [dispatch, currentValidator, additionalValidator, validatorChainMap]);
+  }, [dispatch, currentValidator, additionalValidator, validatorChainMap, hoveredValidator, searchTerm, updateNodeOrder]);
 
   // 줌 핸들러 수정
   const handleWheel = useCallback((e: WheelEvent) => {
@@ -406,7 +464,7 @@ export const ValidatorOverview = () => {
     y: number;
   } | null>(null);
 
-  // 노드 스타일링 함수들 수정
+  // 노드 스타일링 함수들 수정 - 노드 크기에 비례한 테두리 두께 적용
   const applyStaticStyles = (selection: d3.Selection<SVGCircleElement, EnhancedValidatorData, any, any>) => {
     selection
       .attr('cx', d => scaleRef.current.xScale(d.x))
@@ -421,26 +479,53 @@ export const ValidatorOverview = () => {
           : "#E5E7EB" // 연한 회색으로 변경 (필터링에서 제외된 클러스터)
       )
       .style('cursor', 'pointer')
-      .style('stroke', d => 
-        currentValidator?.voter === d.voter 
+      .style('stroke', d => {
+        // 클러스터 필터링 적용
+        const passesClusterFilter = selectedClusters.length === 0 || 
+                                   selectedClusters.includes(d.cluster);
+        
+        // 검색어 매치 여부
+        const matchesSearchTerm = searchTerm && 
+                                 d.voter.toLowerCase().includes(searchTerm.toLowerCase());
+        
+        // 검색 하이라이트는 클러스터 필터를 통과한 경우에만 적용
+        const shouldHighlightSearch = passesClusterFilter && matchesSearchTerm && isSearchFocused;
+        
+        return currentValidator?.voter === d.voter 
           ? "#3B82F6" // 기준 validator - 파란색
           : additionalValidator?.voter === d.voter
             ? "#10B981" // 추가 validator - 녹색
             : hoveredValidator === d.voter
               ? "#8B5CF6" // 호버 - 보라색
-              : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
+              : shouldHighlightSearch
                 ? "#93C5FD" // 검색 결과 - 연한 파란색
-                : "none"
-      )
-      .style('stroke-width', d =>
-        currentValidator?.voter === d.voter || 
-        additionalValidator?.voter === d.voter || 
-        hoveredValidator === d.voter
-          ? 3
-          : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
-            ? 1.5
-            : 0
-      );
+                : "none";
+      })
+      .style('stroke-width', d => {
+        // 클러스터 필터링 적용
+        const passesClusterFilter = selectedClusters.length === 0 || 
+                                   selectedClusters.includes(d.cluster);
+        
+        // 검색어 매치 여부
+        const matchesSearchTerm = searchTerm && 
+                                 d.voter.toLowerCase().includes(searchTerm.toLowerCase());
+        
+        // 검색 하이라이트는 클러스터 필터를 통과한 경우에만 적용
+        const shouldHighlightSearch = passesClusterFilter && matchesSearchTerm && isSearchFocused;
+        
+        // 노드 반지름 계산
+        const nodeRadius = 
+          currentValidator?.voter === d.voter ? 8 : 
+          additionalValidator?.voter === d.voter ? 7 : 5;
+        
+        // 강조 표시가 필요한 경우 노드 반지름의 3/4을 테두리 두께로 설정
+        return (currentValidator?.voter === d.voter || 
+               additionalValidator?.voter === d.voter || 
+               hoveredValidator === d.voter || 
+               shouldHighlightSearch)
+                 ? nodeRadius * 0.75
+                 : 0;
+      });
   };
 
   const applyTransitionStyles = (transition: d3.Transition<SVGCircleElement, EnhancedValidatorData, any, any>) => {
@@ -457,26 +542,53 @@ export const ValidatorOverview = () => {
           : "#E5E7EB" // 연한 회색으로 변경 (필터링에서 제외된 클러스터)
       )
       .style('opacity', 1) // 항상 완전 불투명하게 설정
-      .style('stroke', d => 
-        currentValidator?.voter === d.voter 
+      .style('stroke', d => {
+        // 클러스터 필터링 적용
+        const passesClusterFilter = selectedClusters.length === 0 || 
+                                   selectedClusters.includes(d.cluster);
+        
+        // 검색어 매치 여부
+        const matchesSearchTerm = searchTerm && 
+                                 d.voter.toLowerCase().includes(searchTerm.toLowerCase());
+        
+        // 검색 하이라이트는 클러스터 필터를 통과한 경우에만 적용
+        const shouldHighlightSearch = passesClusterFilter && matchesSearchTerm && isSearchFocused;
+        
+        return currentValidator?.voter === d.voter 
           ? "#3B82F6" // 기준 validator - 파란색
           : additionalValidator?.voter === d.voter
             ? "#10B981" // 추가 validator - 녹색
             : hoveredValidator === d.voter
               ? "#8B5CF6" // 호버 - 보라색
-              : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
+              : shouldHighlightSearch
                 ? "#93C5FD" // 검색 결과 - 연한 파란색
-                : "none"
-      )
-      .style('stroke-width', d =>
-        currentValidator?.voter === d.voter || 
-        additionalValidator?.voter === d.voter || 
-        hoveredValidator === d.voter
-          ? 3
-          : searchTerm && d.voter.toLowerCase().includes(searchTerm.toLowerCase())
-            ? 1.5
-            : 0
-      );
+                : "none";
+      })
+      .style('stroke-width', d => {
+        // 클러스터 필터링 적용
+        const passesClusterFilter = selectedClusters.length === 0 || 
+                                   selectedClusters.includes(d.cluster);
+        
+        // 검색어 매치 여부
+        const matchesSearchTerm = searchTerm && 
+                                 d.voter.toLowerCase().includes(searchTerm.toLowerCase());
+        
+        // 검색 하이라이트는 클러스터 필터를 통과한 경우에만 적용
+        const shouldHighlightSearch = passesClusterFilter && matchesSearchTerm && isSearchFocused;
+        
+        // 노드 반지름 계산
+        const nodeRadius = 
+          currentValidator?.voter === d.voter ? 8 : 
+          additionalValidator?.voter === d.voter ? 7 : 5;
+        
+        // 강조 표시가 필요한 경우 노드 반지름의 3/4을 테두리 두께로 설정
+        return (currentValidator?.voter === d.voter || 
+               additionalValidator?.voter === d.voter || 
+               hoveredValidator === d.voter || 
+               shouldHighlightSearch)
+                 ? nodeRadius * 0.75
+                 : 0;
+      });
   };
 
   // 차트 초기화
@@ -556,7 +668,7 @@ export const ValidatorOverview = () => {
         setHoveredValidator(null);
         setTooltipData(null);
       });
-  }, [displayData, handleClick, currentValidator, additionalValidator, hoveredValidator, searchTerm]);
+  }, [displayData, handleClick, currentValidator, additionalValidator, hoveredValidator, searchTerm, isSearchFocused]);
 
   // SVG에 mousedown 이벤트 핸들러 연결
   useEffect(() => {
@@ -570,20 +682,55 @@ export const ValidatorOverview = () => {
     };
   }, [handleMouseDown]);
 
-  // 검색 결과 계산 - 클러스터 필터 적용
+  // 검색 결과 계산 - 검색어가 없을 때도 결과 표시하도록 수정 및 정렬 기능 추가
   const searchResults: SearchResult<ValidatorData>[] = useMemo(() => {
-    if (!searchTerm || !displayData || !isSearchFocused) return [];
+    if (!displayData || !isSearchFocused) return [];
     
-    return displayData
-      .filter((validator: ValidatorData) => 
-        validator.voter.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+    const filteredResults = displayData
+      .filter((validator: ValidatorData) => {
+        // 클러스터 필터링 적용
+        const passesClusterFilter = selectedClusters.length === 0 || 
+                                   selectedClusters.includes(validator.cluster);
+        
+        // 검색어가 있으면 필터링, 없으면 모든 validator 표시
+        const matchesSearchTerm = !searchTerm || 
+                                 validator.voter.toLowerCase().includes(searchTerm.toLowerCase());
+        
+        // 두 조건 모두 만족해야 함
+        return passesClusterFilter && matchesSearchTerm;
+      })
       .map((validator: ValidatorData) => ({
         id: validator.voter,
         text: validator.voter,
         data: validator
       }));
-  }, [searchTerm, displayData, isSearchFocused]);
+    
+    // 검색어가 있는 경우 결과 정렬
+    if (searchTerm) {
+      const lowerSearchTerm = searchTerm.toLowerCase();
+      
+      return filteredResults.sort((a, b) => {
+        const aLower = a.text.toLowerCase();
+        const bLower = b.text.toLowerCase();
+        
+        // 검색어로 시작하는지 여부
+        const aStartsWith = aLower.startsWith(lowerSearchTerm);
+        const bStartsWith = bLower.startsWith(lowerSearchTerm);
+        
+        // 시작하는 항목이 우선
+        if (aStartsWith && !bStartsWith) return -1;
+        if (!aStartsWith && bStartsWith) return 1;
+        
+        // 둘 다 시작하거나 둘 다 시작하지 않으면 알파벳 순으로 정렬
+        return aLower.localeCompare(bLower);
+      });
+    }
+    
+    // 검색어가 없는 경우 알파벳 순으로 정렬
+    return filteredResults.sort((a, b) => 
+      a.text.toLowerCase().localeCompare(b.text.toLowerCase())
+    );
+  }, [searchTerm, displayData, isSearchFocused, selectedClusters]);
 
   const handleResultClick = (result: SearchResult<ValidatorData>) => {
     if (!result || !result.data) return;
@@ -611,41 +758,6 @@ export const ValidatorOverview = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
-  // 노드 렌더링 순서를 조정하는 함수
-  const updateNodeOrder = useCallback(() => {
-    if (!gRef.current) return;
-    
-    d3.select(gRef.current)
-      .selectAll<SVGCircleElement, EnhancedValidatorData>('circle')
-      .sort((a, b) => {
-        // 1. 현재 선택된 validator, 추가 validator, 호버된 validator를 최상위로
-        const aIsSpecial = 
-          a.voter === currentValidator?.voter || 
-          a.voter === additionalValidator?.voter || 
-          a.voter === hoveredValidator;
-        
-        const bIsSpecial = 
-          b.voter === currentValidator?.voter || 
-          b.voter === additionalValidator?.voter || 
-          b.voter === hoveredValidator;
-        
-        if (aIsSpecial && !bIsSpecial) return 1;
-        if (!aIsSpecial && bIsSpecial) return -1;
-        
-        // 2. 선택된 클러스터의 노드를 그 다음으로
-        if (selectedClusters.length > 0) {
-          const aSelected = selectedClusters.includes(a.cluster);
-          const bSelected = selectedClusters.includes(b.cluster);
-          
-          if (aSelected && !bSelected) return 1;
-          if (!aSelected && bSelected) return -1;
-        }
-        
-        // 3. 기본적으로는 클러스터 번호로 정렬
-        return a.cluster - b.cluster;
-      });
-  }, [currentValidator, additionalValidator, hoveredValidator, selectedClusters]);
 
   // selectedClusters가 변경될 때 색상 업데이트 및 노드 순서 조정
   useEffect(() => {
