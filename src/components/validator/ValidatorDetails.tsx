@@ -216,19 +216,23 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
       // Proposal Match Rate와 Overall Match Rate 계산 부분 수정
       const selectedValidatorVotes = votingPatterns[selectedValidator?.voter || '']?.proposal_votes || {};
 
-      // Proposal Match Rate 계산 (두 validator가 모두 투표한 proposal에 대해서만)
+      // Proposal Match Rate 계산 수정
       let matchCount = 0;
       let totalVotes = 0;
 
       proposalIds.forEach(id => {
         const selectedVote = selectedValidatorVotes[id]?.option;
-        const currentVote = currentValidatorVotes[id]?.option;
         
-        // 두 validator 모두 해당 proposal에 대한 투표 기록이 있는 경우
-        if (selectedVote !== undefined && currentVote !== undefined) {
-          if (selectedVote === currentVote) {
+        // 기준 validator가 투표한 경우에만 계산
+        if (selectedVote !== undefined) {
+          const currentVote = currentValidatorVotes[id]?.option;
+          
+          // 비교 대상 validator도 해당 proposal에 투표했고, 투표가 일치하는 경우
+          if (currentVote !== undefined && selectedVote === currentVote) {
             matchCount++;
           }
+          
+          // 기준 validator가 투표한 모든 proposal 카운트
           totalVotes++;
         }
       });
