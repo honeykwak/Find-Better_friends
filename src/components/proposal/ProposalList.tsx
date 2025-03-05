@@ -470,17 +470,15 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
         // 1. 추가 validator가 없으면 모두 불투명(1)
         // 2. 추가 validator가 있고:
         //    - 둘 다 투표했고 일치하면 불투명(1)
-        //    - 둘 다 투표했고 불일치하면 투명(0.4)
-        //    - 둘 중 하나만 투표했으면 중간 투명도(0.7)
         let opacity = 1;
         
         if (additionalValidator) {
           if (bothVoted) {
-            opacity = votesMatch ? 1 : 0.4;
+            opacity = votesMatch ? 1 : 0.2;//둘 다 투표했고 불일치하면 투명(0.4)
           } else if (primaryVote || additionalVote) {
-            opacity = 0.7;
+            opacity = 0.2;//둘 중 하나만 투표했으면 중간 투명도(0.7)
           } else {
-            opacity = 0.5; // 둘 다 투표하지 않은 경우
+            opacity = 0.2; // 둘 다 투표하지 않은 경우
           }
         }
         
@@ -996,7 +994,8 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
             ref={gridRef}
             className="grid auto-rows-fr gap-2 p-2 relative select-none"
             style={{
-              gridTemplateColumns: 'repeat(auto-fit, minmax(min(60px, 100%), 1fr))'
+              gridTemplateColumns: 'repeat(auto-fit, 60px)',
+              justifyContent: 'start'
             }}
             onMouseDown={handleMouseDown}
           >

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import * as d3 from 'd3';
 import { CLUSTER_COLORS } from '../../constants';
 import { ValidatorData } from '../../types';
@@ -61,7 +61,7 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
     zoom
   } = useValidatorVisualization(displayData, selectedChain, coordinateType);
   
-  // 툴팁 상태
+  // 툴크 상태
   const [tooltipData, setTooltipData] = useState<{
     voter: string;
     x: number;
@@ -111,8 +111,36 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
     return participatedProposals.length / proposalIds.length;
   };
 
-  // 노드 크기 계산 함수
+  // 필터링된 displayData 계산 - 체인 뷰 상태에 따라 다르게 처리
+  const filteredDisplayData = useMemo(() => {
+    // 전체 체인 뷰일 경우 모든 validator 표시
+    if (!selectedChain) {
+      return displayData;
+    }
+
+    // 개별 체인 뷰일 경우에만 proposal 기반 필터링 적용
+    return displayData.filter(validator => {
+      const participationRate = getParticipationRate(validator);
+      return participationRate > 0; // 참여율이 0보다 큰 validator만 표시
+    });
+  }, [displayData, selectedChain, getParticipationRate, selectedProposals, votingPatterns]);
+
+  // 노드 크기 계산 함수도 체인 뷰 상태에 따라 다르게 처리
   const calculateNodeSize = (validator: ValidatorData): number => {
+    // 전체 체인 뷰일 경우 최소 크기 사용
+    if (!selectedChain) {
+      const baseSize = NODE_SIZE.MIN;
+      
+      if (currentValidator?.voter === validator.voter) {
+        return baseSize + NODE_SIZE.SELECTED.PRIMARY;
+      }
+      if (additionalValidator?.voter === validator.voter) {
+        return baseSize + NODE_SIZE.SELECTED.ADDITIONAL;
+      }
+      return baseSize;
+    }
+
+    // 개별 체인 뷰일 경우 참여율 기반 크기 계산
     const participationRate = getParticipationRate(validator);
     const baseSize = NODE_SIZE.MIN + 
       (NODE_SIZE.MAX - NODE_SIZE.MIN) * participationRate;
@@ -123,7 +151,6 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
     if (additionalValidator?.voter === validator.voter) {
       return baseSize + NODE_SIZE.SELECTED.ADDITIONAL;
     }
-    
     return baseSize;
   };
 
@@ -272,7 +299,7 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
 
     // 기존 노드 선택
     const nodes = g.selectAll<SVGCircleElement, any>('circle')
-      .data(displayData, (d: any) => d.voter);
+      .data(filteredDisplayData, (d: any) => d.voter);
 
     // Enter 부분 수정
     const nodesEnter = nodes.enter()
