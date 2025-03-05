@@ -19,7 +19,6 @@ interface SortDirection {
 // type VoteOption = 'YES' | 'NO' | 'ABSTAIN' | 'NO_WITH_VETO' | 'NO_VOTE';
 
 interface ValidatorDetailsProps {
-  votingPattern?: ValidatorVotingPattern | null;
   proposalData: { [proposalId: string]: ProposalData } | null;
   validatorName: string;
 }
@@ -54,11 +53,15 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
   const selectedChain = useAppSelector(state => state.chain.selectedChain);
   const coordinateData = useAppSelector(state => state.chain.coordinateData);
   const selectedValidator = useAppSelector(state => state.validator.selectedValidator);
-  const [votingPatterns, setVotingPatterns] = useState<VotingPatternsData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const votingPatterns = useAppSelector(state => state.votingPatterns.patternsByChain[selectedChain || '']);
   const activeFilters = useAppSelector(state => state.filter.activeFilters);
   const validatorChainMap = useChainMap();
   const [showRecentParticipants, setShowRecentParticipants] = useState(false);
+  const [sortField, setSortField] = useState<SortFieldValue>('validator');
+  const [sortDirection, setSortDirection] = useState<SortDirection['value']>('asc');
+  
+  // isLoading state 제거 (Redux store의 상태로 대체)
+  const isDataReady = !!votingPatterns && !!proposalData;
 
   // 메모이제이션된 셀렉터 사용
   const selectedProposals = useAppSelector(
@@ -88,9 +91,6 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
     });
   }, [selectedChain, validatorName, proposalData, selectedProposals.length, votingPatterns, coordinateData, selectedValidator]);
 
-  const [sortField, setSortField] = useState<SortFieldValue>('validator');
-  const [sortDirection, setSortDirection] = useState<SortDirection['value']>('asc');
-
   // 선택된 proposals 메모이제이션
   const memoizedSelectedProposals = useMemo(() => selectedProposals, [selectedProposals]);
 
@@ -109,29 +109,6 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
 
     loadCoordinateData();
   }, [coordinateData, dispatch]);
-
-  // voting patterns 데이터 로드
-  useEffect(() => {
-    const loadVotingPatterns = async () => {
-      if (!selectedChain) return;
-      setLoading(true);
-      
-      try {
-        const response = await fetch(`/data/analysis/voting_patterns/${selectedChain.toLowerCase()}.json`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setVotingPatterns(data);
-      } catch (error) {
-        console.error('Error loading voting patterns:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadVotingPatterns();
-  }, [selectedChain]);
 
   const handleSort = (field: SortFieldValue) => {
     if (sortField === field) {
@@ -209,12 +186,15 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
   };
 
   const validators = useMemo(() => {
-    if (!coordinateData?.chain_coords_dict?.[selectedChain || ''] || loading || !votingPatterns) {
+    if (!coordinateData?.chain_coords_dict?.[selectedChain || ''] || !isDataReady || !votingPatterns) {
       return [];
     }
 
     const chainValidators = coordinateData.chain_coords_dict[selectedChain || ''];
-    const proposalIds = memoizedSelectedProposals;
+    // 선택된 proposals이 없으면 모든 proposals 사용
+    const proposalIds = memoizedSelectedProposals.length > 0 
+      ? memoizedSelectedProposals 
+      : Object.keys(proposalData || {});
     
     let validatorList = chainValidators.map((validator: ValidatorData): TableValidator => {
       const currentValidatorVotes = votingPatterns[validator.voter]?.proposal_votes || {};
@@ -222,7 +202,6 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
       // Participation Rate 계산 - NO_VOTE를 포함한 모든 투표를 카운트
       const participatedProposals = proposalIds.filter(id => {
         const vote = currentValidatorVotes[id]?.option;
-        // 모든 투표 옵션을 포함 (NO_VOTE 포함)
         return vote !== undefined;
       });
       
@@ -376,7 +355,7 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
     coordinateData,
     proposalData,
     votingPatterns,
-    loading,
+    isDataReady,
     memoizedSelectedProposals,
     selectedValidator,
     sortField,
@@ -424,7 +403,7 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
           </label>
         </div>
       </div>
-      {loading ? (
+      {!isDataReady ? (
         <div className="flex-1 flex items-center justify-center">
           <p>Loading voting patterns...</p>
         </div>

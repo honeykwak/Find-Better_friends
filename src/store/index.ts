@@ -3,13 +3,15 @@ import chainReducer from './slices/chainSlice';
 import validatorReducer from './slices/validatorSlice';
 import proposalReducer from './slices/proposalSlice';
 import filterReducer from './slices/filterSlice';
+import votingPatternsReducer from './slices/votingPatternsSlice';
 
 export const store = configureStore({
   reducer: {
     chain: chainReducer,
     validator: validatorReducer,
     proposal: proposalReducer,
-    filter: filterReducer
+    filter: filterReducer,
+    votingPatterns: votingPatternsReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

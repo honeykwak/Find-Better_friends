@@ -115,9 +115,11 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
   const dispatch = useAppDispatch();
   const selectedValidator = useAppSelector(state => state.validator.selectedValidator);
   const additionalValidator = useAppSelector(state => state.validator.additionalValidator);
-  const [votingPatterns, setVotingPatterns] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
+  const votingPatterns = useAppSelector(state => state.votingPatterns.patternsByChain[chainName]);
   
+  // loading state는 데이터 존재 여부로 대체
+  const isLoading = !votingPatterns;
+
   // 메모이제이션된 셀렉터 사용
   const selectedProposals = useAppSelector(
     state => selectSelectedProposalsByChain(state, chainName)
@@ -402,120 +404,6 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
     };
   }, []);
 
-  // Voting Patterns 데이터 로드
-  useEffect(() => {
-    const loadVotingPatterns = async () => {
-      if (!selectedValidator || !chainName) return;
-      
-      setLoading(true);
-      try {
-        const response = await fetch(`/data/analysis/voting_patterns/${chainName}.json`);
-        if (!response.ok) throw new Error('Failed to fetch voting patterns');
-        const data = await response.json();
-        setVotingPatterns(data);
-      } catch (error) {
-        console.error('Error loading voting patterns:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadVotingPatterns();
-  }, [selectedValidator, chainName]);
-
-  // 투표 결과에 따른 버튼 스타일 결정
-  const getVoteStyle = (proposalId: string) => {
-    if (!selectedValidator || !votingPatterns || loading) {
-      return 'bg-gray-50 text-gray-700 hover:bg-gray-100';
-    }
-
-    const validatorVotes = votingPatterns[selectedValidator.voter]?.proposal_votes;
-    if (!validatorVotes) return 'bg-gray-50 text-gray-700';
-
-    const vote = validatorVotes[proposalId]?.option as VoteOption;
-    return VOTE_COLOR_CLASSES[vote] || 'bg-gray-50 text-gray-700';
-  };
-
-  // 슬라이더 값이 변경될 때마다 선택된 proposals 업데이트
-  useEffect(() => {
-    if (!proposals) return;
-
-    // 현재 선택된 proposals 가져오기
-    const currentSelectedProposals = selectedProposals;
-    
-    // 슬라이더 범위 내의 proposals만 필터링
-    const visibleProposals = Object.entries(proposals).filter(([_, proposal]) => {
-      const proposalTime = proposal.timeVotingStart;
-      return proposalTime >= timeRange[0] && proposalTime <= timeRange[1];
-    }).map(([id]) => id);
-
-    // 보이지 않는 proposals를 선택 해제
-    const newSelectedProposals = currentSelectedProposals.filter(id => 
-      visibleProposals.includes(id)
-    );
-
-    // 선택된 proposals가 변경되었다면 업데이트
-    if (newSelectedProposals.length !== currentSelectedProposals.length) {
-      dispatch(setSelectedProposals({
-        chainId: chainName,
-        proposalIds: newSelectedProposals
-      }));
-    }
-  }, [timeRange, proposals, chainName, selectedProposals, dispatch]);
-
-  // toggleProposal 동작 시 selectedAll 상태도 업데이트하는 함수 수정
-  const handleToggleProposal = (id: string) => {
-    dispatch(toggleProposal({ 
-      chainId: chainName, 
-      proposalId: id 
-    }));
-    
-    // 토글 후의 상태를 예측하여 selectedAll 업데이트
-    const isCurrentlySelected = selectedProposals.includes(id);
-    if (isCurrentlySelected) {
-      setSelectedAll(false);
-    } else {
-      const willBeSelected = [...selectedProposals, id];
-      // 모든 제안서의 총 개수 계산
-      const totalProposalCount = filteredProposalsByMonth.reduce((sum, { proposals }) => sum + proposals.length, 0);
-      setSelectedAll(willBeSelected.length === totalProposalCount);
-    }
-  };
-
-  // 그룹 선택 핸들러 함수 추가
-  const handleGroupToggle = (proposals: [string, ProposalData][]) => {
-    // 그룹 내 모든 제안서 ID 추출
-    const groupProposalIds = proposals.map(([id]) => id);
-    
-    // 그룹 내 모든 제안서가 이미 선택되어 있는지 확인
-    const allSelected = groupProposalIds.every(id => selectedProposals.includes(id));
-    
-    // 모두 선택되어 있으면 해제, 아니면 선택
-    if (allSelected) {
-      // 선택된 제안서에서 그룹 제안서 제거
-      const newSelectedProposals = selectedProposals.filter(id => !groupProposalIds.includes(id));
-      dispatch(setSelectedProposals({ 
-        chainId: chainName, 
-        proposalIds: newSelectedProposals 
-      }));
-    } else {
-      // 그룹 제안서 추가 (중복 제거)
-      const newSelectedProposals = [...new Set([...selectedProposals, ...groupProposalIds])];
-      dispatch(setSelectedProposals({ 
-        chainId: chainName, 
-        proposalIds: newSelectedProposals 
-      }));
-    }
-    
-    // selectedAll 상태 업데이트
-    const totalProposalCount = filteredProposalsByMonth.reduce((sum, { proposals }) => sum + proposals.length, 0);
-    const newSelectedCount = allSelected 
-      ? selectedProposals.length - groupProposalIds.length 
-      : new Set([...selectedProposals, ...groupProposalIds]).size;
-    
-    setSelectedAll(newSelectedCount === totalProposalCount);
-  };
-
   // 제안서 렌더링 로직 수정 - 기준 validator와 추가 validator의 투표 일치 여부에 따라 스타일 적용
   const renderProposals = () => {
     if (!proposals) return null;
@@ -558,79 +446,70 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
               
               {/* 해당 그룹의 제안서들 */}
               {proposals.map(([id, proposal]) => {
-      // 기준 validator의 투표 정보 가져오기 - 구조 확인
-      const primaryVoteData = selectedValidator && votingPatterns?.[selectedValidator.voter]?.proposal_votes?.[id];
-      const primaryVote = primaryVoteData?.option;
-      
-      // 추가 validator의 투표 정보 가져오기 - 구조 확인
-      const additionalVoteData = additionalValidator && votingPatterns?.[additionalValidator.voter]?.proposal_votes?.[id];
-      const additionalVote = additionalVoteData?.option;
-      
-      // 디버깅 로그 - 실제 데이터 구조 확인
-      console.log(`Proposal ${id}:`, {
-        primaryVoteData,
-        primaryVote,
-        additionalVoteData,
-        additionalVote,
-        votingPatterns: votingPatterns
-      });
-      
-      // 두 validator가 모두 투표했는지 확인
-      const bothVoted = primaryVote && additionalVote;
-      
-      // 투표 일치 여부 확인 (둘 다 투표했고 같은 옵션을 선택한 경우)
-      const votesMatch = bothVoted && primaryVote === additionalVote;
-      
-      // 투명도 로직:
-      // 1. 추가 validator가 없으면 모두 불투명(1)
-      // 2. 추가 validator가 있고:
-      //    - 둘 다 투표했고 일치하면 불투명(1)
-      //    - 둘 다 투표했고 불일치하면 투명(0.4)
-      //    - 둘 중 하나만 투표했으면 중간 투명도(0.7)
-      let opacity = 1;
-      
-      if (additionalValidator) {
-        if (bothVoted) {
-          opacity = votesMatch ? 1 : 0.4;
-        } else if (primaryVote || additionalVote) {
-          opacity = 0.7;
-        } else {
-          opacity = 0.5; // 둘 다 투표하지 않은 경우
+        // 기준 validator의 투표 정보 가져오기
+        const primaryVoteData = selectedValidator && votingPatterns?.[selectedValidator.voter]?.proposal_votes?.[id];
+        const primaryVote = primaryVoteData?.option;
+        
+        // 추가 validator의 투표 정보 가져오기
+        const additionalVoteData = additionalValidator && votingPatterns?.[additionalValidator.voter]?.proposal_votes?.[id];
+        const additionalVote = additionalVoteData?.option;
+        
+        // 두 validator가 모두 투표했는지 확인
+        const bothVoted = primaryVote && additionalVote;
+        
+        // 투표 일치 여부 확인 (둘 다 투표했고 같은 옵션을 선택한 경우)
+        const votesMatch = bothVoted && primaryVote === additionalVote;
+        
+        // 투명도 로직:
+        // 1. 추가 validator가 없으면 모두 불투명(1)
+        // 2. 추가 validator가 있고:
+        //    - 둘 다 투표했고 일치하면 불투명(1)
+        //    - 둘 다 투표했고 불일치하면 투명(0.4)
+        //    - 둘 중 하나만 투표했으면 중간 투명도(0.7)
+        let opacity = 1;
+        
+        if (additionalValidator) {
+          if (bothVoted) {
+            opacity = votesMatch ? 1 : 0.4;
+          } else if (primaryVote || additionalVote) {
+            opacity = 0.7;
+          } else {
+            opacity = 0.5; // 둘 다 투표하지 않은 경우
+          }
         }
-      }
-      
-      const isHighlighted = isSearchFocused && debouncedSearchTerm && highlightedProposals.includes(id);
-      
-      return (
-        <button
-          key={id}
+        
+        const isHighlighted = isSearchFocused && debouncedSearchTerm && highlightedProposals.includes(id);
+        
+        return (
+          <button
+            key={id}
                     data-id={id}
-          onClick={() => handleToggleProposal(id)}
-          className={`
-            aspect-square
-            flex items-center justify-center
-            rounded-lg text-xs font-medium
-            transition-all duration-200
-            ${getVoteStyle(id)}
-            ${selectedProposals.includes(id) 
-              ? 'ring-2 ring-blue-500' 
-              : isHighlighted
-                ? 'ring-2 ring-yellow-400 shadow-lg'
-                : 'hover:ring-1 hover:ring-blue-300'
-            }
-            ${isHighlighted ? 'z-10' : ''}
-            ${additionalValidator && bothVoted && votesMatch ? 'ring-2 ring-green-500' : ''}
-          `}
-          style={{
-            transform: `scale(${calculateCompetitiveness(proposal.ratios)})`,
-            opacity: opacity,
-          }}
-        >
-          <span style={{ transform: `scale(${1/calculateCompetitiveness(proposal.ratios)})` }}>
-            {id}
-          </span>
-        </button>
-      );
+            onClick={() => handleToggleProposal(id)}
+            className={`
+              aspect-square
+              flex items-center justify-center
+              rounded-lg text-xs font-medium
+              transition-all duration-200
+              ${getVoteStyle(id)}
+              ${selectedProposals.includes(id) 
+                ? 'ring-2 ring-blue-500' 
+                : isHighlighted
+                  ? 'ring-2 ring-yellow-400 shadow-lg'
+                  : 'hover:ring-1 hover:ring-blue-300'
+              }
+              ${isHighlighted ? 'z-10' : ''}
+              ${additionalValidator && bothVoted && votesMatch ? 'ring-2 ring-green-500' : ''}
+            `}
+            style={{
+              transform: `scale(${calculateCompetitiveness(proposal.ratios)})`,
+              opacity: opacity,
+            }}
+          >
+            <span style={{ transform: `scale(${1/calculateCompetitiveness(proposal.ratios)})` }}>
+              {id}
+            </span>
+          </button>
+        );
               })}
             </React.Fragment>
           );
@@ -862,6 +741,134 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
       }
     };
   }, []);
+
+  // 투표 결과에 따른 버튼 스타일 결정
+  const getVoteStyle = (proposalId: string) => {
+    if (!selectedValidator || !votingPatterns || isLoading) {
+      return 'bg-gray-50 text-gray-700 hover:bg-gray-100';
+    }
+
+    const validatorVotes = votingPatterns[selectedValidator.voter]?.proposal_votes;
+    if (!validatorVotes) return 'bg-gray-50 text-gray-700';
+
+    const vote = validatorVotes[proposalId]?.option as VoteOption;
+    return VOTE_COLOR_CLASSES[vote] || 'bg-gray-50 text-gray-700';
+  };
+
+  // 슬라이더 값이 변경될 때마다 선택된 proposals 업데이트
+  useEffect(() => {
+    if (!proposals) return;
+
+    // 현재 선택된 proposals 가져오기
+    const currentSelectedProposals = selectedProposals;
+    
+    // 슬라이더 범위 내의 proposals만 필터링
+    const visibleProposals = Object.entries(proposals).filter(([_, proposal]) => {
+      const proposalTime = proposal.timeVotingStart;
+      return proposalTime >= timeRange[0] && proposalTime <= timeRange[1];
+    }).map(([id]) => id);
+
+    // 보이지 않는 proposals를 선택 해제
+    const newSelectedProposals = currentSelectedProposals.filter(id => 
+      visibleProposals.includes(id)
+    );
+
+    // 선택된 proposals가 변경되었다면 업데이트
+    if (newSelectedProposals.length !== currentSelectedProposals.length) {
+      dispatch(setSelectedProposals({
+        chainId: chainName,
+        proposalIds: newSelectedProposals
+      }));
+    }
+  }, [timeRange, proposals, chainName, selectedProposals, dispatch]);
+
+  // toggleProposal 동작 시 selectedAll 상태도 업데이트하는 함수 수정
+  const handleToggleProposal = (id: string) => {
+    dispatch(toggleProposal({ 
+      chainId: chainName, 
+      proposalId: id 
+    }));
+    
+    // 토글 후의 상태를 예측하여 selectedAll 업데이트
+    const isCurrentlySelected = selectedProposals.includes(id);
+    if (isCurrentlySelected) {
+      setSelectedAll(false);
+    } else {
+      const willBeSelected = [...selectedProposals, id];
+      // 모든 제안서의 총 개수 계산
+      const totalProposalCount = filteredProposalsByMonth.reduce((sum, { proposals }) => sum + proposals.length, 0);
+      setSelectedAll(willBeSelected.length === totalProposalCount);
+    }
+  };
+
+  // 그룹 선택 핸들러 함수 추가
+  const handleGroupToggle = (proposals: [string, ProposalData][]) => {
+    // 그룹 내 모든 제안서 ID 추출
+    const groupProposalIds = proposals.map(([id]) => id);
+    
+    // 그룹 내 모든 제안서가 이미 선택되어 있는지 확인
+    const allSelected = groupProposalIds.every(id => selectedProposals.includes(id));
+    
+    // 모두 선택되어 있으면 해제, 아니면 선택
+    if (allSelected) {
+      // 선택된 제안서에서 그룹 제안서 제거
+      const newSelectedProposals = selectedProposals.filter(id => !groupProposalIds.includes(id));
+      dispatch(setSelectedProposals({ 
+        chainId: chainName, 
+        proposalIds: newSelectedProposals 
+      }));
+    } else {
+      // 그룹 제안서 추가 (중복 제거)
+      const newSelectedProposals = [...new Set([...selectedProposals, ...groupProposalIds])];
+      dispatch(setSelectedProposals({ 
+        chainId: chainName, 
+        proposalIds: newSelectedProposals 
+      }));
+    }
+    
+    // selectedAll 상태 업데이트
+    const totalProposalCount = filteredProposalsByMonth.reduce((sum, { proposals }) => sum + proposals.length, 0);
+    const newSelectedCount = allSelected 
+      ? selectedProposals.length - groupProposalIds.length 
+      : new Set([...selectedProposals, ...groupProposalIds]).size;
+    
+    setSelectedAll(newSelectedCount === totalProposalCount);
+  };
+
+  // 기존의 개별 proposal 로그를 제거하고 하나의 요약된 로그로 변경
+  useEffect(() => {
+    const proposalSummary = {
+      totalProposals: proposals ? Object.keys(proposals).length : 0,
+      selectedProposalsCount: selectedProposals.length,
+      votingPatternsAvailable: !!votingPatterns,
+      timeRange: timeRange,
+      filterSummary: {
+        searchQuery: debouncedSearchTerm,
+        splitOption,
+        sortOption,
+        searchType
+      },
+      proposalsWithoutVotes: proposals ? Object.entries(proposals).filter(([_, p]) => {
+        const primaryVote = votingPatterns?.[selectedValidator?.voter || '']?.proposal_votes?.[p.id]?.option;
+        return !primaryVote;
+      }).length : 0,
+      selectedProposalIds: selectedProposals
+    };
+
+    console.group('ProposalList Summary');
+    console.log('Proposals Overview:', proposalSummary);
+    console.groupEnd();
+  }, [
+    proposals, 
+    selectedProposals, 
+    votingPatterns, 
+    timeRange, 
+    debouncedSearchTerm, 
+    splitOption, 
+    sortOption, 
+    searchType, 
+    selectedValidator
+  ]);
 
   return (
     <div className="h-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">

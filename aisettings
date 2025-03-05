@@ -1,0 +1,30 @@
+{
+  "dataLoading": {
+    "loadAllAtStartup": true,
+    "dataSources": [
+      {
+        "type": "coordinates",
+        "path": "/data/coordinates/coordinates.json",
+        "storeAction": "setCoordinateData"
+      },
+      {
+        "type": "chainProposals",
+        "pathTemplate": "/data/analysis/proposal_analysis/${chain}.json",
+        "storeAction": "setChainProposals"
+      },
+      {
+        "type": "votingPatterns",
+        "pathTemplate": "/data/analysis/voting_patterns/${chain}.json",
+        "storeAction": "setVotingPatterns"
+      }
+    ],
+    "chains": [
+      "cosmos", "juno", "osmosis", "stargaze", "terra", 
+      "kava", "evmos", "injective", "secret"
+    ],
+    "caching": {
+      "enabled": true,
+      "maxAge": 3600000
+    }
+  }
+} 

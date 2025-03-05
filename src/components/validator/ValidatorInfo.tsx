@@ -64,7 +64,7 @@ export const ValidatorInfo: React.FC<ValidatorInfoProps> = ({
     <div className="h-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">
       <h2 className="flex-none text-xl font-semibold mb-4">Validator Info</h2>
       <div className="flex-1 min-h-0 overflow-auto">
-        {!validator || !chainName || !validatorName ? (
+        {!validator ? (
           <div className="h-full flex items-center justify-center">
             <p className="text-gray-500">Select a validator to view information</p>
           </div>

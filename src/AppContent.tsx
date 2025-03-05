@@ -12,6 +12,7 @@ import { ProposalList } from './components/proposal/ProposalList';
 import { ValidatorSummary } from './components/validator/ValidatorSummary';
 import { ValidatorDetails } from './components/validator/ValidatorDetails';
 import { setChainProposals } from './store/slices/proposalSlice';
+import { setVotingPatterns } from './store/slices/votingPatternsSlice';
 
 // 상단에 CHAIN_LIST 상수 추가
 const CHAIN_LIST = [
@@ -28,15 +29,14 @@ const CHAIN_LIST = [
 
 export const AppContent: React.FC = () => {
   const [validatorAnalysis, setValidatorAnalysis] = useState<ValidatorAnalysis | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   
   const selectedValidator = useAppSelector(state => state.validator.selectedValidator);
   const selectedChain = useAppSelector(state => state.chain.selectedChain);
   const validatorChains = useAppSelector(state => state.chain.validatorChains);
   const chainProposals = useAppSelector(state => state.proposal.chainProposals);
   const dispatch = useAppDispatch();
-
-  // 데이터 로딩 상태 추가
-  const [isLoading, setIsLoading] = useState(false);
 
   // getValidatorChain 함수를 useMemo로 최적화
   const effectiveChainName = useMemo(() => {
@@ -96,48 +96,59 @@ export const AppContent: React.FC = () => {
 
   const { votingPattern, proposalData } = validatorData;
 
-  // 데이터 로딩 로직 최적화
-  const loadData = useCallback(async () => {
-    if (isLoading) return;
-    
-    setIsLoading(true);
-    try {
-      // 1. validator analysis 로드
-      const analysisResponse = await fetch('/data/analysis/validator_analysis.json');
-      if (!analysisResponse.ok) throw new Error('Failed to load validator analysis');
-      const analysisData: ValidatorAnalysis = await analysisResponse.json();
-      setValidatorAnalysis(analysisData);
-
-      // 2. proposal 데이터 로드
-      const proposalDataByChain: ChainProposals = {};
-      await Promise.all(CHAIN_LIST.map(async (chain) => {
-        try {
-          const response = await fetch(`/data/analysis/proposal_analysis/${chain.toLowerCase()}.json`);
-          if (!response.ok) throw new Error(`Failed to load data for ${chain}`);
-          
-          const data = await response.json();
-          proposalDataByChain[chain] = {
-            proposals: data.proposals,
-            totalCount: Object.keys(data.proposals).length
-          };
-        } catch (error) {
-          console.error(`Error loading data for ${chain}:`, error);
-          proposalDataByChain[chain] = { proposals: {}, totalCount: 0 };
-        }
-      }));
-
-      dispatch(setChainProposals(proposalDataByChain));
-    } catch (error) {
-      console.error('Error loading data:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [dispatch]);
-
-  // 컴포넌트 마운트 시 데이터 로드
+  // 초기 데이터 로드를 위한 useEffect
   useEffect(() => {
-    loadData();
-  }, [loadData]); // loadData를 의존성 배열에 추가
+    const loadAllData = async () => {
+      try {
+        setIsLoading(true);
+        
+        // 1. 모든 체인의 제안서 데이터 로드
+        const proposalDataByChain: Record<string, any> = {};
+        await Promise.all(CHAIN_LIST.map(async (chain) => {
+          try {
+            const response = await fetch(`/data/analysis/proposal_analysis/${chain.toLowerCase()}.json`);
+            if (response.ok) {
+              const data = await response.json();
+              proposalDataByChain[chain] = {
+                proposals: data.proposals || {},
+                totalCount: Object.keys(data.proposals || {}).length
+              };
+            }
+          } catch (error) {
+            console.warn(`Error loading proposal data for ${chain}:`, error);
+            proposalDataByChain[chain] = { proposals: {}, totalCount: 0 };
+          }
+        }));
+        
+        // 2. 모든 체인의 투표 패턴 데이터 로드
+        const votingPatternsByChain: Record<string, any> = {};
+        await Promise.all(CHAIN_LIST.map(async (chain) => {
+          try {
+            const response = await fetch(`/data/analysis/voting_patterns/${chain.toLowerCase()}.json`);
+            if (response.ok) {
+              const data = await response.json();
+              votingPatternsByChain[chain] = data;
+            }
+          } catch (error) {
+            console.warn(`Error loading voting patterns for ${chain}:`, error);
+            votingPatternsByChain[chain] = {};
+          }
+        }));
+
+        // 3. Redux store에 데이터 저장
+        dispatch(setChainProposals(proposalDataByChain));
+        dispatch(setVotingPatterns(votingPatternsByChain));
+
+      } catch (error) {
+        console.error('Error loading initial data:', error);
+        setError('Failed to load data');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadAllData();
+  }, [dispatch]);
 
   // props 객체들을 useMemo로 최적화
   // const validatorInfoProps = useMemo(() => ({
@@ -158,6 +169,18 @@ export const AppContent: React.FC = () => {
   //   proposalData,
   //   validatorName: selectedValidator?.voter || ''
   // }), [votingPattern, proposalData, selectedValidator]);
+
+  if (isLoading) {
+    return <div className="flex items-center justify-center h-screen">
+      <div className="text-lg">Loading data...</div>
+    </div>;
+  }
+
+  if (error) {
+    return <div className="flex items-center justify-center h-screen">
+      <div className="text-lg text-red-600">{error}</div>
+    </div>;
+  }
 
   return (
     <div className="h-screen overflow-hidden bg-gray-50 flex flex-col">
@@ -187,7 +210,7 @@ export const AppContent: React.FC = () => {
                   validator={selectedValidator}
                   validatorAnalysis={validatorAnalysis || {}}
                   chainProposals={chainProposals}
-                  chainName={effectiveChainName}
+                  chainName={selectedChain || ''}
                   validatorName={selectedValidator?.voter || ''}
                 />
               </div>
@@ -207,8 +230,7 @@ export const AppContent: React.FC = () => {
             </div>
             <div className="component-container">
               <ValidatorDetails 
-                votingPattern={votingPattern}
-                proposalData={proposalData}
+                proposalData={chainProposals[selectedChain!]?.proposals || null}
                 validatorName={selectedValidator?.voter || ''}
               />
             </div>

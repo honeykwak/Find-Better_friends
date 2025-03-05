@@ -316,8 +316,14 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
 
   // useEffect 추가 - 외부에서 호출 가능하도록
   useEffect(() => {
-    onResetView(() => resetZoomPan());
-  }, [resetZoomPan, onResetView]);
+    onResetView(() => {
+      // 기존 줌/팬 리셋
+      resetZoomPan();
+      
+      // validator 선택 해제를 위해 빈 validator로 클릭 이벤트 발생
+      onValidatorClick({} as ValidatorData);
+    });
+  }, [resetZoomPan, onResetView, onValidatorClick]);
 
   return (
     <div className="min-h-0 flex-1 overflow-hidden relative">
