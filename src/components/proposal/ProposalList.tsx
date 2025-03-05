@@ -12,6 +12,7 @@ import { SearchInput } from '../common/SearchInput';
 import { SearchResult } from '../../types/search';
 import { VOTE_COLOR_CLASSES } from '../../constants';
 import { useDebounce } from '../../hooks/useDebounce';
+import { ProposalTooltip } from './ProposalTooltip';
 
 interface ProposalListProps {
   chainName: string;
@@ -405,6 +406,11 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
   }, []);
 
   // 제안서 렌더링 로직 수정 - 기준 validator와 추가 validator의 투표 일치 여부에 따라 스타일 적용
+  const [tooltipData, setTooltipData] = useState<{
+    proposal: ProposalData;
+    position: { x: number; y: number };
+  } | null>(null);
+
   const renderProposals = () => {
     if (!proposals) return null;
     
@@ -483,8 +489,19 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
         return (
           <button
             key={id}
-                    data-id={id}
+            data-id={id}
             onClick={() => handleToggleProposal(id)}
+            onMouseEnter={(e) => {
+              const rect = e.currentTarget.getBoundingClientRect();
+              setTooltipData({
+                proposal: proposal,
+                position: {
+                  x: rect.left,
+                  y: rect.top
+                }
+              });
+            }}
+            onMouseLeave={() => setTooltipData(null)}
             className={`
               aspect-square
               flex items-center justify-center
@@ -999,6 +1016,7 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
           </div>
         </div>
       </div>
+      {tooltipData && <ProposalTooltip {...tooltipData} />}
     </div>
   );
 }; 

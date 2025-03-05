@@ -2,7 +2,8 @@ import { useMemo, useEffect, useState } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { ValidatorVotingPattern, ProposalData, ValidatorData, ClusterType } from '../../types';
-import { setCoordinateData } from '../../store/slices/chainSlice';
+import { setCoordinateData, setSelectedValidator, setAdditionalValidator } from '../../store/slices/chainSlice';
+import { setSelectedValidator as setValidatorSliceSelectedValidator, setAdditionalValidator as setValidatorSliceAdditionalValidator } from '../../store/slices/validatorSlice';
 import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { selectSelectedProposalsByChain } from '../../store/selectors';
 import { useChainMap } from '../../hooks/useChainMap';
@@ -35,7 +36,7 @@ interface VotingPatternsData {
 }
 
 interface TableValidator {
-  no: number;
+  no: number | string;
   validator: string;
   cluster: ClusterType;
   participationRate: string;
@@ -185,6 +186,9 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
     return matches ? {} : { opacity: 0.5 };
   };
 
+  // additionalValidator 추가
+  const additionalValidator = useAppSelector(state => state.validator.additionalValidator);
+
   const validators = useMemo(() => {
     if (!coordinateData?.chain_coords_dict?.[selectedChain || ''] || !isDataReady || !votingPatterns) {
       return [];
@@ -303,10 +307,12 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
     }
 
     validatorList.sort((a, b) => {
-      // 1. 선택된 validator가 있다면 최상단
-      if (selectedValidator) {
-        if (a.validator === selectedValidator.voter) return -1;
-        if (b.validator === selectedValidator.voter) return 1;
+      // 1. Primary validator와 Additional validator를 최상단에 배치
+      if (selectedValidator || additionalValidator) {
+        if (a.validator === selectedValidator?.voter) return -1;
+        if (b.validator === selectedValidator?.voter) return 1;
+        if (a.validator === additionalValidator?.voter) return -1;
+        if (b.validator === additionalValidator?.voter) return 1;
       }
 
       // 2. 활성화된 필터에 따른 정렬
@@ -346,9 +352,11 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
     let counter = 1;
     return validatorList.map(v => ({
       ...v,
-      no: selectedValidator && v.validator === selectedValidator.voter 
-        ? 0  // 1에서 0으로 변경
-        : counter++
+      no: selectedValidator?.voter === v.validator 
+        ? 'P'  // Primary validator는 'P'
+        : additionalValidator?.voter === v.validator
+          ? 'C'  // Compare validator는 'C'
+          : counter++
     }));
   }, [
     selectedChain,
@@ -364,7 +372,8 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
     getRowStyle,
     validatorChainMap,
     showRecentParticipants,
-    latestProposalId
+    latestProposalId,
+    additionalValidator
   ]);
 
   const SortIcon = ({ field }: { field: SortFieldValue }) => {
@@ -385,6 +394,26 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
       </div>
     </th>
     );
+
+  // tr 클릭 핸들러 추가
+  const handleRowClick = (validator: TableValidator) => {
+    if (!selectedValidator) {
+      // 선택된 validator가 없으면 primary로 설정
+      dispatch(setValidatorSliceSelectedValidator({
+        voter: validator.validator,
+        cluster: validator.cluster
+      } as ValidatorData));
+    } else if (selectedValidator.voter === validator.validator) {
+      // 이미 선택된 validator를 다시 클릭하면 선택 해제
+      dispatch(setValidatorSliceSelectedValidator(null));
+    } else {
+      // 다른 validator를 클릭하면 additional validator로 설정
+      dispatch(setValidatorSliceAdditionalValidator({
+        voter: validator.validator,
+        cluster: validator.cluster
+      } as ValidatorData));
+    }
+  };
 
   return (
     <div className="h-full bg-white rounded-lg shadow-lg p-4 flex flex-col min-h-0">
@@ -429,9 +458,11 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
                   key={validator.validator}
                   style={getRowStyle(validator)}
                   className={`
-                    hover:bg-gray-50 transition-colors
+                    hover:bg-gray-50 transition-colors cursor-pointer
                     ${selectedValidator?.voter === validator.validator ? 'bg-blue-50' : ''}
+                    ${additionalValidator?.voter === validator.validator ? 'bg-green-50' : ''}
                   `}
+                  onClick={() => handleRowClick(validator)}
                 >
                   <td className="px-3 py-2 text-sm text-gray-500">
                     {validator.no}
