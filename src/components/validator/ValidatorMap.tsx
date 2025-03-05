@@ -4,6 +4,7 @@ import { CLUSTER_COLORS } from '../../constants';
 import { ValidatorData } from '../../types';
 import { useValidatorVisualization } from '../../hooks/useValidatorVisualization';
 import { useAppSelector } from '../../hooks/useAppSelector';
+import { selectSelectedProposalsByChain } from '../../store/selectors';
 
 interface ValidatorMapProps {
   displayData: any[];
@@ -84,21 +85,29 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
     state.votingPatterns.patternsByChain[selectedChain || '']
   );
 
+  // 선택된 proposals 가져오기
+  const selectedProposals = useAppSelector(
+    state => selectSelectedProposalsByChain(state, selectedChain || '')
+  );
+
   // participation rate 계산 함수 수정
   const getParticipationRate = (validator: ValidatorData): number => {
     if (!chainProposals || !selectedChain || !votingPatterns) return 0;
     
-    const totalProposals = Object.keys(chainProposals).length;
-    if (totalProposals === 0) return 0;
+    // 선택된 proposals이 있으면 그것만 사용, 없으면 전체 proposals 사용
+    const proposalIds = selectedProposals.length > 0 
+      ? selectedProposals 
+      : Object.keys(chainProposals);
     
+    if (proposalIds.length === 0) return 0;
     if (!votingPatterns[validator.voter]) return 0;
     
-    const participatedProposals = Object.keys(chainProposals).filter(id => {
+    const participatedProposals = proposalIds.filter(id => {
       const vote = votingPatterns[validator.voter]?.proposal_votes[id]?.option;
       return vote !== undefined;
     });
 
-    return participatedProposals.length / totalProposals;
+    return participatedProposals.length / proposalIds.length;
   };
 
   // 노드 크기 계산 함수
@@ -303,7 +312,20 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
 
     // 노드 순서 업데이트
     updateNodeOrder();
-  }, [displayData, currentValidator, additionalValidator, hoveredValidator, searchTerm, isSearchFocused, selectedClusters, onValidatorClick, onValidatorHover, zoom, dimensions]);
+  }, [
+    displayData,
+    currentValidator,
+    additionalValidator,
+    hoveredValidator,
+    searchTerm,
+    isSearchFocused,
+    selectedClusters,
+    selectedProposals,
+    onValidatorClick,
+    onValidatorHover,
+    zoom,
+    dimensions
+  ]);
 
   // 노드 순서 조정 함수
   const updateNodeOrder = () => {
