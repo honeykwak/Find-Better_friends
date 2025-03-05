@@ -53,12 +53,56 @@ export const ProposalTooltip: React.FC<ProposalTooltipProps> = ({ proposal, posi
 
   const arcs = pie(pieData);
 
+  // 툴팁 위치 계산 로직 추가
+  const calculatePosition = () => {
+    // 브라우저 창 크기
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    // 툴팁의 예상 크기 (최대 너비와 대략적인 높이)
+    const tooltipWidth = 400; // max-w-sm = 24rem = 384px
+    const tooltipHeight = 300; // 대략적인 높이
+
+    // 기본 오프셋
+    const offset = 10;
+
+    // 기본 위치 (우측 하단)
+    let left = position.x + offset;
+    let top = position.y + offset;
+
+    // 우측 경계 체크
+    if (left + tooltipWidth > windowWidth) {
+      // 왼쪽에 표시
+      left = position.x - tooltipWidth - offset;
+    }
+
+    // 하단 경계 체크
+    if (top + tooltipHeight > windowHeight) {
+      // 위에 표시
+      top = position.y - tooltipHeight - offset;
+    }
+
+    // 왼쪽 경계 체크 (왼쪽으로 넘어갈 경우)
+    if (left < 0) {
+      left = offset;
+    }
+
+    // 상단 경계 체크 (위로 넘어갈 경우)
+    if (top < 0) {
+      top = offset;
+    }
+
+    return { left, top };
+  };
+
+  const tooltipPosition = calculatePosition();
+
   return ReactDOM.createPortal(
     <div 
       className="fixed z-50 bg-white p-4 rounded-lg shadow-lg border border-gray-200 max-w-sm"
       style={{ 
-        left: position.x + 10, 
-        top: position.y + 10,
+        left: tooltipPosition.left,
+        top: tooltipPosition.top,
         pointerEvents: 'none'
       }}
     >
