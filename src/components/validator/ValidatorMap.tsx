@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import { CLUSTER_COLORS } from '../../constants';
 import { ValidatorData } from '../../types';
 import { useValidatorVisualization } from '../../hooks/useValidatorVisualization';
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 interface ValidatorMapProps {
   displayData: any[];
@@ -18,6 +19,16 @@ interface ValidatorMapProps {
   onValidatorHover: (validatorId: string | null) => void;
   onResetView: (resetFn: () => void) => void;
 }
+
+// 노드 크기 상수 정의
+const NODE_SIZE = {
+  MIN: 4,
+  MAX: 12,
+  SELECTED: {
+    PRIMARY: 2,    // 기본 크기에 더해질 값
+    ADDITIONAL: 1   // 기본 크기에 더해질 값
+  }
+};
 
 export const ValidatorMap: React.FC<ValidatorMapProps> = ({
   displayData,
@@ -64,6 +75,48 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
     yScale: d3.scaleLinear() 
   });
   
+  // 제안 데이터와 투표 패턴 데이터를 컴포넌트 레벨에서 가져오기
+  const chainProposals = useAppSelector(state => 
+    state.proposal.chainProposals[selectedChain || '']?.proposals || {}
+  );
+  
+  const votingPatterns = useAppSelector(state => 
+    state.votingPatterns.patternsByChain[selectedChain || '']
+  );
+
+  // participation rate 계산 함수 수정
+  const getParticipationRate = (validator: ValidatorData): number => {
+    if (!chainProposals || !selectedChain || !votingPatterns) return 0;
+    
+    const totalProposals = Object.keys(chainProposals).length;
+    if (totalProposals === 0) return 0;
+    
+    if (!votingPatterns[validator.voter]) return 0;
+    
+    const participatedProposals = Object.keys(chainProposals).filter(id => {
+      const vote = votingPatterns[validator.voter]?.proposal_votes[id]?.option;
+      return vote !== undefined;
+    });
+
+    return participatedProposals.length / totalProposals;
+  };
+
+  // 노드 크기 계산 함수
+  const calculateNodeSize = (validator: ValidatorData): number => {
+    const participationRate = getParticipationRate(validator);
+    const baseSize = NODE_SIZE.MIN + 
+      (NODE_SIZE.MAX - NODE_SIZE.MIN) * participationRate;
+
+    if (currentValidator?.voter === validator.voter) {
+      return baseSize + NODE_SIZE.SELECTED.PRIMARY;
+    }
+    if (additionalValidator?.voter === validator.voter) {
+      return baseSize + NODE_SIZE.SELECTED.ADDITIONAL;
+    }
+    
+    return baseSize;
+  };
+
   // 노드 렌더링 로직
   useEffect(() => {
     if (!svgRef.current || !displayData.length) return;
@@ -95,10 +148,7 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
       selection
         .attr('cx', d => scaleRef.current.xScale(d.x))
         .attr('cy', d => scaleRef.current.yScale(d.y))
-        .attr('r', d => 
-          currentValidator?.voter === d.voter ? 8 : 
-          additionalValidator?.voter === d.voter ? 7 : 5
-        )
+        .attr('r', d => calculateNodeSize(d))
         .style('fill', d => 
           selectedClusters.length === 0 || selectedClusters.includes(d.cluster)
             ? CLUSTER_COLORS[d.cluster]
@@ -140,9 +190,7 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
           const shouldHighlightSearch = passesClusterFilter && matchesSearchTerm && isSearchFocused;
           
           // 노드 반지름 계산
-          const nodeRadius = 
-            currentValidator?.voter === d.voter ? 8 : 
-            additionalValidator?.voter === d.voter ? 7 : 5;
+          const nodeRadius = calculateNodeSize(d);
           
           // 강조 표시가 필요한 경우 노드 반지름의 3/4을 테두리 두께로 설정
           return (currentValidator?.voter === d.voter || 
@@ -158,10 +206,7 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
       transition
         .attr('cx', d => scaleRef.current.xScale(d.x))
         .attr('cy', d => scaleRef.current.yScale(d.y))
-        .attr('r', d => 
-          currentValidator?.voter === d.voter ? 8 : 
-          additionalValidator?.voter === d.voter ? 7 : 5
-        )
+        .attr('r', d => calculateNodeSize(d))
         .style('fill', d => 
           selectedClusters.length === 0 || selectedClusters.includes(d.cluster)
             ? CLUSTER_COLORS[d.cluster]
@@ -203,9 +248,7 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
           const shouldHighlightSearch = passesClusterFilter && matchesSearchTerm && isSearchFocused;
           
           // 노드 반지름 계산
-          const nodeRadius = 
-            currentValidator?.voter === d.voter ? 8 : 
-            additionalValidator?.voter === d.voter ? 7 : 5;
+          const nodeRadius = calculateNodeSize(d);
           
           // 강조 표시가 필요한 경우 노드 반지름의 3/4을 테두리 두께로 설정
           return (currentValidator?.voter === d.voter || 
