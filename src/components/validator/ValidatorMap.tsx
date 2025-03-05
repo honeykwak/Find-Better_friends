@@ -5,6 +5,7 @@ import { ValidatorData } from '../../types';
 import { useValidatorVisualization } from '../../hooks/useValidatorVisualization';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectSelectedProposalsByChain } from '../../store/selectors';
+import { ValidatorTooltip } from './ValidatorTooltip';
 
 interface ValidatorMapProps {
   displayData: any[];
@@ -400,30 +401,17 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
         <g ref={gRef} />
       </svg>
       {tooltipData && (
-        <div 
-          className={`
-            absolute bg-white p-3 border rounded shadow
-            ${currentValidator?.voter === tooltipData.voter ? 'ring-2 ring-blue-500 bg-blue-50' : ''}
-            ${additionalValidator?.voter === tooltipData.voter ? 'ring-2 ring-green-500 bg-green-50' : ''}
-          `}
-          style={{ 
-            left: (tooltipData.x * scale + position.x) + 15,
-            top: (tooltipData.y * scale + position.y) - 10,
-            transformOrigin: 'top left',
-            pointerEvents: 'none'
-          }}
-        >
-          <p className={`font-medium 
-            ${currentValidator?.voter === tooltipData.voter ? 'text-blue-600' : ''}
-            ${additionalValidator?.voter === tooltipData.voter ? 'text-green-600' : ''}
-          `}>
-            {tooltipData.voter}
-            {currentValidator?.voter === tooltipData.voter && 
-              <span className="ml-2 text-xs">(Primary)</span>}
-            {additionalValidator?.voter === tooltipData.voter && 
-              <span className="ml-2 text-xs">(Additional)</span>}
-          </p>
-        </div>
+        <ValidatorTooltip
+          voter={tooltipData.voter}
+          position={tooltipData}
+          scale={scale}
+          mapPosition={position}
+          votingPatterns={votingPatterns}
+          chainProposals={chainProposals}
+          selectedProposals={selectedProposals}
+          currentValidator={currentValidator}
+          additionalValidator={additionalValidator}
+        />
       )}
     </div>
   );
