@@ -1,5 +1,5 @@
 import { store } from '../store';
-import { AiSettings } from '../types';
+// import { AiSettings } from '../types';
 
 export class DataLoader {
   private settings: AiSettings;
@@ -45,5 +45,25 @@ export class DataLoader {
     window.dispatchEvent(new CustomEvent('dataLoadProgress', { 
       detail: { progress } 
     }));
+  }
+
+  async loadCoordinates() {
+    try {
+      const response = await fetch('/data/coordinates/coordinates.json');
+      return await response.json();
+    } catch (error) {
+      console.error('Error loading coordinates:', error);
+      return null;
+    }
+  }
+
+  async loadChainData(chain: string) {
+    try {
+      const response = await fetch(`/data/analysis/proposal_analysis/${chain}.json`);
+      return await response.json();
+    } catch (error) {
+      console.error(`Error loading chain data for ${chain}:`, error);
+      return null;
+    }
   }
 } 
