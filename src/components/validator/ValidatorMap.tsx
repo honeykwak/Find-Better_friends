@@ -156,8 +156,8 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
   const [viewMode, setViewMode] = useState<'default' | 'ego-network'>('default');
 
   // ego-network 뷰에서 사용할 위치 계산 함수
-  const calculateEgoNetworkPositions = useCallback(() => {
-    if (!currentValidator || !votingPatterns || !selectedChain) return displayData;
+  const calculateEgoNetworkPositions = useCallback((data: ValidatorData[]): ValidatorData[] => {
+    if (!currentValidator || !votingPatterns || !selectedChain) return data;
     
     // 기준 validator ID
     const baseValidatorId = currentValidator.voter;
@@ -169,7 +169,7 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
     // 원의 반지름 (0 ~ 1 사이 좌표계 기준)
     const maxRadius = 0.4; // 최대 반지름
     
-    return displayData.map(validator => {
+    return data.map(validator => {
       // 기준 validator는 중앙에 배치
       if (validator.voter === baseValidatorId) {
         return {
@@ -236,7 +236,7 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
     
     // 개별 체인 뷰에서만 ego-network 모드 적용
     if (viewMode === 'ego-network' && currentValidator) {
-      return calculateEgoNetworkPositions();
+      return calculateEgoNetworkPositions(filteredDisplayData);
     }
     
     return filteredDisplayData;
