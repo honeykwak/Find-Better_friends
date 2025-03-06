@@ -154,6 +154,96 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
     return baseSize;
   };
 
+  // 새로운 viewMode 상태 추가
+  const [viewMode, setViewMode] = useState<'default' | 'ego-network'>('default');
+
+  // ego-network 뷰에서 사용할 위치 계산 함수
+  const calculateEgoNetworkPositions = useCallback(() => {
+    if (!currentValidator || !votingPatterns || !selectedChain) return displayData;
+    
+    // 기준 validator ID
+    const baseValidatorId = currentValidator.voter;
+    
+    // 중심점 설정 (0.5, 0.5)는 SVG의 중앙을 의미
+    const centerX = 0.5;
+    const centerY = 0.5;
+    
+    // 원의 반지름 (0 ~ 1 사이 좌표계 기준)
+    const maxRadius = 0.4; // 최대 반지름
+    
+    return displayData.map(validator => {
+      // 기준 validator는 중앙에 배치
+      if (validator.voter === baseValidatorId) {
+        return {
+          ...validator,
+          x: centerX,
+          y: centerY
+        };
+      }
+      
+      // proposal match rate 계산
+      let matchRate = 0;
+      
+      // validator와 기준 validator의 proposal match rate 계산
+      const baseVotes = votingPatterns[baseValidatorId]?.proposal_votes || {};
+      const validatorVotes = votingPatterns[validator.voter]?.proposal_votes || {};
+      
+      // 선택된 proposal이 있으면 그것만 사용, 없으면 모든 proposal 사용
+      const proposalIds = selectedProposals.length > 0
+        ? selectedProposals
+        : Object.keys(chainProposals);
+      
+      if (proposalIds.length > 0) {
+        let matches = 0;
+        let totalComparableVotes = 0;
+        
+        proposalIds.forEach(id => {
+          const baseVote = baseVotes[id]?.option;
+          const validatorVote = validatorVotes[id]?.option;
+          
+          // 둘 다 투표한 경우에만 비교
+          if (baseVote !== undefined && validatorVote !== undefined) {
+            totalComparableVotes++;
+            if (baseVote === validatorVote) {
+              matches++;
+            }
+          }
+        });
+        
+        matchRate = totalComparableVotes > 0 ? matches / totalComparableVotes : 0;
+      }
+      
+      // matchRate를 반지름으로 변환 (1에 가까울수록 중심에 가깝게)
+      const radius = maxRadius * (1 - matchRate);
+      
+      // 각도 계산 (validator의 cluster를 기준으로 비슷한 cluster끼리 모이도록)
+      const angle = (validator.cluster / 5) * 2 * Math.PI + 
+                   (validator.voter.charCodeAt(0) % 100) / 100 * Math.PI; // 약간의 무작위성 추가
+      
+      // 극좌표를 직교좌표로 변환
+      return {
+        ...validator,
+        x: centerX + radius * Math.cos(angle),
+        y: centerY + radius * Math.sin(angle)
+      };
+    });
+  }, [currentValidator, votingPatterns, selectedChain, displayData, chainProposals, selectedProposals]);
+
+  // viewMode에 따라 다른 displayData 사용
+  const effectiveDisplayData = useMemo(() => {
+    // 전체 체인 뷰에서는 항상 filteredDisplayData 사용
+    if (!selectedChain) {
+      return filteredDisplayData;
+    }
+    
+    // 개별 체인 뷰에서만 ego-network 모드 적용
+    if (viewMode === 'ego-network' && currentValidator) {
+      return calculateEgoNetworkPositions();
+    }
+    
+    return filteredDisplayData;
+  }, [viewMode, filteredDisplayData, calculateEgoNetworkPositions, currentValidator, selectedChain]);
+
   // 노드 렌더링 로직
   useEffect(() => {
     if (!svgRef.current || !displayData.length) return;
@@ -299,21 +389,58 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
 
     // 기존 노드 선택
     const nodes = g.selectAll<SVGCircleElement, any>('circle')
-      .data(filteredDisplayData, (d: any) => d.voter);
+      .data(effectiveDisplayData, (d: any) => d.voter);
+
+    // 전체 체인 뷰로 전환할 때 성능 최적화
+    const isFullChainView = !selectedChain;
+    const transitionDuration = isFullChainView ? 200 : 500; // 전체 뷰에서는 빠른 전환
 
     // Enter 부분 수정
     const nodesEnter = nodes.enter()
       .append('circle')
       .style('opacity', 0)
-      .call(selection => applyStaticStyles(selection));
+      .attr('cx', d => scaleRef.current.xScale(d.x))
+      .attr('cy', d => scaleRef.current.yScale(d.y))
+      .attr('r', d => calculateNodeSize(d));
 
-    // Update 부분 수정
+    // 노드 수가 많으면 배치 처리 최적화
+    if (nodes.enter().size() > 200) {
+      // 배치 처리: 단순히 표시만 하고 복잡한 스타일은 나중에
+      nodesEnter
+        .style('fill', d => CLUSTER_COLORS[d.cluster])
+        .transition()
+        .duration(transitionDuration)
+        .style('opacity', 1);
+      
+      // 이후 복잡한 스타일은 requestAnimationFrame으로 지연
+      requestAnimationFrame(() => {
+        g.selectAll<SVGCircleElement, any>('circle')
+          .call(selection => applyStaticStyles(selection));
+      });
+    } else {
+      // 소량 데이터는 일반 방식으로 처리
+      nodesEnter
+        .call(selection => applyStaticStyles(selection))
+        .transition()
+        .duration(transitionDuration)
+        .style('opacity', 1);
+    }
+
+    // Update 부분 수정 (전체 뷰는 간소화)
     nodes
       .merge(nodesEnter)
       .transition()
-      .duration(500) // ANIMATION_DURATION
-      .style('opacity', 1)
-      .call(transition => applyTransitionStyles(transition));
+      .duration(transitionDuration)
+      .attr('cx', d => scaleRef.current.xScale(d.x))
+      .attr('cy', d => scaleRef.current.yScale(d.y))
+      .attr('r', d => calculateNodeSize(d))
+      .style('opacity', 1);
+
+    // 이후에 스타일 적용 (지연)
+    setTimeout(() => {
+      g.selectAll<SVGCircleElement, any>('circle')
+        .call(selection => applyStaticStyles(selection));
+    }, transitionDuration + 50);
 
     // Exit: 제거될 노드
     nodes.exit()
@@ -352,7 +479,9 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
     onValidatorClick,
     onValidatorHover,
     zoom,
-    dimensions
+    dimensions,
+    viewMode,
+    calculateEgoNetworkPositions
   ]);
 
   // 노드 순서 조정 함수
@@ -418,8 +547,38 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
     });
   }, [resetZoomPan, onResetView, onValidatorClick]);
 
+  // viewMode 전환 최적화
+  useEffect(() => {
+    // 체인 전환 중에는 viewMode 업데이트를 지연시킴
+    if (selectedChain) {
+      // 개별 체인 뷰에서만 ego-network 모드 적용 고려
+      if (currentValidator && !additionalValidator) {
+        setViewMode('ego-network');
+      } else if (!currentValidator) {
+        setViewMode('default');
+      }
+    } else {
+      // 전체 체인 뷰에서는 항상 기본 모드 사용
+      setViewMode('default');
+    }
+  }, [currentValidator, additionalValidator, selectedChain]);
+
   return (
     <div className="min-h-0 flex-1 overflow-hidden relative">
+      {/* 모드 전환 버튼 추가 */}
+      {currentValidator && (
+        <div className="absolute top-2 right-2 z-10">
+          <button
+            className={`px-3 py-1 text-xs rounded-md transition-colors
+              ${viewMode === 'default' ? 'bg-gray-200 text-gray-800' : 'bg-gray-100 text-gray-600'}
+            `}
+            onClick={() => setViewMode(viewMode === 'default' ? 'ego-network' : 'default')}
+          >
+            {viewMode === 'default' ? 'Show Ego Network' : 'Show Default View'}
+          </button>
+        </div>
+      )}
+      
       <svg
         ref={svgRef}
         className="w-full h-full"

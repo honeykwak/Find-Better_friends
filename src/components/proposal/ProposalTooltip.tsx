@@ -23,17 +23,25 @@ export const ProposalTooltip: React.FC<ProposalTooltipProps> = ({ proposal, posi
   // 투표 비율을 퍼센트로 변환
   const formatRatio = (ratio: number) => `${(ratio * 100).toFixed(1)}%`;
   
+  // 방어적 프로그래밍: ratios가 없으면 기본값 사용
+  const ratios = proposal.ratios || {
+    YES: 0,
+    NO: 0,
+    NO_WITH_VETO: 0,
+    ABSTAIN: 0
+  };
+  
   // 파이 차트 데이터 준비 - NO_VOTE 추가
-  const votedRatioSum = proposal.ratios.YES + 
-                       proposal.ratios.NO + 
-                       proposal.ratios.NO_WITH_VETO + 
-                       proposal.ratios.ABSTAIN;
+  const votedRatioSum = ratios.YES + 
+                       ratios.NO + 
+                       ratios.NO_WITH_VETO + 
+                       ratios.ABSTAIN;
   
   const pieData = [
-    { option: 'YES', value: proposal.ratios.YES },
-    { option: 'NO', value: proposal.ratios.NO },
-    { option: 'NO_WITH_VETO', value: proposal.ratios.NO_WITH_VETO },
-    { option: 'ABSTAIN', value: proposal.ratios.ABSTAIN },
+    { option: 'YES', value: ratios.YES },
+    { option: 'NO', value: ratios.NO },
+    { option: 'NO_WITH_VETO', value: ratios.NO_WITH_VETO },
+    { option: 'ABSTAIN', value: ratios.ABSTAIN },
     { option: 'NO_VOTE', value: Math.max(0, 1 - votedRatioSum) } // 음수 방지
   ];
 
