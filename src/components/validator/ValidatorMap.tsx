@@ -6,6 +6,7 @@ import { useValidatorVisualization } from '../../hooks/useValidatorVisualization
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectSelectedProposalsByChain } from '../../store/selectors';
 import { ValidatorTooltip } from './ValidatorTooltip';
+import { getClusterColor } from '../../utils/typeGuards';
 
 interface ValidatorMapProps {
   displayData: any[];
@@ -51,12 +52,9 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
     gRef,
     scale,
     position,
-    isAnimating,
     isDragging,
     dimensions,
     handleMouseDown,
-    handleMouseMove,
-    handleMouseUp,
     resetZoomPan,
     zoom
   } = useValidatorVisualization(displayData, selectedChain, coordinateType);
@@ -278,7 +276,7 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
         .attr('r', d => calculateNodeSize(d))
         .style('fill', d => 
           selectedClusters.length === 0 || selectedClusters.includes(d.cluster)
-            ? CLUSTER_COLORS[d.cluster]
+            ? getClusterColor(d.cluster)
             : "#E5E7EB" // 연한 회색으로 변경 (필터링에서 제외된 클러스터)
         )
         .style('cursor', 'pointer')
@@ -329,67 +327,9 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
         });
     };
 
-    const applyTransitionStyles = (transition: d3.Transition<SVGCircleElement, any, any, any>) => {
-      transition
-        .attr('cx', d => scaleRef.current.xScale(d.x))
-        .attr('cy', d => scaleRef.current.yScale(d.y))
-        .attr('r', d => calculateNodeSize(d))
-        .style('fill', d => 
-          selectedClusters.length === 0 || selectedClusters.includes(d.cluster)
-            ? CLUSTER_COLORS[d.cluster]
-            : "#E5E7EB" // 연한 회색으로 변경 (필터링에서 제외된 클러스터)
-        )
-        .style('opacity', 1) // 항상 완전 불투명하게 설정
-        .style('stroke', d => {
-          // 클러스터 필터링 적용
-          const passesClusterFilter = selectedClusters.length === 0 || 
-                                    selectedClusters.includes(d.cluster);
-          
-          // 검색어 매치 여부
-          const matchesSearchTerm = searchTerm && 
-                                  d.voter.toLowerCase().includes(searchTerm.toLowerCase());
-          
-          // 검색 하이라이트는 클러스터 필터를 통과한 경우에만 적용
-          const shouldHighlightSearch = passesClusterFilter && matchesSearchTerm && isSearchFocused;
-          
-          return currentValidator?.voter === d.voter 
-            ? "#3B82F6" // 기준 validator - 파란색
-            : additionalValidator?.voter === d.voter
-              ? "#10B981" // 추가 validator - 녹색
-              : hoveredValidator === d.voter
-                ? "#8B5CF6" // 호버 - 보라색
-                : shouldHighlightSearch
-                  ? "#93C5FD" // 검색 결과 - 연한 파란색
-                  : "none";
-        })
-        .style('stroke-width', d => {
-          // 클러스터 필터링 적용
-          const passesClusterFilter = selectedClusters.length === 0 || 
-                                    selectedClusters.includes(d.cluster);
-          
-          // 검색어 매치 여부
-          const matchesSearchTerm = searchTerm && 
-                                  d.voter.toLowerCase().includes(searchTerm.toLowerCase());
-          
-          // 검색 하이라이트는 클러스터 필터를 통과한 경우에만 적용
-          const shouldHighlightSearch = passesClusterFilter && matchesSearchTerm && isSearchFocused;
-          
-          // 노드 반지름 계산
-          const nodeRadius = calculateNodeSize(d);
-          
-          // 강조 표시가 필요한 경우 노드 반지름의 3/4을 테두리 두께로 설정
-          return (currentValidator?.voter === d.voter || 
-                additionalValidator?.voter === d.voter || 
-                hoveredValidator === d.voter || 
-                shouldHighlightSearch)
-                  ? nodeRadius * 0.75
-                  : 0;
-        });
-    };
-
     // 기존 노드 선택
-    const nodes = g.selectAll<SVGCircleElement, any>('circle')
-      .data(effectiveDisplayData, (d: any) => d.voter);
+    const nodes = g.selectAll<SVGCircleElement, ValidatorData>('circle')
+      .data(effectiveDisplayData, (d: ValidatorData) => d.voter);
 
     // 전체 체인 뷰로 전환할 때 성능 최적화
     const isFullChainView = !selectedChain;
@@ -407,7 +347,7 @@ export const ValidatorMap: React.FC<ValidatorMapProps> = ({
     if (nodes.enter().size() > 200) {
       // 배치 처리: 단순히 표시만 하고 복잡한 스타일은 나중에
       nodesEnter
-        .style('fill', d => CLUSTER_COLORS[d.cluster])
+        .style('fill', d => getClusterColor(d.cluster))
         .transition()
         .duration(transitionDuration)
         .style('opacity', 1);

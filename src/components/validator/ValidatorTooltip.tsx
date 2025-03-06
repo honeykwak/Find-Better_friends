@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as d3 from 'd3';
 import { ValidatorData } from '../../types';
+import { getVoteColor, isValidVoteOption } from '../../utils/typeGuards';
 
 // VOTE_COLOR_CLASSES에서 실제 색상 값 추출
 const VOTE_COLORS = {
@@ -78,7 +79,12 @@ export const ValidatorTooltip: React.FC<ValidatorTooltipProps> = ({
     targetProposals.forEach(proposalId => {
       const vote = validatorVotes[proposalId]?.option;
       if (vote) {
-        stats[vote === 'NOWITHVETO' ? 'NO_WITH_VETO' : vote]++;
+        const voteOption = vote === 'NOWITHVETO' ? 'NO_WITH_VETO' : vote;
+        if (isValidVoteOption(voteOption)) {
+          stats[voteOption]++;
+        } else {
+          stats.NO_VOTE++;
+        }
       } else {
         stats.NO_VOTE++;
       }
@@ -146,7 +152,7 @@ export const ValidatorTooltip: React.FC<ValidatorTooltipProps> = ({
                 <path
                   key={i}
                   d={arc(d) || ''}
-                  fill={VOTE_COLORS[d.data.option]}
+                  fill={getVoteColor(d.data.option)}
                   stroke="#fff"
                   strokeWidth="1"
                 />
@@ -158,7 +164,7 @@ export const ValidatorTooltip: React.FC<ValidatorTooltipProps> = ({
           <div className="flex-1 space-y-1">
             {pieData.map(({ option, value }) => (
               <div key={option} className="flex justify-between text-xs">
-                <span style={{ color: VOTE_COLORS[option] }}>
+                <span style={{ color: getVoteColor(option) }}>
                   {option.replace(/_/g, ' ')}
                 </span>
                 <span>{`${(value * 100).toFixed(1)}% (${voteStats[option]})`}</span>
