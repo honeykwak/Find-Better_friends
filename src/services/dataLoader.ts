@@ -1,6 +1,13 @@
 import { store } from '../store';
 // import { AiSettings } from '../types';
 
+export interface AiSettings {
+  dataLoading: {
+    chains: string[];
+    dataSources: any;
+  }
+}
+
 export class DataLoader {
   private settings: AiSettings;
   private cache: Map<string, {data: any, timestamp: number}>;
@@ -57,12 +64,21 @@ export class DataLoader {
     }
   }
 
-  async loadChainData(chain: string) {
+  async loadChainData(dataType: string, chain: string) {
     try {
-      const response = await fetch(`/data/analysis/proposal_analysis/${chain}.json`);
+      let url: string;
+      if (dataType === 'chainProposals') {
+        url = `/data/analysis/proposal_analysis/${chain}.json`;
+      } else if (dataType === 'votingPatterns') {
+        url = `/data/analysis/voting_patterns/${chain}.json`;
+      } else {
+        throw new Error(`Unknown data type: ${dataType}`);
+      }
+
+      const response = await fetch(url);
       return await response.json();
     } catch (error) {
-      console.error(`Error loading chain data for ${chain}:`, error);
+      console.error(`Error loading ${dataType} for ${chain}:`, error);
       return null;
     }
   }

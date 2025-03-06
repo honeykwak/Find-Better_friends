@@ -864,7 +864,8 @@ export const ProposalList: React.FC<ProposalListProps> = ({ chainName, proposals
         searchType
       },
       proposalsWithoutVotes: proposals ? Object.entries(proposals).filter(([_, p]) => {
-        const primaryVote = votingPatterns?.[selectedValidator?.voter || '']?.proposal_votes?.[p.id]?.option;
+        const proposalId = _;  // 여기서 _는 proposal의 키(ID)입니다.
+        const primaryVote = votingPatterns?.[selectedValidator?.voter || '']?.proposal_votes?.[proposalId]?.option;
         return !primaryVote;
       }).length : 0,
       selectedProposalIds: selectedProposals

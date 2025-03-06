@@ -167,7 +167,9 @@ export const ValidatorTooltip: React.FC<ValidatorTooltipProps> = ({
                 <span style={{ color: getVoteColor(option) }}>
                   {option.replace(/_/g, ' ')}
                 </span>
-                <span>{`${(value * 100).toFixed(1)}% (${voteStats[option]})`}</span>
+                <span>{`${(value * 100).toFixed(1)}% (${
+                  isValidVoteOption(option) ? voteStats[option] : 0
+                })`}</span>
               </div>
             ))}
           </div>

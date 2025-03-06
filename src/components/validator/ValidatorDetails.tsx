@@ -403,16 +403,16 @@ export const ValidatorDetails: React.FC<ValidatorDetailsProps> = ({
   const handleRowClick = (validator: TableValidator) => {
     if (!selectedValidator) {
       // 선택된 validator가 없으면 primary로 설정
-      dispatch(setValidatorSliceSelectedValidator({
+      dispatch(setSelectedValidator({
         voter: validator.validator,
         cluster: validator.cluster
       } as ValidatorData));
     } else if (selectedValidator.voter === validator.validator) {
       // 이미 선택된 validator를 다시 클릭하면 선택 해제
-      dispatch(setValidatorSliceSelectedValidator(null));
+      dispatch(setSelectedValidator(null));
     } else {
       // 다른 validator를 클릭하면 additional validator로 설정
-      dispatch(setValidatorSliceAdditionalValidator({
+      dispatch(setAdditionalValidator({
         voter: validator.validator,
         cluster: validator.cluster
       } as ValidatorData));
